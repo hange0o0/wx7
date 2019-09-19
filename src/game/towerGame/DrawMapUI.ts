@@ -16,6 +16,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
 
     public pkMap = new PKMap();
+    public scale = 1;
 
 
     public data;
@@ -37,6 +38,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
         super.childrenCreated();
 
         this.addChildAt(this.pkMap,1);
+        this.pkMap.horizontalCenter = 0
+        this.pkMap.verticalCenter = -80
 
 
         this.list.itemRenderer = CreateMapItem
@@ -149,8 +152,9 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     private onTouch(e){
 
-        var x = Math.floor((e.stageX - this.pkMap.x)/64)
-        var y = Math.floor((e.stageY - this.y - this.pkMap.y)/64)
+        var itemSize = 64*this.scale;
+        var x = Math.floor((e.stageX - this.pkMap.x)/itemSize)
+        var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
         if(y >= this.hh || y < 0 || x >= this.ww || x < 0)
             return;
         if(this.mapData[y][x] != 0 && this.mapData[y][x]!= 1)
@@ -251,9 +255,9 @@ class DrawMapUI extends game.BaseUI_wx4 {
     public onShow(){
         this.pkMap.width = 64*this.ww
         this.pkMap.height = 64*this.hh
+        this.scale = TowerManager.getInstance().getScale(this.ww,this.hh)
+        this.pkMap.scaleX = this.pkMap.scaleY = this.scale;
 
-        this.pkMap.x = (640 - this.pkMap.width)/2
-        this.pkMap.y = (this.height - 150 - this.pkMap.height)/2
 
 
         this.renewMap();

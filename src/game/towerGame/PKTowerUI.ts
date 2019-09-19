@@ -20,6 +20,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
 
     public pkMap = new PKMap();
+    public scale
 
 
     public data;
@@ -42,6 +43,8 @@ class PKTowerUI extends game.BaseUI_wx4 {
         super.childrenCreated();
 
         this.addChildAt(this.pkMap,1);
+        this.pkMap.horizontalCenter = 0
+        this.pkMap.verticalCenter = -80
 
 
         this.list.itemRenderer = CreateMapItem
@@ -116,8 +119,8 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.pkMap.width = 64*this.ww
         this.pkMap.height = 64*this.hh
 
-        this.pkMap.x = (640 - this.pkMap.width)/2
-        this.pkMap.y = (this.height - 150 - this.pkMap.height)/2
+        this.scale = TowerManager.getInstance().getScale(this.ww,this.hh)
+        this.pkMap.scaleX = this.pkMap.scaleY = this.scale;
 
         this.renewMap();
         TC.initData(this.data.id);

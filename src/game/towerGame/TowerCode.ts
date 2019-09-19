@@ -125,14 +125,15 @@ class TowerCode {
         this.maxRound = round;
         this.round = 0;
         var step = 10
+
+        var roadIndex = 0;
         while(round > 0)
         {
-            var roadIndex = 0;
-            var roadRandom = Math.random()<0.3;
-            if(roadNum > 1)
-            {
-                roadIndex = Math.floor(this.random()*roadNum)
-            }
+
+            var roadRandom = roadIndex == roadNum;
+            if(roadRandom)
+                roadIndex = 0
+
             round --;
             var list = [];
             returnArr.push(list);
@@ -156,6 +157,10 @@ class TowerCode {
                 }
             }
             step += 10*30;
+            roadIndex ++;
+            if(roadRandom)
+                roadIndex = 0;
+
         }
 
         return returnArr
@@ -167,7 +172,7 @@ class TowerCode {
     {
         this.dataArr.reset();
         var startPos = [];
-        var endPos
+        var endPos = []
         for(var i=0;i<arr.length;i++)
         {
             for(var j=0;j<arr[i].length;j++)
@@ -176,19 +181,30 @@ class TowerCode {
                 if(type == 5)
                     startPos.push({x:j,y:i});
                 if(type == 6)
-                    endPos = {x:j,y:i};
+                    endPos.push({x:j,y:i});
                 if(type == 1 || type == 4 || type == 5 || type == 6)
                     this.dataArr.setOK(i,j)
             }
         }
         if(startPos.length == 0)
             return null
-        if(!endPos)
+        if(endPos.length == 0)
             return null
         var results = []
         for(var i=0;i<startPos.length;i++)
         {
-            results.push(this.astar.find(startPos[i].x, startPos[i].y, endPos.x, endPos.y))
+            //找最近一条路
+            var endPath:any = null;
+            for(var j=0;j<endPos.length;j++)
+            {
+                var path = this.astar.find(startPos[i].x, startPos[i].y, endPos[j].x, endPos[j].y)
+                if(path)
+                {
+                    if(!endPath || endPath.length > path.length)
+                        endPath = path;
+                }
+            }
+            results.push(endPath)
         }
         return results;
     }

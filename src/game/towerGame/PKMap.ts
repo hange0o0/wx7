@@ -46,23 +46,7 @@ class PKMap extends game.BaseContainer_wx4 {
         this.renewPos(data);
     }
 
-    private renewTree(data){
-        if(this.treeItem.length)
-        {
-            this.treePool = this.treePool.concat(this.treeItem)
-            while(this.treeItem.length)
-                MyTool.removeMC(this.treeItem.pop())
-        }
 
-        for(var i=0;i<data.length;i++)
-        {
-            for(var j=0;j<data[i].length;j++)
-            {
-                if(data[i][j] == 3)
-                    this.addTree(j,i)
-            }
-        }
-    }
 
     private renewPos(data){
        while(this.posArr.length)
@@ -101,6 +85,24 @@ class PKMap extends game.BaseContainer_wx4 {
         return arr;
     }
 
+    private renewTree(data){
+        if(this.treeItem.length)
+        {
+            this.treePool = this.treePool.concat(this.treeItem)
+            while(this.treeItem.length)
+                MyTool.removeMC(this.treeItem.pop())
+        }
+
+        for(var i=0;i<data.length;i++)
+        {
+            for(var j=0;j<data[i].length;j++)
+            {
+                if(data[i][j] == 3)
+                    this.addTree(j,i)
+            }
+        }
+    }
+
     public addTree(x,y){
         var img:any = this.treePool.pop()
         if(!img)
@@ -109,6 +111,7 @@ class PKMap extends game.BaseContainer_wx4 {
         }
         this.roleCon.addChild(img);
         TC.randomSeed = this.randomSeedIn*(x*1000 + y)*123456789
+        this.treeItem.push(img)
         var type = TC.random() > 0.5?1:2;
         var artID = Math.ceil(TC.random()*4)
 
@@ -128,6 +131,7 @@ class PKMap extends game.BaseContainer_wx4 {
             img.x =  x*64 + 16 + TC.random()*32// - 64
             img.y =  y*64 + 16 + TC.random()*32// - 64
         }
+        return img
     }
 
 
@@ -190,6 +194,7 @@ class PKMap extends game.BaseContainer_wx4 {
             img.anchorOffsetY = 44/2
         }
         this.arrowCon.addChild(img);
+        this.arrowItem.push(img);
         img.x =  from[0]*64 + 32
         img.y =  from[1]*64 + 32 + 10
 

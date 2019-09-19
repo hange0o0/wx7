@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HelpUISkin" width="560" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+		<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0" locked="true"/>
+	<e:Group id="ctrlGroup" y="90" scaleX="0.6" scaleY="0.6" x="51.52">
+		<e:Image source="move_ctrl_bg_png" horizontalCenter="0" verticalCenter="0"/>
+		<e:Image source="move_ctrl_item_png" anchorOffsetX="44" anchorOffsetY="44" horizontalCenter="0" verticalCenter="0"/>
+	</e:Group>
+	<e:Label text="拖动摇杆控制角色移动，角色会自动攻击靠近的敌人" x="257.11" y="111.1" width="250" size="24" lineSpacing="10"/>
+	<e:Label text="当玩家停止移动时，会自动释放一个可用技能，玩家也可手动选择下一个要释放的技能" x="253.46" y="300" width="250" size="24" lineSpacing="10"/>
+	<e:Label text="必须在时间结束前消灭地图上所有敌人，否则游戏失败，角色死亡需花费时间复活" x="30" y="511.36" width="500" size="24" lineSpacing="10" anchorOffsetX="0"/>
+	<e:Image id="rateBar" source="yellor_bg_png" height="5" width="500" x="30" y="490"/>
+	<ns1:PKSkillItem id="skillItem" x="83.12" y="302.74" skinName="PKSkillItemSkin"/>
+	<e:Button id="skillBtn" label="开始游戏" skinName="Btn2Skin" width="200" horizontalCenter="0" bottom="50"/>
+
+</e:Skin>

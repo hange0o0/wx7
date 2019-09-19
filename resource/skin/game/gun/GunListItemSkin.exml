@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GunListItemSkin" width="100" height="140" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="normal,choose" >
+	<e:Image source="item_png" includeIn="choose" scale9Grid="18,20,13,11" left="0" right="0" top="0" bottom="0"/>
+	<e:Image id="mc" source="black_bg_png" width="100" height="100" x="0" y="0"/>
+	<e:Label id="levelText" text="Label" size="20" bold="false" bottom="8" horizontalCenter="0"/>
+	<e:Group id="lockGroup" horizontalCenter="0" bottom="8">
+		<e:Image source="vide_icon2_png" y="0" scaleX="0.7" scaleY="0.7" x="0"/>
+		<e:Label text="解锁" x="32" size="20" textColor="0xffff00" verticalCenter="0"/>
+	</e:Group>
+</e:Skin>

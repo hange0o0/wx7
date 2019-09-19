@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="FeedBackUISkin" width="560" height="760" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+		<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Label text="　如果你发现任何问题，或有什么建议，都可在此进行反馈，以帮助我们更好地完善这个游戏" y="82" size="21" left="30" right="30" lineSpacing="10" textColor="0xd6d6d6"/>
+	<e:Image left="30" right="30" top="150" bottom="110" source="window_bg_png" scale9Grid="44,41,38,33" alpha="0.5"/>
+	<e:Button id="sendBtn" label="发送" skinName="Btn1Skin" width="180" horizontalCenter="0" bottom="30"/>
+	<e:EditableText id="inputText" text="" left="50" right="50" top="170" bottom="130" size="24" promptColor="0x5b5b5b" prompt="请在此输入你要说的话，感谢你的支持" textColor="0xffffff"/>
+
+</e:Skin>

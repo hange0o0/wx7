@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="DebugUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect fillColor="0xFFFFFF" left="0" right="0" top="0" bottom="0"/>
+	<e:Group id="con" left="20" right="20" top="100" bottom="20">
+		<e:layout>
+			<e:TileLayout requestedColumnCount="3"/>
+		</e:layout>
+	</e:Group>
+	<e:Button id="backBtn" label="返回" x="30" y="30" skinName="Btn2Skin"/>
+	<e:Label id="desText" text="Label" textColor="0x1c0101" left="20" right="20" bottom="10" size="24"/>
+</e:Skin>

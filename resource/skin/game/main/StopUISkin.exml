@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="StopUISkin" width="560" height="580" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+		<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Group horizontalCenter="0" bottom="50">
+		<e:Button id="closeBtn" label="认输退出" skinName="Btn1Skin" width="180" x="0" y="0"/>
+		<e:Button id="okBtn" label="继续游戏" width="180" x="0" y="0" skinName="Btn2Skin"/>
+		<e:layout>
+			<e:HorizontalLayout gap="50"/>
+		</e:layout>
+	</e:Group>
+	<e:Label text="请选择你习惯的操控模式" y="99.73" size="24" horizontalCenter="0"/>
+	<e:Group y="157.85" horizontalCenter="0">
+		<e:RadioButton id="r0" label="左手主控" x="0" y="0" skinName="MyRadioButtonSkin"/>
+		<e:RadioButton id="r1" label="单手模式" x="10" y="10" skinName="MyRadioButtonSkin"/>
+		<e:RadioButton id="r2" label="右手主控" x="20" y="20" skinName="MyRadioButtonSkin"/>
+		<e:layout>
+			<e:HorizontalLayout gap="40"/>
+		</e:layout>
+	</e:Group>
+	<e:Group y="213.57" horizontalCenter="0">
+		<e:Group id="g1" x="0" y="0">
+			<e:Image source="ctrl_type1_png" y="0" horizontalCenter="0"/>
+			<e:Image id="c0" source="common_select_01_png" scale9Grid="21,17,20,18" width="140" x="0" height="180" y="0" touchEnabled="false"/>
+		</e:Group>
+		<e:Group id="g2" x="10" y="10">
+			<e:Image y="0" horizontalCenter="0" source="ctrl_type3_png"/>
+			<e:Image id="c1" scale9Grid="21,17,20,18" width="140" x="0" height="180" y="0" source="common_select_01_png" touchEnabled="false"/>
+		</e:Group>
+		<e:Group id="g3" x="20" y="20">
+			<e:Image y="0" horizontalCenter="0" source="ctrl_type2_png"/>
+			<e:Image id="c2" source="common_select_01_png" scale9Grid="21,17,20,18" width="140" x="0" height="180" y="0" touchEnabled="false"/>
+		</e:Group>
+		<e:layout>
+			<e:HorizontalLayout gap="30"/>
+		</e:layout>
+	</e:Group>
+
+</e:Skin>

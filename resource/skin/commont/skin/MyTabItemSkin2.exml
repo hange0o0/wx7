@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="MyTabItemSkin2" currentState="up" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="up,down,disabled,upAndSelected,downAndSelected,disabledAndSelected"  width="160">
+	<e:Image includeIn="upAndSelected,downAndSelected,disabledAndSelected" x="0" y="0" width="100%" source="btn_r2__png" scale9Grid="31,17,98,24" />
+	<e:Image includeIn="up,down,disabled" x="0" y="0" width="100%" source="btn_b2_png" scale9Grid="31,17,98,24" left="-5" right="0" left.up="-3" source.up="btn_b2_png"/>
+	<e:Label id="label" text="{data.label}" y="14" size="20" height="26" verticalAlign="middle" strokeColor.disabled="0x025CB5" touchEnabled="false" textAlign="center"  textColor.upAndSelected="0xCCB48E" textColor.downAndSelected="0xCCB48E" textColor.disabledAndSelected="0xCCB48E" textColor="0xAFAFAF" horizontalCenter="0.5"/>
+</e:Skin>

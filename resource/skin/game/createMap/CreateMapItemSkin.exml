@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="CreateMapItemSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="up,down" >
+	<e:Image id="mc" source="map_1_1_png" x="0" y="0"/>
+	<e:Image source="icon_right_png" x="4.5" y="4" includeIn="down"/>
+</e:Skin>

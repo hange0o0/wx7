@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="MyHSliderSkin" minWidth="20" minHeight="8" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="600">
+
+	<e:Rect id="track" height="6" width="100%" x="0" verticalCenter="0" ellipseHeight="10" ellipseWidth="10" fillColor="0xDBDBB3"/>
+	<e:Group id="thumb" x="0" y="0" width="30">
+		<e:Image source="point2_png" scaleX="0.5" scaleY="0.5" horizontalCenter="0" verticalCenter="0"/>
+		<e:Group width="60" height="60" x="-15" y="0"/>
+	</e:Group>
+</e:Skin>

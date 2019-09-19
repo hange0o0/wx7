@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HPBarSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="69" height="14" states="s1,s2,s3" >
+	<e:Image source="hp_bar0_png" x="0" y="0"/>
+	<e:Image id="barMC" source="hp_bar1_png" x="0" y="0" fillMode="clip" width="69" source.s2="hp_bar1_png" source.s1="hp_bar3_png" source.s3="hp_bar2_png"/>
+	<e:BitmapLabel id="hpText" font="pk_word3_fnt" text="12345" letterSpacing="-5" bottom="9" horizontalCenter="0" includeIn="s1"/>
+</e:Skin>

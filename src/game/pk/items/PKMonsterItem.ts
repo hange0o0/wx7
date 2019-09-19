@@ -1,0 +1,377 @@
+class PKMonsterItem_wx3 extends game.BaseItem {
+    private static pool = [];
+    private static index = 1
+     public static createItem():PKMonsterItem_wx3{
+         var item:PKMonsterItem_wx3 = this.pool.pop();
+         if(!item)
+         {
+             item = new PKMonsterItem_wx3();
+         }
+         item.id = this.index;
+         this.index++
+         return item;
+     }
+     public static freeItem(item){
+         if(!item)
+             return;
+         item.remove();
+         if(this.pool.indexOf(item) == -1)
+            this.pool.push(item);
+     }
+
+    private hpBar: HPBar;
+
+    public path
+    public targetPos
+    public scale = 2/3
+
+
+
+    public id = 0;
+    public yunStep = 0;
+    public iceStep = 0;
+    public fireStep = 0;
+    public poisonStep = 0;
+    public fireHurt = 0;
+    public poisonHurt = 0;
+    public lastHurtTime = 0;
+
+    public stateYunMV
+    public stateFireMV
+    public statePoisonMV
+    public iceMC:eui.Image
+    public monsterMV:PKMonsterMV_wx3 = new PKMonsterMV_wx3();
+
+    public randomWalkRota = 0;
+    public randomWalkTime = 0;
+    public randomWalk = false;
+
+    public constructor() {
+        super();
+        this.skinName = "PKMonsterItemSkin";
+        this.monsterMV.addEventListener('mv_die',this.onDieFinish,this)
+    }
+
+    public childrenCreated() {
+        super.childrenCreated();
+
+        this.touchChildren = this.touchEnabled = false;
+        this.hpBar.currentState = 's2';
+
+        this.addChildAt(this.monsterMV,0)
+        this.monsterMV.x = 50;
+        this.monsterMV.y = 300;
+        this.anchorOffsetX = 50;
+        this.anchorOffsetY = 300;
+    }
+    public resetHpBarY(){
+        this.hpBar.y = 300 - this.data.getVO().height*this.data.scale - 20
+        this.monsterMV.scaleX = this.monsterMV.scaleY = this.data.scale
+
+    }
+
+    public dataChanged(){
+        this.data.relateItem = this;
+        this.monsterMV.load(this.data.mid)
+        this.monsterMV.stand();
+        this.monsterMV.alpha = 1;
+        this.resetHpBarY();
+
+        this.iceStep = 0;
+        this.yunStep = 0;
+        this.fireStep = 0;
+        this.poisonStep = 0;
+        this.fireHurt = 0;
+        this.poisonHurt = 0;
+        this.lastHurtTime = 0;
+        this.targetPos = null;
+
+        MyTool.removeMC(this.iceMC)
+        this.hpBar.visible = true;
+        this.renewHp();
+
+        if(this.stateYunMV) {
+            this.stateYunMV.stop()
+            MyTool.removeMC(this.stateYunMV)
+        }
+        if(this.stateFireMV) {
+            this.stateFireMV.stop()
+            MyTool.removeMC(this.stateFireMV)
+        }
+        if(this.statePoisonMV) {
+            this.statePoisonMV.stop()
+            MyTool.removeMC(this.statePoisonMV)
+        }
+    }
+
+    public resetXY(x,y){
+        this.x = this.data.x = x;
+        this.y = this.data.y = y;
+    }
+
+    private onDieFinish(){
+        this.data.onDie();
+        if(this.data.isDie)
+            this.data.isDie = 2;
+    }
+
+    public setIce(step){
+        if(!step)
+            return;
+        if(!this.iceMC)
+        {
+            this.iceMC =  new eui.Image('effect_ice_png');
+            this.iceMC.anchorOffsetX = 102
+            this.iceMC.anchorOffsetY = 161
+            this.iceMC.x = 50;
+            this.iceMC.y = 300;
+        }
+
+        this.iceStep = Math.max(step,this.iceStep);
+        this.addChild(this.iceMC);
+        this.iceMC.scaleX = this.iceMC.scaleY = this.data.getVO().height/140*this.data.scale
+    }
+
+    public setYun(step){
+        if(!step)
+            return;
+        if(!this.yunStep)//表现晕
+        {
+            if(!this.stateYunMV)
+            {
+                this.stateYunMV = new MovieSimpleSpirMC2()
+                this.stateYunMV.x =  50 -  154/4
+                this.stateYunMV.setData('effect2_png',154/2,39,2,1000/6)
+                this.stateYunMV.stop()
+            }
+            this.addChild(this.stateYunMV)
+            this.stateYunMV.y = 300 - this.data.getVO().height - 35;
+            this.stateYunMV.play()
+        }
+        this.yunStep = Math.max(step,this.yunStep);
+    }
+
+    public setFire(step,hurt){
+        if(!step)
+            return;
+        if(!this.fireStep)//表现晕
+        {
+            if(!this.stateFireMV)
+            {
+                this.stateFireMV = new MovieSimpleSpirMC2()
+                this.stateFireMV.anchorOffsetX = 531/3/2
+                this.stateFireMV.anchorOffsetY = 532/2*0.8
+                this.stateFireMV.x = 50
+                this.stateFireMV.y = 300
+                this.stateFireMV.setData('effect18_png',531/3,532/2,5,84)
+                this.stateFireMV.widthNum = 3
+                this.stateFireMV.stop()
+            }
+            this.addChild(this.stateFireMV)
+            this.stateFireMV.play()
+        }
+        this.fireStep = Math.max(step,this.fireStep);
+        this.fireHurt = Math.max(hurt,this.fireHurt);
+    }
+
+
+    public setPoison(step,hurt){
+        if(!step)
+            return;
+        if(!this.poisonStep)//表现晕
+        {
+            if(!this.statePoisonMV)
+            {
+                this.statePoisonMV = new MovieSimpleSpirMC2()
+                this.statePoisonMV.anchorOffsetX = 560/4/2
+                this.statePoisonMV.anchorOffsetY = 412/2*0.8
+                this.statePoisonMV.x = 50
+                this.statePoisonMV.y = 300
+                this.statePoisonMV.setData('effect17_png',560/4,412/2,7,84)
+                this.statePoisonMV.widthNum = 4
+                this.statePoisonMV.stop()
+            }
+            this.addChild(this.statePoisonMV)
+            this.statePoisonMV.play()
+        }
+        this.poisonStep = Math.max(step,this.poisonStep);
+        this.poisonHurt = Math.max(hurt,this.poisonHurt);
+    }
+
+    public onE(){
+        var myData = this.data;
+        if(myData.isDie)
+            return;
+        this.runBuff();
+        if(myData.isDie)//buff会至死
+            return;
+        myData.onStep();
+        myData.onDelay();
+        var t = PKC.actionStep
+
+        if(t  < myData.stopEnd)
+            return;
+        if(t  < myData.atkEnd)
+            return;
+        if(t  < myData.skillEnd)
+            return;
+        if(t  < myData.beAtkStop)
+            return;
+
+        if(this.yunStep)
+            return;
+
+        //this.monsterMV.scaleX = (myData.x > playerData.x ?1:-1)*myData.scale
+
+
+        //move
+        var speed = this.data.speed;
+        if(this.iceStep)
+            speed/=2;
+
+
+        if(!this.targetPos)
+        {
+            this.targetPos = TC.getMonsterPosByPath(this.path.shift());
+            if(!this.targetPos)//到终点
+            {
+                this.data.isDie = 2
+                return;
+            }
+        }
+
+        var addX = this.targetPos.x -  this.x
+        var addY = this.targetPos.y -  this.y
+
+        if(Math.abs(addX) < 1)
+            addX = 0
+        else if(Math.abs(addX) > speed)
+            addX = addX>0?speed:-speed
+
+        if(Math.abs(addY) < 1)
+            addY = 0
+        else if(Math.abs(addY) > speed)
+            addY = addY>0?speed:-speed
+
+        this.resetXY(this.x + addX,this.y+addY)
+        this.runMV();
+
+        this.monsterMV.scaleY = this.scale
+        if(addX > 0)
+            this.monsterMV.scaleX = -1*this.scale
+        else if(addX < 0)
+            this.monsterMV.scaleX = 1*this.scale
+
+        if(Math.abs(this.targetPos.x -  this.x) < 1 && Math.abs(this.targetPos.y -  this.y) < 1 )
+        {
+            this.targetPos = TC.getMonsterPosByPath(this.path.shift());
+        }
+    }
+
+
+    private runBuff(){
+        if(this.yunStep)
+        {
+            this.yunStep --;
+            if(this.yunStep <= 0)
+            {
+                this.yunStep = 0;
+                this.stateYunMV.stop()
+                MyTool.removeMC(this.stateYunMV)
+            }
+        }
+
+        if(this.iceStep)
+        {
+            this.iceStep --;
+            if(this.iceStep <= 0)
+            {
+                this.iceStep = 0;
+                MyTool.removeMC(this.iceMC)
+            }
+        }
+
+        if(this.fireStep)
+        {
+            this.fireStep --;
+            if(this.fireStep <= 0)
+            {
+                this.fireStep = 0;
+                this.stateFireMV.stop()
+                MyTool.removeMC(this.stateFireMV)
+            }
+        }
+
+        if(this.poisonStep)
+        {
+            this.poisonStep --;
+            if(this.poisonStep <= 0)
+            {
+                this.poisonStep = 0;
+                this.statePoisonMV.stop()
+                MyTool.removeMC(this.statePoisonMV)
+            }
+        }
+
+        if(!this.data.isDie && PKC.actionStep - this.lastHurtTime >= PKC.frameRate)
+        {
+            this.lastHurtTime = PKC.actionStep;
+            var hurt = this.fireHurt + this.poisonHurt;
+            if(hurt)
+                this.data.addHp(-hurt)
+        }
+    }
+
+
+    public runMV(){
+        if(this.monsterMV.state != MonsterMV.STAT_RUN )
+            this.monsterMV.run();
+    }
+
+    public standMV(){
+        if(this.monsterMV.state != MonsterMV.STAT_STAND)
+            this.monsterMV.stand();
+    }
+
+    public dieMV(){
+        this.monsterMV.die();
+        this.data.getVO().playDieSound()
+        //this.bar.width = 0;
+        this.hpBar.visible = false;
+        //this.vo.playDieSound();
+        //if(this.data.mid != 99)
+        //    PlayManager.getInstance().showDropCoin(this)
+    }
+
+    public atkMV(){
+        this.monsterMV.atk();
+    }
+
+    public renewHp(){
+        this.hpBar.data = this.data;
+        this.hpBar.visible = this.data.hp > 0
+        //this.hpBar.visible = this.data.hp < this.data.maxHp;
+    }
+
+    public stopMV(){
+        this.monsterMV.stop();
+    }
+
+    public playMV(){
+        this.monsterMV.play();
+    }
+
+
+    public remove(){
+        egret.Tween.removeTweens(this);
+        MyTool.removeMC(this);
+        this.monsterMV.stop();
+
+        if(this.statePoisonMV)
+            this.statePoisonMV.stop()
+        if(this.stateFireMV)
+            this.stateFireMV.stop()
+        if(this.stateYunMV)
+            this.stateYunMV.stop()
+    }
+}

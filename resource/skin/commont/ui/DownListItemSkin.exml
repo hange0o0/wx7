@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="DownListItemSkin" height="50" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Group width="100%" height="100%" x="0" y="0" locked="true">
+	</e:Group>
+	<e:Rect height="1" bottom="0" fillColor="0x38230f" left="5" right="5"/>
+	<e:Group id="con" horizontalCenter="0" verticalCenter="0">
+		<e:Image id="img" width="30" height="30" x="0" y="0"/>
+		<e:Label id="text" text="Label" size="25" stroke="2" y="0" x="6"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" paddingRight="3"/>
+		</e:layout>
+	</e:Group>
+</e:Skin>

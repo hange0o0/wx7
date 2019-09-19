@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="TopUISkin" width="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" height="50">
+	<e:Image source="title_bg4_png" x="0" y="-63" fillMode="repeat" width="100%"/>
+
+	<e:Label id="titleText" text="标签" strokeColor="0x110900" stroke="2" size="24" bold="true" textColor="0xef9f32" y="15" horizontalCenter="0.5"/>
+	<e:Group id="helpBtn" y="0" width="60" height="60" right="0">
+		<e:Image source="icon_help_png" y="1.51" scaleX="0.85" scaleY="0.85" x="10.6"/>
+	</e:Group>
+</e:Skin>

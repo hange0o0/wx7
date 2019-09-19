@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="TouchTipsSkin" xmlns:e="http://ns.egret.com/eui">
+	<e:Image source="border4_png" x="0" y="0" scale9Grid="14,16,41,27" width="100%" height="100%"/>
+	<e:Label right="20" left="20" textColor="0xCCB48E" text="标签标签标签标签" verticalAlign="middle" textAlign="left" bottom="20" lineSpacing="5" size="26" top="20" id="text" x="10" y="10" maxWidth="320"/>
+</e:Skin>

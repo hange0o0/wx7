@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SkillUnlockUISkin" width="500" height="480" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Group horizontalCenter="0" bottom="50">
+		<e:Button id="refreshBtn" label="刷新" x="0" y="0" skinName="Btn1Skin" width="160"/>
+		<e:Button id="inviteBtn" label="马上邀请" x="10" y="10" width="160" skinName="Btn2Skin"/>
+		<e:layout>
+			<e:HorizontalLayout gap="30"/>
+		</e:layout>
+	</e:Group>
+	<e:Group y="120" horizontalCenter="0">
+		<e:Label text="只需邀请一位好友新加入游戏" y="0" size="24" x="0"/>
+		<e:Label text="即可帮你" y="56" size="24" x="108"/>
+		<e:Label text="【永久解锁】此技能栏！" y="112" size="30" textColor="0xfcef94" x="24" bold="true"/>
+		<e:layout>
+			<e:VerticalLayout horizontalAlign="center" gap="30"/>
+		</e:layout>
+	</e:Group>
+	<e:Label text="注：好友需通过本邀请链接进入游戏" textColor="0x9b9b9b" size="22" bottom="135" horizontalCenter="0"/>
+</e:Skin>

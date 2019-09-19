@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SkillChooseItem1Skin" width="130" height="130" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing"  states="normal,lock" >
+	<e:Image left="0" right="0" top="0" source="dungeon_map_1b_a_jpg" source.lock="dungeon_map_1d_jpg" height="130"/>
+	<e:Image source="black_bg_alpha_png" includeIn="normal" x="10" y="8" width="110" height="110"/>
+	<e:Image source="black_bg_alpha_png" includeIn="lock" height="30" bottom="0" left="0" right="0"/>
+	<e:Image source="add_icon_png" includeIn="normal" horizontalCenter="0" verticalCenter="0" scaleX="2" scaleY="2" alpha="1"/>
+	<e:Label text="点击解锁" includeIn="lock" size="22" horizontalCenter="0" bottom="4"/>
+	<e:Image id="mc" source="" width="110" height="110" x="10" y="8" includeIn="normal"/>
+</e:Skin>

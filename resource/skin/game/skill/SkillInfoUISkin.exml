@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SkillInfoUISkin" width="520" height="620" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Group left="20" right="20" top="80" bottom="20">
+		<e:Group y="180" horizontalCenter="0">
+			<e:Label id="nameText" text="Label" y="0" size="24" textColor="0x9BD2FF" x="0"/>
+			<e:Group x="28" y="44" width="100%">
+				<e:Label id="skillCDText" text="Label" y="0" size="24" x="0" textColor="0xFCE7B0"/>
+				<e:Label id="levelText" text="Label" y="0" size="24" right="0" textColor="0xfceb71"/>
+			</e:Group>
+			<e:Label id="atkText" text="攻击：1234" y="0" size="22" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F" textAlign="left" x="160" maxWidth="400"/>
+			<e:layout>
+				<e:VerticalLayout gap="20" horizontalAlign="center"/>
+			</e:layout>
+		</e:Group>
+		<e:Group y="0" horizontalCenter="0">
+			<e:Image id="img" width="120" height="120" y="0" x="0"/>
+			<e:Group y="132" width="120" x="0">
+				<e:Image source="black_bg_png" x="0" y="0" height="20" width="120"/>
+				<e:Image id="barMC" source="yellor_bg_png" x="0" y="0" width="120" height="20"/>
+				<e:Label id="rateText" text="12/12" size="22" horizontalCenter="1" stroke="2" y="-7.6"/>
+			</e:Group>
+		</e:Group>
+	</e:Group>
+	<e:Button id="closeBtn" label="关闭" skinName="Btn2Skin" horizontalCenter="0" bottom="50" width="160"/>
+</e:Skin>

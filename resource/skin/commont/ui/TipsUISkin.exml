@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="TipsUISkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image left="0" right="0" top="0" bottom="0" minWidth="300" maxWidth="620" scale9Grid="41,24,9,9" source="black_bg_alpha_png"/>
+	<e:Label id="text" left="30" right="30" top="20" bottom="20" textAlign="center" verticalAlign="middle" text="123456" size="26" stroke="5" textColor="0xffffff" lineSpacing="20"/>
+</e:Skin>

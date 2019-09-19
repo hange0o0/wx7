@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="BasePanelSkin" width="400" height="300" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="window_bg_png" scale9Grid="47,52,16,10" left="0" right="0" top="0" bottom="0"/>
+	<e:Label id="nameText" y="30" text="领取补助" stroke="2" bold="true" size="24" horizontalCenter="0" textColor="0xffffff"/>
+	<e:Group id="closeBtn" width="60" height="60" y="0" right="0">
+		<e:Image source="close_btn_png" scaleX="1" scaleY="1" verticalCenter="0" horizontalCenter="0"/>
+	</e:Group>
+</e:Skin>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="NotEnoughCoinUISkin" width="520" height="480" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Label id="desText" text="好友助力加成 30%" size="18" horizontalCenter="0" bottom="115" textColor="0x686868"/>
+	<e:Group id="btnGroup" horizontalCenter="0" bottom="40">
+		<e:Button id="shareBtn" label="领取补助" width="180" y="0" skinName="Btn2Skin" x="0" icon="video_icon_png"/>
+		<e:layout>
+			<e:HorizontalLayout gap="50"/>
+		</e:layout>
+	</e:Group>
+	<e:Group y="80" left="30" right="30" height="240">
+		<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" left="0" right="0" top="0" bottom="0"/>
+		<e:Image source="main_shop_png" y="75" scaleX="1.5" scaleY="1.5" horizontalCenter="0.5"/>
+		<e:Label text="根据当前成绩，你可领取以下补助：" y="25" horizontalCenter="0" size="22" textColor="0xcccccc"/>
+        <e:Label id="coinText" text="312K" y="140" size="40" horizontalCenter="0" bold="true" textColor="0xf9de40" stroke="5" strokeColor="0x301b05"/>
+	</e:Group>
+</e:Skin>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SkillListUISkin" width="580" height="860" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Scroller id="scroller" top="320" bottom="20" bounces="false" anchorOffsetY="0" left="20" right="20">
+		<e:Group>
+			<e:List id="list" width="200" height="200" x="65" y="56">
+				<e:layout>
+					<e:TileLayout horizontalGap="10" verticalGap="20" requestedColumnCount="5" paddingTop="10"/>
+				</e:layout>
+			</e:List>
+		</e:Group>
+	</e:Scroller>
+	<e:Group id="con" y="120" left="20" right="20" height="200">
+		<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" left="0" right="0" top="0" bottom="0"/>
+		<e:Label id="atkText" text="攻击：1234" y="60" size="22" x="165" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F" width="365"/>
+		<e:Group x="165" y="20">
+			<e:Label id="nameText" text="Label" y="0" size="24" textColor="0x9BD2FF" x="0"/>
+			<e:Label id="skillCDText" text="Label" y="0" size="24" x="0" textColor="0xFCE7B0"/>
+			<e:layout>
+			<e:HorizontalLayout gap="20"/>
+			</e:layout>
+		</e:Group>
+		<e:Image id="img" width="120" height="120" x="18" y="20"/>
+		<e:Group id="barGroup" x="18" y="150" width="120">
+			<e:Image source="black_bg_png" x="0" y="0" height="20" width="120"/>
+			<e:Image id="barMC" source="yellor_bg_png" x="0" y="0" width="120" height="20"/>
+			<e:Label id="rateText" text="12/12" size="22" horizontalCenter="1" stroke="2" y="-7.6"/>
+		</e:Group>
+	</e:Group>
+	<e:TabBar id="tab" y="70" itemRendererSkinName="MyTabItemSkin" left="30" height="50" width="300">
+		<e:ArrayCollection>
+		<e:Array>
+			<e:Object label="技能"/>
+			<e:Object label="怪物"/>
+		</e:Array>
+		</e:ArrayCollection>
+		<e:layout>
+		<e:HorizontalLayout horizontalAlign="justify"/>
+		</e:layout>
+	</e:TabBar>
+</e:Skin>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="RankUISkin" width="600" height="860" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:TabBar id="tab" y="30" itemRendererSkinName="MyTabItemSkin" left="30" height="50" width="300">
+		<e:ArrayCollection>
+			<e:Array>
+				<e:Object label="好友榜"/>
+				<e:Object label="世界榜"/>
+			</e:Array>
+		</e:ArrayCollection>
+		<e:layout>
+			<e:HorizontalLayout horizontalAlign="justify"/>
+		</e:layout>
+	</e:TabBar>
+	<e:Label id="desText" text="Label" bottom="0" size="24" textColor="0xcccccc" left="0" right="0" height="60" textAlign="center" verticalAlign="middle"/>
+	<e:Scroller id="scroller" left="30" right="30" top="80" bottom="60">
+		<e:Group>
+			<e:List id="list" width="200" height="200" x="74" y="166">
+				<e:layout>
+					<e:VerticalLayout gap="0" paddingTop="10"/>
+				</e:layout>
+			</e:List>
+		</e:Group>
+	</e:Scroller>
+	<e:Image id="openBtn" left="0" right="0" bottom="0" height="60"/>
+</e:Skin>

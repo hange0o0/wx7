@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="ScrollTestSkin" width="480" height="800" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Button id="removeBtn" label="remove" x="54" y="191"/>
+	<e:Button id="addBtn" label="add" x="57" y="134"/>
+	<e:Group id="group" x="80" top="35">
+		<e:Rect height="90" width="324" x="1" y="0"/>
+		<e:Scroller id="scroller" width="200" height="200" x="52" y="5">
+			<e:Group>
+				<e:Rect height="500" width="20" x="55" y="110"/>
+			</e:Group>
+		</e:Scroller>
+		<e:layout>
+			<e:VerticalLayout/>
+		</e:layout>
+	</e:Group>
+</e:Skin>

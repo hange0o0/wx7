@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="DebugSkillItemSkin" width="200" height="250" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Label id="skillName" text="标签" horizontalCenter="0" bottom="13"/>
+</e:Skin>

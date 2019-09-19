@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="ChangeJumpUISkin" width="540" height="660" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:List id="list" width="400" height="460" y="85" horizontalCenter="0">
+		<e:layout>
+			<e:TileLayout requestedColumnCount="3" horizontalGap="50" verticalGap="50"/>
+		</e:layout>
+	</e:List>
+	<e:Label id="destText" text="Label" horizontalCenter="0" bottom="25" size="22" textColor="0xa5a5a5" textAlign="center" lineSpacing="10"/>
+</e:Skin>

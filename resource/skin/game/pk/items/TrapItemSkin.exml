@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TrapItemSkin" width="1" height="1" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*">
+	<ns1:HPBar id="hpBar" y="-100" skinName="HPBarSkin" horizontalCenter="0" currentState="s3"/>
+</e:Skin>

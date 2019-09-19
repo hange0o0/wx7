@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<e:Skin class="Btn1Skin" states="up,down,disabled" minHeight="50" minWidth="100" xmlns:e="http://ns.egret.com/eui" width="100" height="60">
+	<e:Image x="0" y="0" width="100%" height="100%" source="btn_png" scale9Grid="20,20,11,13"/>
+
+	
+	<e:Group left="0" right="0" top="0" bottom="0">
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" horizontalAlign="center" gap="10" paddingLeft="-10"/>
+		</e:layout>
+		<e:Image id="iconDisplay"/>
+		<e:Label id="labelDisplay" size="24" text="123" textColor="0x000000" lineSpacing="5" bold="true"/>
+	</e:Group>
+</e:Skin>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="ChangeUserUISkin" width="640" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" height="320">
+	<e:List id="list" left="0" right="0" top="0" bottom="0">
+		<e:layout>
+			<e:TileLayout requestedColumnCount="5" paddingTop="30" paddingLeft="30" horizontalGap="20" verticalGap="20"/>
+		</e:layout>
+	</e:List>
+
+</e:Skin>

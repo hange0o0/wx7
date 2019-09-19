@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="PKMapSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="640" height="960">
+	<e:Group id="arrowCon" left="0" right="0" top="0" bottom="0" x="0" y="0"/>
+	<e:Group id="bottomCon" left="0" right="0" top="0" bottom="0" x="0" y="0"/>
+	<e:Group id="roleCon" left="0" right="0" top="0" bottom="0" x="0" y="0"/>
+	<e:Group id="topCon" left="0" right="0" top="0" bottom="0" x="0" y="0"/>
+</e:Skin>

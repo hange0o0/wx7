@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GunListUISkin" width="580" height="860" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Scroller id="scroller" top="380" bottom="20" bounces="false" anchorOffsetY="0" left="20" right="20">
+		<e:Group>
+			<e:List id="list" width="200" height="200" x="65" y="56">
+				<e:layout>
+					<e:TileLayout horizontalGap="10" verticalGap="20" requestedColumnCount="5" paddingTop="10"/>
+				</e:layout>
+			</e:List>
+		</e:Group>
+	</e:Scroller>
+	<e:Group y="80" left="20" right="20" height="300">
+		<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" left="0" right="0" top="0" bottom="0"/>
+		<e:Label id="atkText" text="攻击：1234\n攻速：0.5秒\n攻速：0.5秒\n攻速：0.5秒\n攻速：0.5秒\n攻速：0.5秒\n攻速：0.5秒" y="20" size="22" x="250" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F"/>
+		<e:Label id="nameText" text="asdfsdf" y="215" size="24" x="25" lineSpacing="10" anchorOffsetX="0" textColor="0xfffab2" bold="true" width="200" textAlign="center"/>
+		<ns1:PlayerItem id="playerItem" x="75" y="50" skinName="PlayerItemSkin" scaleX="1.2" scaleY="1.2"/>
+	</e:Group>
+</e:Skin>

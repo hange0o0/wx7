@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="RankItemSkin" width="540" height="100" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect id="bg" left="0" right="0" bottom="0" height="2" fillColor="0x8c8c8c"/>
+	<e:Image id="headMC" width="80" height="80" x="80" verticalCenter="0"/>
+	<e:Label id="indexText" text="1" x="0" textColor="0xffffff" size="40" textAlign="center" width="80" verticalCenter="0"/>
+	<e:Label id="nickText" text="1" x="170" textColor="0xFFFFFF" size="24" textAlign="left" verticalCenter="0"/>
+	<e:Label id="valueText" text="Label" verticalCenter="0" right="20" size="24"/>
+</e:Skin>

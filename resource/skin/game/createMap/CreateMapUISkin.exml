@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="CreateMapUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0xffffff" locked="true"/>
+	<e:Group x="0" width="640" bottom="0" height="240">
+		<e:List id="list" height="150" y="0" x="10">
+			<e:layout>
+			<e:HorizontalLayout gap="10"/>
+			</e:layout>
+		</e:List>
+		<e:Label text="宽：" x="10.64" textColor="0x000000" size="22" y="159.68"/>
+		<e:Label text="高：" x="10.64" textColor="0x000000" size="22" y="199.68"/>
+		<e:EditableText id="widthText" width="60" height="30" text="120" x="57.64" textColor="0x000000" border="true" size="24" y="154.68"/>
+		<e:EditableText id="heightText" width="60" height="30" text="120" x="56.97" textColor="0x000000" border="true" size="24" y="195.68"/>
+		<e:Label text="树：" x="248.66" textColor="0x000000" size="22" y="162.02"/>
+		<e:Label text="塔：" x="248.66" textColor="0x000000" size="22" y="202.02"/>
+		<e:EditableText id="treeText" width="60" height="30" text="120" x="295.66" textColor="0x000000" border="true" size="24" y="157.02"/>
+		<e:Label text="路：" x="370.65" textColor="0x000000" size="22" y="162.02"/>
+		<e:EditableText id="roadText" width="60" height="30" text="120" x="417.65" textColor="0x000000" border="true" size="24" y="157.02"/>
+		<e:EditableText id="towerText" width="60" height="30" text="120" x="294.99" textColor="0x000000" border="true" size="24" y="198.02"/>
+		<e:Button id="setBtn" label="设置" x="132.31" y="160.35" skinName="Btn2Skin"/>
+		<e:Button id="randomBtn" label="随机" x="530" y="161.01" skinName="Btn2Skin"/>
+		<e:Button id="saveBtn" label="保存" y="12.34" skinName="Btn2Skin" right="10"/>
+		<e:Button id="backBtn" label="退出" y="86.01" skinName="Btn2Skin" right="10"/>
+		<e:Group bottom="249" horizontalCenter="0">
+			<e:Button id="beforeBtn" label="上一关" y="53.35" skinName="Btn2Skin" x="0"/>
+			<e:Label id="levelText" text="Label" x="61.65" y="0" textColor="0x000000" width="100" textAlign="center"/>
+			<e:Button id="nextBtn" label="下一关" y="53.35" skinName="Btn2Skin" x="110"/>
+			<e:layout>
+				<e:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="30"/>
+			</e:layout>
+		</e:Group>
+		<e:Button id="testBtn" label="测试" skinName="Btn2Skin" right="10" bottom="250"/>
+	</e:Group>
+</e:Skin>

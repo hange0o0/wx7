@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="CreateListItemSkin" width="150" height="40" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Label id="txt" text="Label" left="0" right="0" top="0" bottom="0" textAlign="center" verticalAlign="middle" border="true" borderColor="0xffffff"/>
+</e:Skin>

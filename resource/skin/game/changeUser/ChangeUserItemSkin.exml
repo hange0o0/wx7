@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="ChangeUserItemSkin" width="100" height="120" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="s1,s2" >
+	<e:Image id="mc" width="90" height="90" y="0" horizontalCenter="0"/>
+	<e:Label id="nameText" text="一一一一一" horizontalCenter="0" size="20" bottom="0" textAlign="center" textColor="0xfcf3c9" textColor.s1="0x1c1b1b" textColor.s2="0xffffff"/>
+</e:Skin>

@@ -15,11 +15,6 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
 
 
-
-
-
-
-
     public pkMap = new PKMap();
 
 

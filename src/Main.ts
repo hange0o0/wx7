@@ -1,4 +1,4 @@
-var UM_wx4:UserManager_wx4,TM_wx4:TimeManager_wx4,EM_wx4:EventManager_wx4 ,CM_wx4:CacheManager_wx4,DM:DebugManager,PKC:PKCode_wx4,TC:TowerCode
+var UM_wx4:UserManager_wx4,TM_wx4:TimeManager_wx4,EM_wx4:EventManager_wx4 ,CM_wx4:CacheManager_wx4,DM:DebugManager,TC:TowerCode
 class Main extends eui.UILayer {
     /**
      * 加载进度界面
@@ -41,7 +41,6 @@ class Main extends eui.UILayer {
         CM_wx4 = CacheManager_wx4.getInstance();
         DM = DebugManager.getInstance();
         TC = TowerCode.getInstance();
-        PKC = PKCode_wx4.getInstance();
         Config.initURLRequest();
         console.log('_1a')
     }
@@ -168,7 +167,7 @@ class Main extends eui.UILayer {
     protected startCreateScene(): void {
         CM_wx4.initData(RES.getRes("data_txt"),'monster');
         CM_wx4.initData(RES.getRes("gun_txt"),'gun');
-        CM_wx4.initData(RES.getRes("skill_txt"),'skill');
+        //CM_wx4.initData(RES.getRes("skill_txt"),'skill');
         CM_wx4.initData(RES.getRes("level_txt"),'level');
         CM_wx4.initFinish()
         GameManager_wx4.stage = this.stage;

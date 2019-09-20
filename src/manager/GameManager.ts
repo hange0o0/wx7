@@ -292,9 +292,7 @@ if(window["wx"])
     window["sendClientError"] = sendClientError
     window["GameManager_wx4"] = GameManager_wx4
     window["BasePanel"] = BasePanel
-    window["PKSkillItem"] = PKSkillItem
     window["HPBar"] = HPBar
-    window["PlayerItem"] = PlayerItem
 
 
     var wx =  window["wx"];
@@ -317,8 +315,6 @@ if(window["wx"])
         //GameManager.stage.dispatchEventWith(egret.Event.DEACTIVATE);
         EM_wx4.dispatch(egret.Event.DEACTIVATE)
         console.log('hide')
-        if(PKC.isPKing)
-            StopUI.getInstance().show();
         //GameUI.getInstance().cleanTouch();
     });
 

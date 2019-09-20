@@ -75,22 +75,16 @@ class ChangeGunUI extends game.BaseWindow_wx4{
         var GM = GunManager.getInstance();
         var vo:GunVO = GunVO.getObject(GM.gunid);
 
-        PKC.playerData.gunid = GM.gunid;
-
 
         this.nameText.text = vo.name;
         var arr = [];
         arr.push(this.createText('攻击伤害',vo.atk + '%'))
         arr.push(this.createText('攻击间隔',MyTool.toFixed(vo.atkspeed/100,1) + '秒'))
         arr.push(this.createText('攻击距离',vo.atkdis + ''))
-        arr.push(this.createText('打退距离',vo.atkback + ''))
-        arr.push(this.createText('暴击率',vo.doublerate + '%'))
-        arr.push(this.createText('暴击倍数',MyTool.toFixed(vo.doublevalue,1) + '倍'))
-        arr.push(this.createText('闪避率',vo.missrate + '%'))
+
         this.setHtml(this.atkText,arr.join('\n'));
 
         this.atkSpeed = PKTool.getStepByTime(vo.atkspeed)
-        this.doubleRate = vo.doublerate/100
         this.actionStep = this.atkSpeed
 
     }

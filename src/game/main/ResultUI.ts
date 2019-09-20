@@ -40,7 +40,6 @@ class ResultUI extends game.BaseUI_wx4{
     public childrenCreated() {
         super.childrenCreated();
 
-        this.skillList.itemRenderer = ResultItem;
 
         this.addBtnEvent(this.ad1,()=>{
             MyADManager.getInstance().showAD(this.ad1['adData'])
@@ -65,7 +64,7 @@ class ResultUI extends game.BaseUI_wx4{
                 this.rate --
                 while(this.rate > 0)
                 {
-                    PKManager.getInstance().endGame(this.result);
+                    //PKManager.getInstance().endGame(this.result);
                     this.rate --
                 }
 
@@ -77,7 +76,6 @@ class ResultUI extends game.BaseUI_wx4{
 
     public close(){
         this.hide();
-        PKUI.getInstance().hide()
     }
 
     public onShow(){
@@ -85,8 +83,6 @@ class ResultUI extends game.BaseUI_wx4{
     }
 
     public show(isWin?){
-        PKC.isPKing = false;
-        PKC.isStop = true;
         this.isWin = isWin;
         PKManager.getInstance().sendGameEnd(isWin)
         if(this.isWin)
@@ -99,77 +95,77 @@ class ResultUI extends game.BaseUI_wx4{
 
 
     public renew(){
-        var rate = PKC.monsterList.length/PKC.roundMonsterNum
-        this.result = this.isWin?PKManager.getInstance().getWinResult():PKManager.getInstance().getFailResult(1-rate)
-        if(this.isWin)
-            SoundManager.getInstance().playEffect('win')
-        else
-            SoundManager.getInstance().playEffect('lose')
-
-        var list = [];
-        for(var s in this.result.skill)
-        {
-            list.push({
-                id:s,
-                num:this.result.skill[s],
-                lastLevel:SkillManager.getInstance().getSkillLevel(s),
-            })
-        }
-
-        PKManager.getInstance().endGame(this.result);
-
-        for(var i=0;i<list.length;i++)
-        {
-            list[i].currentLevel = SkillManager.getInstance().getSkillLevel(list[i].id)
-        }
-        this.skillList.dataProvider = new eui.ArrayCollection(list);
-        this.coinText.text = '金币 +' + NumberUtil_wx4.addNumSeparator(this.result.coin);
-
-        this.failGroup.visible = !this.isWin;
-        if(this.failGroup.visible)
-        {
-
-            var mLen = PKC.monsterList.length;
-            var mNum = mLen + PKC.autoMonster.length;
-            var rate = mNum/PKC.roundMonsterNum
-            this.barMC.width = 360*rate;
-            this.rateText.text = '剩余怪物：'+(mNum)
-
-            this.titleText.text = '惜败！'
-            this.titleText.textColor = 0xFF0000
-        }
-        else
-        {
-            this.titleText.text = '大胜！'
-            this.titleText.textColor = 0xFFFF00
-        }
-
-
-        var adArr = MyADManager.getInstance().getListByNum(10);
-        var ad = ArrayUtil_wx4.randomOne(adArr,true);
-        if(ad)
-        {
-            this.ad1['adData'] = ad;
-            this.ad1.source = ad.logo
-            this.ad1.visible = true;
-        }
-        else
-        {
-            this.ad1.visible = false;
-        }
-
-
-        var ad = ArrayUtil_wx4.randomOne(adArr,true);
-        if(ad)
-        {
-            this.ad2['adData'] = ad;
-            this.ad2.source = ad.logo
-            this.ad2.visible = true;
-        }
-        else
-        {
-            this.ad2.visible = false;
-        }
+        //var rate = PKC.monsterList.length/PKC.roundMonsterNum
+        //this.result = this.isWin?PKManager.getInstance().getWinResult():PKManager.getInstance().getFailResult(1-rate)
+        //if(this.isWin)
+        //    SoundManager.getInstance().playEffect('win')
+        //else
+        //    SoundManager.getInstance().playEffect('lose')
+        //
+        //var list = [];
+        //for(var s in this.result.skill)
+        //{
+        //    list.push({
+        //        id:s,
+        //        num:this.result.skill[s],
+        //        lastLevel:SkillManager.getInstance().getSkillLevel(s),
+        //    })
+        //}
+        //
+        //PKManager.getInstance().endGame(this.result);
+        //
+        //for(var i=0;i<list.length;i++)
+        //{
+        //    list[i].currentLevel = SkillManager.getInstance().getSkillLevel(list[i].id)
+        //}
+        //this.skillList.dataProvider = new eui.ArrayCollection(list);
+        //this.coinText.text = '金币 +' + NumberUtil_wx4.addNumSeparator(this.result.coin);
+        //
+        //this.failGroup.visible = !this.isWin;
+        //if(this.failGroup.visible)
+        //{
+        //
+        //    var mLen = PKC.monsterList.length;
+        //    var mNum = mLen + PKC.autoMonster.length;
+        //    var rate = mNum/PKC.roundMonsterNum
+        //    this.barMC.width = 360*rate;
+        //    this.rateText.text = '剩余怪物：'+(mNum)
+        //
+        //    this.titleText.text = '惜败！'
+        //    this.titleText.textColor = 0xFF0000
+        //}
+        //else
+        //{
+        //    this.titleText.text = '大胜！'
+        //    this.titleText.textColor = 0xFFFF00
+        //}
+        //
+        //
+        //var adArr = MyADManager.getInstance().getListByNum(10);
+        //var ad = ArrayUtil_wx4.randomOne(adArr,true);
+        //if(ad)
+        //{
+        //    this.ad1['adData'] = ad;
+        //    this.ad1.source = ad.logo
+        //    this.ad1.visible = true;
+        //}
+        //else
+        //{
+        //    this.ad1.visible = false;
+        //}
+        //
+        //
+        //var ad = ArrayUtil_wx4.randomOne(adArr,true);
+        //if(ad)
+        //{
+        //    this.ad2['adData'] = ad;
+        //    this.ad2.source = ad.logo
+        //    this.ad2.visible = true;
+        //}
+        //else
+        //{
+        //    this.ad2.visible = false;
+        //}
     }
 
     public hide(){

@@ -10,7 +10,6 @@ class GunListUI extends game.BaseWindow_wx4{
     private list: eui.List;
     private atkText: eui.Label;
     private nameText: eui.Label;
-    private playerItem: PlayerItem;
 
 
     private atkSpeed = 0;
@@ -30,8 +29,7 @@ class GunListUI extends game.BaseWindow_wx4{
         this.setTitle('更换武器')
         this.scroller.viewport = this.list;
         this.list.itemRenderer = GunListItem
-        this.playerItem.x = 125
-        this.playerItem.y = 125
+
     }
 
     public show(){
@@ -42,26 +40,12 @@ class GunListUI extends game.BaseWindow_wx4{
         this.actionStep = 100;
         this.renew();
         this.renewChoose();
-        this.playerItem.showStandMV()
         this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renewList)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
     }
 
     private onE(){
-        //this.gunItem.move2();
-        this.actionStep -- ;
-        if(this.actionStep <=0)
-        {
-            this.actionStep = this.atkSpeed
-            if(Math.random()<this.doubleRate)
-            {
-                this.playerItem.showDoubleMV()
-            }
-            else
-            {
-                this.playerItem.showAtkMV()
-            }
-        }
+
     }
 
     public renewList(){
@@ -83,8 +67,6 @@ class GunListUI extends game.BaseWindow_wx4{
         var GM = GunManager.getInstance();
         var vo:GunVO = GunVO.getObject(GM.gunid);
 
-        PKC.playerData.gunid = GM.gunid;
-        this.playerItem.data = PKC.playerData;
 
 
         this.nameText.text = vo.name;
@@ -92,16 +74,15 @@ class GunListUI extends game.BaseWindow_wx4{
         arr.push(this.createText('攻击伤害',vo.atk + '%'))
         arr.push(this.createText('攻击间隔',MyTool.toFixed(vo.atkspeed/100,1) + '秒'))
         arr.push(this.createText('攻击距离',vo.atkdis + ''))
-        arr.push(this.createText('打退距离',vo.atkback + ''))
-        arr.push(this.createText('暴击率',vo.doublerate + '%'))
-        arr.push(this.createText('暴击倍数',MyTool.toFixed(vo.doublevalue,1) + '倍'))
-        arr.push(this.createText('闪避率',vo.missrate + '%'))
+        //arr.push(this.createText('打退距离',vo.atkback + ''))
+        //arr.push(this.createText('暴击率',vo.doublerate + '%'))
+        //arr.push(this.createText('暴击倍数',MyTool.toFixed(vo.doublevalue,1) + '倍'))
+        //arr.push(this.createText('闪避率',vo.missrate + '%'))
         this.setHtml(this.atkText,arr.join('\n'));
 
         this.atkSpeed = PKTool.getStepByTime(vo.atkspeed)
-        this.doubleRate = vo.doublerate/100
+        //this.doubleRate = vo.doublerate/100
         this.actionStep = this.atkSpeed
-        this.playerItem.showStandMV()
 
     }
 

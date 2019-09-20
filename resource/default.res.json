@@ -2602,6 +2602,21 @@
 			"name":"map_5_1_png",
 			"type":"image",
 			"url":"game_assets2/map/map_5_1.png"
+		},
+		{
+			"name":"buff_atk_png",
+			"type":"image",
+			"url":"game_assets2/buff/buff_atk.png"
+		},
+		{
+			"name":"buff_dis_png",
+			"type":"image",
+			"url":"game_assets2/buff/buff_dis.png"
+		},
+		{
+			"name":"buff_speed_png",
+			"type":"image",
+			"url":"game_assets2/buff/buff_speed.png"
 		}
 	]
 }

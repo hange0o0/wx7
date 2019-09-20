@@ -37,7 +37,6 @@ class StopUI extends game.BaseWindow_wx4 {
         this.setTitle('游戏暂停')
         this.addBtnEvent(this.closeBtn,()=>{
             this.hide();
-            PKUI.getInstance().hide();
             if(RebornUI.getInstance().stage)
                 RebornUI.getInstance().hide();
         })
@@ -45,7 +44,6 @@ class StopUI extends game.BaseWindow_wx4 {
         this.addBtnEvent(this.okBtn,()=>{
             SharedObjectManager_wx4.getInstance().setMyValue('ctrlType',this.chooseType)
             this.hide();
-            PKUI.getInstance().renewCtrl();
         })
 
         this.r0.group.addEventListener(eui.UIEvent.CHANGE,this.onRChange,this)
@@ -79,12 +77,10 @@ class StopUI extends game.BaseWindow_wx4 {
     }
 
     public hide() {
-        PKC.isStop = false;
         super.hide();
     }
 
     public onShow(){
-        PKC.isStop = true;
         this.chooseType = SharedObjectManager_wx4.getInstance().getMyValue('ctrlType') || 1;
         this.renew();
     }

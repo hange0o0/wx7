@@ -80,57 +80,57 @@ class PKManager {
         return Math.min(Math.ceil(UM_wx4.level/5),8)
     }
 
-    public initChooseSkill(){
-        this.lastChooseData = [];
-        var mySkill = SkillManager.getInstance().mySkill.concat();
-        if(mySkill.length > 12)
-        {
-            ArrayUtil_wx4.random(mySkill,3);
-            mySkill.length = 12;
-        }
-
-        for(var i=0;i<mySkill.length;i++)
-        {
-            this.lastChooseData.push(mySkill[i].id)
-        }
-        UM_wx4.needUpUser = true
-    }
-
-    public endGame(result){
-        var SM = SkillManager.getInstance();
-        for(var s in result.skill)
-        {
-            SM.addSkill(s,result.skill[s])
-        }
-        UM_wx4.addCoin(result.coin)//save
-        UM_wx4.needUpUser = true
-    }
-
-    public getWinResult(){
-        var skillNum = 5 + UM_wx4.level;
-        var skillArr = SkillManager.getInstance().getNewSkill(skillNum)
-        var coin = 50 + Math.floor(Math.pow(UM_wx4.level,1.5))*50
-        if(PKC.playerData.coinAdd)
-            coin = Math.ceil(coin*(1+PKC.playerData.coinAdd))
-        return {
-            skill:skillArr,
-            coin:coin,
-            skillNum:skillNum
-        }
-    }
-
-    public getFailResult(rate){
-        var skillNum = Math.ceil(UM_wx4.level*0.5*rate);
-        var skillArr = SkillManager.getInstance().getNewSkill(skillNum)
-        var coin = Math.ceil(Math.pow(UM_wx4.level,1.5)*rate*20)
-        if(PKC.playerData.coinAdd)
-            coin = Math.ceil(coin*(1+PKC.playerData.coinAdd))
-        return {
-            skill:skillArr,
-            coin:coin,
-            skillNum:skillNum
-        }
-    }
+    //public initChooseSkill(){
+    //    this.lastChooseData = [];
+    //    var mySkill = SkillManager.getInstance().mySkill.concat();
+    //    if(mySkill.length > 12)
+    //    {
+    //        ArrayUtil_wx4.random(mySkill,3);
+    //        mySkill.length = 12;
+    //    }
+    //
+    //    for(var i=0;i<mySkill.length;i++)
+    //    {
+    //        this.lastChooseData.push(mySkill[i].id)
+    //    }
+    //    UM_wx4.needUpUser = true
+    //}
+    //
+    //public endGame(result){
+    //    var SM = SkillManager.getInstance();
+    //    for(var s in result.skill)
+    //    {
+    //        SM.addSkill(s,result.skill[s])
+    //    }
+    //    UM_wx4.addCoin(result.coin)//save
+    //    UM_wx4.needUpUser = true
+    //}
+    //
+    //public getWinResult(){
+    //    var skillNum = 5 + UM_wx4.level;
+    //    var skillArr = SkillManager.getInstance().getNewSkill(skillNum)
+    //    var coin = 50 + Math.floor(Math.pow(UM_wx4.level,1.5))*50
+    //    if(PKC.playerData.coinAdd)
+    //        coin = Math.ceil(coin*(1+PKC.playerData.coinAdd))
+    //    return {
+    //        skill:skillArr,
+    //        coin:coin,
+    //        skillNum:skillNum
+    //    }
+    //}
+    //
+    //public getFailResult(rate){
+    //    var skillNum = Math.ceil(UM_wx4.level*0.5*rate);
+    //    var skillArr = SkillManager.getInstance().getNewSkill(skillNum)
+    //    var coin = Math.ceil(Math.pow(UM_wx4.level,1.5)*rate*20)
+    //    if(PKC.playerData.coinAdd)
+    //        coin = Math.ceil(coin*(1+PKC.playerData.coinAdd))
+    //    return {
+    //        skill:skillArr,
+    //        coin:coin,
+    //        skillNum:skillNum
+    //    }
+    //}
 
     public getUpCost(){
         return 50 + Math.floor(Math.pow(this.playerLevel,1.8))*50

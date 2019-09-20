@@ -9,7 +9,6 @@ class HelpUI extends game.BaseWindow_wx4 {
 
     private ctrlGroup: eui.Group;
     private rateBar: eui.Image;
-    private skillItem: PKSkillItem;
     private skillBtn: eui.Button;
 
 
@@ -26,22 +25,19 @@ class HelpUI extends game.BaseWindow_wx4 {
         super.childrenCreated();
         this.setTitle('游戏说明')
         this.addBtnEvent(this.skillBtn,this.hide)
-        this.skillItem.touchChildren = this.skillItem.touchEnabled = false;
     }
 
     public show(){
-        PKC.isStop = true;
         super.show()
     }
 
     public hide() {
-        PKC.isStop = false;
         super.hide();
     }
 
     public onShow(){
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
-        this.skillItem.data = SBase.getItem(1)
+        //this.skillItem.data = SBase.getItem(1)
     }
 
     public onE(){

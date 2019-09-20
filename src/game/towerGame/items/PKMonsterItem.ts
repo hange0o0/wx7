@@ -1,11 +1,11 @@
-class PKMonsterItem_wx3 extends game.BaseItem {
+class PKMonsterItem extends game.BaseItem {
     private static pool = [];
     private static index = 1
-     public static createItem():PKMonsterItem_wx3{
-         var item:PKMonsterItem_wx3 = this.pool.pop();
+     public static createItem():PKMonsterItem{
+         var item:PKMonsterItem = this.pool.pop();
          if(!item)
          {
-             item = new PKMonsterItem_wx3();
+             item = new PKMonsterItem();
          }
          item.id = this.index;
          this.index++
@@ -34,6 +34,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public poisonStep = 0;
     public fireHurt = 0;
     public poisonHurt = 0;
+    public speedRate = 0;
     public lastHurtTime = 0;
 
     public stateYunMV
@@ -41,10 +42,15 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     public statePoisonMV
     public iceMC:eui.Image
     public monsterMV:PKMonsterMV_wx3 = new PKMonsterMV_wx3();
+    
+    
 
-    public randomWalkRota = 0;
-    public randomWalkTime = 0;
-    public randomWalk = false;
+    public totalDis = 0;//到终点的距离，用于箭塔攻击排序
+    public speed
+    public mvo:MonsterVO
+    public hp
+    public maxHp
+    public isDie
 
     public constructor() {
         super();
@@ -64,15 +70,32 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.anchorOffsetX = 50;
         this.anchorOffsetY = 300;
     }
+
+    public setPath(path){
+        this.path = path;
+        var dis = 0;
+        var lastPos
+        for(var i=0;i<path.length;i++)
+        {
+            if(lastPos)
+            {
+                dis += Math.abs(lastPos[0] - path[i][0]) + Math.abs(lastPos[1] - path[i][1])
+            }
+            lastPos = path[i];
+        }
+        this.totalDis = dis*64;
+
+    }
     public resetHpBarY(){
-        this.hpBar.y = 300 - this.data.getVO().height*this.data.scale - 20
-        this.monsterMV.scaleX = this.monsterMV.scaleY = this.data.scale
+        this.hpBar.y = 300 - this.mvo.height*this.scale - 20
+        this.monsterMV.scaleX = this.monsterMV.scaleY = this.scale
 
     }
 
     public dataChanged(){
-        this.data.relateItem = this;
-        this.monsterMV.load(this.data.mid)
+        this.mvo = MonsterVO.getObject(this.data)
+        
+        this.monsterMV.load(this.mvo.id)
         this.monsterMV.stand();
         this.monsterMV.alpha = 1;
         this.resetHpBarY();
@@ -85,9 +108,18 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         this.poisonHurt = 0;
         this.lastHurtTime = 0;
         this.targetPos = null;
+        
+        this.isDie = 0
+        this.speed = this.mvo.speed
+        this.hp = this.mvo.hp
+        this.maxHp = this.mvo.hp;
+        this.speedRate = 1;
+        
+        
+        
 
         MyTool.removeMC(this.iceMC)
-        this.hpBar.visible = true;
+        this.hpBar.visible = false;
         this.renewHp();
 
         if(this.stateYunMV) {
@@ -105,17 +137,16 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     }
 
     public resetXY(x,y){
-        this.x = this.data.x = x;
-        this.y = this.data.y = y;
+        this.x = x;
+        this.y = y;
     }
 
     private onDieFinish(){
-        this.data.onDie();
-        if(this.data.isDie)
-            this.data.isDie = 2;
+        if(this.isDie)
+            this.isDie = 2;
     }
 
-    public setIce(step){
+    public setIce(step,speedRate){
         if(!step)
             return;
         if(!this.iceMC)
@@ -125,11 +156,14 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             this.iceMC.anchorOffsetY = 161
             this.iceMC.x = 50;
             this.iceMC.y = 300;
+
         }
 
         this.iceStep = Math.max(step,this.iceStep);
+        this.speedRate = Math.min(speedRate,this.speedRate);
+
+        this.iceMC.scaleX = this.iceMC.scaleY = this.mvo.height/140*this.scale
         this.addChild(this.iceMC);
-        this.iceMC.scaleX = this.iceMC.scaleY = this.data.getVO().height/140*this.data.scale
     }
 
     public setYun(step){
@@ -145,7 +179,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
                 this.stateYunMV.stop()
             }
             this.addChild(this.stateYunMV)
-            this.stateYunMV.y = 300 - this.data.getVO().height - 35;
+            this.stateYunMV.y = 300 - this.mvo.height - 35;
             this.stateYunMV.play()
         }
         this.yunStep = Math.max(step,this.yunStep);
@@ -169,6 +203,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             }
             this.addChild(this.stateFireMV)
             this.stateFireMV.play()
+            this.stateFireMV.scaleX = this.stateFireMV.scaleY = this.mvo.height/140*this.scale
         }
         this.fireStep = Math.max(step,this.fireStep);
         this.fireHurt = Math.max(hurt,this.fireHurt);
@@ -193,41 +228,23 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             }
             this.addChild(this.statePoisonMV)
             this.statePoisonMV.play()
+            this.statePoisonMV.scaleX = this.statePoisonMV.scaleY = this.mvo.height/140*this.scale
         }
         this.poisonStep = Math.max(step,this.poisonStep);
         this.poisonHurt = Math.max(hurt,this.poisonHurt);
     }
 
     public onE(){
-        var myData = this.data;
-        if(myData.isDie)
+        if(this.isDie)
             return;
         this.runBuff();
-        if(myData.isDie)//buff会至死
+        if(this.isDie)//buff会至死
             return;
-        myData.onStep();
-        myData.onDelay();
-        var t = PKC.actionStep
-
-        if(t  < myData.stopEnd)
-            return;
-        if(t  < myData.atkEnd)
-            return;
-        if(t  < myData.skillEnd)
-            return;
-        if(t  < myData.beAtkStop)
-            return;
-
         if(this.yunStep)
             return;
 
-        //this.monsterMV.scaleX = (myData.x > playerData.x ?1:-1)*myData.scale
-
-
         //move
-        var speed = this.data.speed;
-        if(this.iceStep)
-            speed/=2;
+        var speed = this.speed*this.speedRate;
 
 
         if(!this.targetPos)
@@ -235,7 +252,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             this.targetPos = TC.getMonsterPosByPath(this.path.shift());
             if(!this.targetPos)//到终点
             {
-                this.data.isDie = 2
+                this.isDie = 2
                 return;
             }
         }
@@ -253,8 +270,10 @@ class PKMonsterItem_wx3 extends game.BaseItem {
         else if(Math.abs(addY) > speed)
             addY = addY>0?speed:-speed
 
+        this.totalDis -= Math.abs(addX) + Math.abs(addY)
         this.resetXY(this.x + addX,this.y+addY)
         this.runMV();
+
 
         this.monsterMV.scaleY = this.scale
         if(addX > 0)
@@ -287,6 +306,7 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             if(this.iceStep <= 0)
             {
                 this.iceStep = 0;
+                this.speedRate = 1;
                 MyTool.removeMC(this.iceMC)
             }
         }
@@ -313,13 +333,27 @@ class PKMonsterItem_wx3 extends game.BaseItem {
             }
         }
 
-        if(!this.data.isDie && PKC.actionStep - this.lastHurtTime >= PKC.frameRate)
+        if(!this.isDie && TC.actionStep - this.lastHurtTime >= TC.frameRate)
         {
-            this.lastHurtTime = PKC.actionStep;
+            this.lastHurtTime = TC.actionStep;
             var hurt = this.fireHurt + this.poisonHurt;
             if(hurt)
-                this.data.addHp(-hurt)
+                this.addHp(-hurt)
         }
+    }
+
+    public addHp(v){
+        if(this.isDie)
+            return
+        this.hp += v;
+        if(this.hp <= 0)
+        {
+            this.hp = 0;
+            this.isDie = 1
+            this.dieMV();
+        }
+        this.renewHp()
+        this.hpBar.visible = !this.isDie && this.hp < this.maxHp
     }
 
 
@@ -334,13 +368,25 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     }
 
     public dieMV(){
+
+        MyTool.removeMC(this.iceMC)
+        if(this.stateYunMV) {
+            this.stateYunMV.stop()
+            MyTool.removeMC(this.stateYunMV)
+        }
+        if(this.stateFireMV) {
+            this.stateFireMV.stop()
+            MyTool.removeMC(this.stateFireMV)
+        }
+        if(this.statePoisonMV) {
+            this.statePoisonMV.stop()
+            MyTool.removeMC(this.statePoisonMV)
+        }
+
+
         this.monsterMV.die();
-        this.data.getVO().playDieSound()
-        //this.bar.width = 0;
+        this.mvo.playDieSound()
         this.hpBar.visible = false;
-        //this.vo.playDieSound();
-        //if(this.data.mid != 99)
-        //    PlayManager.getInstance().showDropCoin(this)
     }
 
     public atkMV(){
@@ -348,17 +394,14 @@ class PKMonsterItem_wx3 extends game.BaseItem {
     }
 
     public renewHp(){
-        this.hpBar.data = this.data;
-        this.hpBar.visible = this.data.hp > 0
-        //this.hpBar.visible = this.data.hp < this.data.maxHp;
+        this.hpBar.data = this;
     }
 
-    public stopMV(){
-        this.monsterMV.stop();
-    }
-
-    public playMV(){
-        this.monsterMV.play();
+    public getHitPos(){
+        return {
+            x:this.x,
+            y:this.y - this.mvo.height*0.4*this.scale
+        }
     }
 
 

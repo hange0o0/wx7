@@ -151,29 +151,29 @@ class PKTool {
     }
 
     public static showLight(from,to){
-        var mv = MovieSimpleSpirMC.create();
-        var arr = [];
-        for(var i=1;i<=3;i++)
-        {
-            arr.push( 'arc_' + i + '_png')
-        }
-
-        mv.setData(arr,84)
-        mv.once('complete',()=>{
-            mv.dispose();
-        },this)
-        mv.gotoAndPay(0,1)
-
-        mv.icon.fillMode = 'repeat'
-        mv.icon.width = MyTool.getDis(from,to);
-        mv.anchorOffsetY = 35/2
-        mv.anchorOffsetX = 0
-        PKCodeUI.getInstance().bulletCon.addChild(mv);
-        mv.x = from.x
-        mv.y = from.y
-
-        var angle = Math.atan2(to.y-from.y,to.x-from.x)
-        mv.rotation = angle/Math.PI*180
+        //var mv = MovieSimpleSpirMC.create();
+        //var arr = [];
+        //for(var i=1;i<=3;i++)
+        //{
+        //    arr.push( 'arc_' + i + '_png')
+        //}
+        //
+        //mv.setData(arr,84)
+        //mv.once('complete',()=>{
+        //    mv.dispose();
+        //},this)
+        //mv.gotoAndPay(0,1)
+        //
+        //mv.icon.fillMode = 'repeat'
+        //mv.icon.width = MyTool.getDis(from,to);
+        //mv.anchorOffsetY = 35/2
+        //mv.anchorOffsetX = 0
+        //PKCodeUI.getInstance().bulletCon.addChild(mv);
+        //mv.x = from.x
+        //mv.y = from.y
+        //
+        //var angle = Math.atan2(to.y-from.y,to.x-from.x)
+        //mv.rotation = angle/Math.PI*180
     }
 
 

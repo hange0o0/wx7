@@ -129,7 +129,6 @@ class UserManager_wx4 {
             }
         }
         GunManager.getInstance().initData(data.gunData);
-        SkillManager.getInstance().initData(data.skillData);
         PKManager.getInstance().initData(data.pkData);
         this.testAddInvite();
         this.localSave();
@@ -338,7 +337,6 @@ class UserManager_wx4 {
             addForceEnd:UM_wx4.addForceEnd,
 
             pkData:PKManager.getInstance().getSave(),
-            skillData:SkillManager.getInstance().getSave(),
             gunData:GunManager.getInstance().getSave(),
 
             //cdCoin:UM_wx4.cdCoin,

@@ -10,7 +10,6 @@ class TowerCode {
     public frameRate = 30   //PKTool.getStepByTime 也要改
 
     public actionStep = 0;
-    public monsterList = [];
 
 
 
@@ -60,14 +59,6 @@ class TowerCode {
     public onStep(){
         this.actionStep ++;
         this.autoAction();//上怪
-        var len = this.monsterList.length;
-        for(var i=0;i<len;i++)
-        {
-            var monster = this.monsterList[i];
-            monster.onStep();
-        }
-
-
     }
 
     //自动出战上怪
@@ -85,8 +76,7 @@ class TowerCode {
         {
             var data = this.roundAutoMonster.shift();
             var mid = _get['mid'] || data.id;
-            var monster = PKTowerUI.getInstance().addMonster(mid,data.road)
-            this.monsterList.push(monster)
+            PKTowerUI.getInstance().addMonster(mid,data.road)
         }
     }
 
@@ -96,7 +86,6 @@ class TowerCode {
     public initData(level){
         this.isStop = false;
         this.actionStep = 0;
-        this.monsterList.length = 0;
         PKMonsterAction_wx3.getInstance().init();
         this.roundAutoMonster.length = 0;
         this.totalAutoMonster = this.getLevelMonster(level);
@@ -121,7 +110,7 @@ class TowerCode {
         var returnArr = []
 
 
-        var round = Math.min(10,3 + Math.floor(level/10))
+        var round = 999//Math.min(10,3 + Math.floor(level/10))
         this.maxRound = round;
         this.round = 0;
         var step = 10
@@ -156,7 +145,7 @@ class TowerCode {
                         roadIndex = 0;
                 }
             }
-            step += 10*30;
+            //step += 10*30;
             roadIndex ++;
             if(roadRandom)
                 roadIndex = 0;

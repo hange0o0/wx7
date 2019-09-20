@@ -94,10 +94,6 @@ class DebugUI extends game.BaseUI_wx4 {
         })
 
         this.addB('胜一场',()=>{
-            var result = PKManager.getInstance().getWinResult()
-            PKManager.getInstance().endGame(result);
-            PKManager.getInstance().endGame(result);
-            PKManager.getInstance().endGame(result);
             MyWindow.ShowTips('OK')
         })
 

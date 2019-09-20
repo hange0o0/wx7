@@ -62,7 +62,7 @@ class GameUI extends game.BaseUI_wx4 {
         })
 
         this.addBtnEvent(this.skillBtn,()=>{
-            SkillListUI.getInstance().show()
+            //SkillListUI.getInstance().show()
         })
 
         this.addBtnEvent(this.levelBtn,()=>{
@@ -90,30 +90,30 @@ class GameUI extends game.BaseUI_wx4 {
         })
 
         this.addBtnEvent(this.startBtn1,()=>{
-            var PKM = PKManager.getInstance();
-            if(PKM.lastChooseData.length == 0)
-            {
-                var enery = PKM.getEnergyCost();
-                if(PKM.getEnergy() < enery)
-                {
-                    MyWindow.Confirm('体力不足'+enery+'点，可观看广告免去本次体力消耗。',(type)=>{
-                        if(type == 1)
-                        {
-                            ShareTool.openGDTV(()=>{
-                                PKM.initChooseSkill();
-                                SkillChooseUI.getInstance().show();
-                                this.renewNeedEnergy();
-                            })
-                        }
-
-                    },['取消', '观看广告'])
-                    return;
-                }
-                PKM.addEnergy(-enery);
-                PKM.initChooseSkill();
-                this.renewNeedEnergy();
-            }
-            SkillChooseUI.getInstance().show();
+            //var PKM = PKManager.getInstance();
+            //if(PKM.lastChooseData.length == 0)
+            //{
+            //    var enery = PKM.getEnergyCost();
+            //    if(PKM.getEnergy() < enery)
+            //    {
+            //        MyWindow.Confirm('体力不足'+enery+'点，可观看广告免去本次体力消耗。',(type)=>{
+            //            if(type == 1)
+            //            {
+            //                ShareTool.openGDTV(()=>{
+            //                    PKM.initChooseSkill();
+            //                    SkillChooseUI.getInstance().show();
+            //                    this.renewNeedEnergy();
+            //                })
+            //            }
+            //
+            //        },['取消', '观看广告'])
+            //        return;
+            //    }
+            //    PKM.addEnergy(-enery);
+            //    PKM.initChooseSkill();
+            //    this.renewNeedEnergy();
+            //}
+            //SkillChooseUI.getInstance().show();
             //PKUI.getInstance().show();
         })
 
@@ -227,10 +227,7 @@ class GameUI extends game.BaseUI_wx4 {
             PassDayAwardUI.getInstance().show();
         }
         this.showTips();
-        this.addChildAt(PKCodeUI.getInstance(),0)
-        PKC.isAuto = true;
-        PKCodeUI.getInstance().onShow()
-        PKC.playerData.randomSKill();
+
         this.resetAD();
 
 
@@ -344,55 +341,55 @@ class GameUI extends game.BaseUI_wx4 {
     private onE(){
         if(!this.visible)
             return
-        if(PKC.isStop)
-            return;
-        var ui = PKCodeUI.getInstance();
-        var playerData = PKC.playerData;
-        var monster = PKC.monsterList[0]
-        playerData.hp = playerData.maxHp;
-
-        if(monster && !monster.isDie)
-        {
-            var len = MyTool.getDis(monster,playerData);
-
-            if(len > playerData.atkDis -10)
-            {
-                ui.playerItem.move({
-                    x1:playerData.x,
-                    y1:playerData.y,
-                    x2:monster.x,
-                    y2:monster.y,
-                })
-                this.moveState = 1
-                if(playerData.skillsList.length && Math.random() < 0.01)//用技能
-                {
-                    playerData.useSkill(ArrayUtil_wx4.randomOne(playerData.skillsList).sid)
-                }
-            }
-            else if(this.moveState == -1 || len < 40 + (playerData.atkDis-40)/3)
-            {
-                ui.playerItem.move({
-                    x2:playerData.x,
-                    y2:playerData.y,
-                    x1:monster.x,
-                    y1:monster.y,
-                })
-
-                if(len > 40 + (playerData.atkDis-40)/3*2)
-                    this.moveState = 0;
-                else
-                    this.moveState = -1
-            }
-            else
-            {
-                this.moveState = 0
-            }
-
-
-        }
-
-        ui.onE();
-        ui.renewConY(true);
+        //if(PKC.isStop)
+        //    return;
+        //var ui = PKCodeUI.getInstance();
+        //var playerData = PKC.playerData;
+        //var monster = PKC.monsterList[0]
+        //playerData.hp = playerData.maxHp;
+        //
+        //if(monster && !monster.isDie)
+        //{
+        //    var len = MyTool.getDis(monster,playerData);
+        //
+        //    if(len > playerData.atkDis -10)
+        //    {
+        //        ui.playerItem.move({
+        //            x1:playerData.x,
+        //            y1:playerData.y,
+        //            x2:monster.x,
+        //            y2:monster.y,
+        //        })
+        //        this.moveState = 1
+        //        if(playerData.skillsList.length && Math.random() < 0.01)//用技能
+        //        {
+        //            playerData.useSkill(ArrayUtil_wx4.randomOne(playerData.skillsList).sid)
+        //        }
+        //    }
+        //    else if(this.moveState == -1 || len < 40 + (playerData.atkDis-40)/3)
+        //    {
+        //        ui.playerItem.move({
+        //            x2:playerData.x,
+        //            y2:playerData.y,
+        //            x1:monster.x,
+        //            y1:monster.y,
+        //        })
+        //
+        //        if(len > 40 + (playerData.atkDis-40)/3*2)
+        //            this.moveState = 0;
+        //        else
+        //            this.moveState = -1
+        //    }
+        //    else
+        //    {
+        //        this.moveState = 0
+        //    }
+        //
+        //
+        //}
+        //
+        //ui.onE();
+        //ui.renewConY(true);
     }
 
 
@@ -407,10 +404,10 @@ class GameUI extends game.BaseUI_wx4 {
                 PassDayAwardUI.getInstance().show();
             }
 
-            this.addChildAt(PKCodeUI.getInstance(),0)
-            PKC.isAuto = true;
-            PKCodeUI.getInstance().onShow()
-            PKC.playerData.randomSKill();
+            //this.addChildAt(PKCodeUI.getInstance(),0)
+            //PKC.isAuto = true;
+            //PKCodeUI.getInstance().onShow()
+            //PKC.playerData.randomSKill();
         }
     }
 
@@ -420,8 +417,8 @@ class GameUI extends game.BaseUI_wx4 {
     }
 
     public renewGun(){
-        PKC.playerData.initData();
-        PKC.playerData.relateItem.dataChanged();
+        //PKC.playerData.initData();
+        //PKC.playerData.relateItem.dataChanged();
         this.renewRed();
     }
 

@@ -14,7 +14,6 @@ class CacheManager_wx4{
     public constructor() {
         this.register(MonsterVO)
         this.register(GunVO)
-        this.register(SkillVO)
         this.register(LevelVO)
     }
 

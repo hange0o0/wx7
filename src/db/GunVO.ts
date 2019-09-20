@@ -13,23 +13,27 @@ class GunVO {
     public name: string;
     public atk: number;
     public atkspeed: number;
-    public open: number;
     public atkdis: number;
-    public atkback: number;
-    public doublerate: number;
-    public doublevalue: number;
-    public missrate: number;
-    public anx: number;
-    public any: number;
+    public shootnum: number;
+    public skilltype: string;
+    public sv1: number;
+    public sv2: number;
+    public enemy: string;
 
 
 
+    public enemys
     public constructor() {
 
     }
 
     public reInit(){
+        this.enemys = this.enemy.split(',')
+    }
 
+    //对这个怪有攻击加成
+    public isAtkAdd(mid){
+       return this.enemys.indexOf(mid+'') != -1
     }
 
     public getThumb(){
@@ -38,6 +42,28 @@ class GunVO {
 
     public getUrl(){
         return 'knife_'+this.id+'_png'
+    }
+
+    public getDes(){
+        switch(this.skilltype)
+        {
+            case 'ice':
+                return '降低目标 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的移动速度，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒'
+            case 'fire':
+                return '点燃目标，每秒造成 ' + MyTool.createHtml(this.sv1 + '',0xFFFF00) + ' 点伤害，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒'
+            case 'poison':
+                return '使目标中毒，每秒造成 ' + MyTool.createHtml(this.sv1 + '',0xFFFF00) + ' 点伤害，直至目标死亡'
+            case 'yun':
+                return '有 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的机率使目标陷入晕眩，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒'
+
+            case 'atk':
+                return '增加射程内所有飞刀 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的攻击力,可以叠加'
+            case 'speed':
+                return '增加射程内所有飞刀 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的攻击速度,可以叠加'
+            case 'dis':
+                return '增加射程内所有飞刀 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的攻击距离,可以叠加'
+        }
+        return ''
     }
 
 

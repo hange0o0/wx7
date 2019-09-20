@@ -38,7 +38,7 @@ class RebornUI extends game.BaseWindow_wx4{
     }
 
     public onShow(){
-        this.step = this.totalTime - PKC.playerData.rebornDec;
+        this.step = 30*100
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.stopBtn.visible = false;
@@ -51,17 +51,10 @@ class RebornUI extends game.BaseWindow_wx4{
     }
 
     private onE(){
-        if(PKC.isStop)
-            return;
+
         if(this.step <= 0)
         {
             this.hide();
-            PKC.playerData.hp = PKC.playerData.maxHp;
-            PKC.playerData.isDie = 0
-            PKC.playerData.relateItem.renewHp();
-            PKC.playerData.relateItem.mvKey = null
-            PKC.playerData.relateItem.showStandMV()
-            PKC.playerData.wudiStep = 30*5;
             SoundManager.getInstance().playEffect('reborn')
             return;
         }

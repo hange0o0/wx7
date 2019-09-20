@@ -5,6 +5,8 @@ class TowerManager extends egret.EventDispatcher {
         return this._instance;
     }
 
+    public level = 1;
+
     public constructor(){
         super();
 

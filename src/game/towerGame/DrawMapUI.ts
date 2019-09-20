@@ -91,7 +91,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         {
             if(!this.towerPos[s])
             {
-                this.towerPos[s] = 49;
+                this.towerPos[s] = Math.ceil(Math.random()*50);
                 //MyWindow.ShowTips('这个位置还没放置飞刀哦！' + s)
                 //return;
             }

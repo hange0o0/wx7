@@ -34,6 +34,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
     public movePaths
 
     public monsterArr = []
+    public bulletArr = []
     public constructor() {
         super();
         this.skinName = "PKTowerUISkin";
@@ -113,7 +114,11 @@ class PKTowerUI extends game.BaseUI_wx4 {
     public onShow(){
         while(this.monsterArr.length)
         {
-            PKMonsterItem_wx3.freeItem(this.monsterArr.pop())
+            PKMonsterItem.freeItem(this.monsterArr.pop())
+        }
+        while(this.bulletArr.length)
+        {
+            PKBulletItem.freeItem(this.bulletArr.pop())
         }
 
         this.pkMap.width = 64*this.ww
@@ -136,35 +141,65 @@ class PKTowerUI extends game.BaseUI_wx4 {
         for(var i=0;i<len;i++)
         {
             var mItem = this.monsterArr[i];
-            if(mItem.data.isDie == 2)
+            if(mItem.isDie == 2)
             {
-                PKMonsterItem_wx3.freeItem(mItem);
+                PKMonsterItem.freeItem(mItem);
                 this.monsterArr.splice(i,1)
                 len--;
                 i--;
-
-                var index = PKC.monsterList.indexOf(mItem.data)
-                if(index != -1)
-                    PKC.monsterList.splice(index,1);
                 continue;
             }
             mItem.onE();
         }
 
+        var len = this.bulletArr.length;
+        for(var i=0;i<len;i++)
+        {
+            var bItem = this.bulletArr[i];
+            if(bItem.isDie)
+            {
+                PKBulletItem.freeItem(bItem);
+                this.bulletArr.splice(i,1)
+                len--;
+                i--;
+                continue;
+            }
+            bItem.onE();
+        }
+
+        var gunArr = this.pkMap.gunArr;
+        len = gunArr.length;
+        for(var i=0;i<len;i++)
+        {
+            var gItem = gunArr[i];
+            gItem.onE(this.monsterArr);
+        }
+
+
         this.pkMap.sortY();
     }
 
     public addMonster(mid,roadIndex = 0){
-        var newItem = PKMonsterItem_wx3.createItem();
+        var newItem = PKMonsterItem.createItem();
         this.monsterArr.push(newItem);
         this.pkMap.roleCon.addChild(newItem);
-        newItem.path = this.movePaths[roadIndex].concat();
+        newItem.data = mid;
+        newItem.setPath(this.movePaths[roadIndex].concat());
+
         var startPos = TC.getMonsterPosByPath(newItem.path.shift());
-        newItem.data = MBase.getItem(mid);
         newItem.resetXY(startPos.x,startPos.y)
-        return newItem.data;
     }
 
-
+    public createBullet(owner,target){
+        var bullet = PKBulletItem.createItem();
+        this.bulletArr.push(bullet);
+        this.pkMap.topCon.addChild(bullet);
+        bullet.data = {
+            owner:owner,
+            target:target,
+        }
+        bullet.resetXY(owner.x,owner.y - 50)
+        return bullet;
+    }
 
 }

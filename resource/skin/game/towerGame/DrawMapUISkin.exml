@@ -3,12 +3,20 @@
 	<e:Image source="bg_10_jpg" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
 	<e:List id="list" height="150" bottom="0" horizontalCenter="0">
 		<e:layout>
-		<e:HorizontalLayout gap="50"/>
+		<e:HorizontalLayout gap="60"/>
 		</e:layout>
 	</e:List>
-	<e:Button id="startBtn" label="开始" skinName="Btn2Skin" width="100" height="100" bottom="30" right="20"/>
-	<e:Button id="addForceBtn" label="攻击\n+50%" skinName="Btn2Skin" width="100" height="100" bottom="30" left="20"/>
-	<e:Label text="选择左则砖块铺路，右帽砖块清除" horizontalCenter="0" bottom="10" size="20"/>
-	<e:Label id="levetText" text="第 10 关" y="20" horizontalCenter="0"/>
-	<e:Image id="closeBtn" source="close_btn_png" x="20" y="20"/>
+	<e:Button id="startBtn" label="开始" skinName="Btn2Skin" width="150" bottom="90" right="20"/>
+	<e:Button id="backBtn" label="返回" width="150" bottom="20" right="20" skinName="Btn1Skin"/>
+	<e:Button id="addForceBtn" label="攻击+50%" skinName="Btn2Skin" width="150" bottom="90" left="20"/>
+	<e:Button id="resetBtn" label="重置" width="150" bottom="20" left="20" skinName="Btn1Skin"/>
+	<e:Group horizontalCenter="0" bottom="10">
+		<e:Label text="铺路砖块" size="20" x="0" y="0"/>
+		<e:Label text="清除砖块" size="20" x="0" y="0"/>
+		<e:layout>
+			<e:HorizontalLayout gap="40"/>
+		</e:layout>
+	</e:Group>
+	<e:Image id="closeBtn" source="close_btn_png" x="20" y="20" visible="false"/>
+	<e:Label id="levetText" text="第 10 关" y="30" horizontalCenter="0" stroke="3" size="24" bold="true"/>
 </e:Skin>

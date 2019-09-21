@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="SkillChooseItem2Skin" width="120" height="150" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="dungeon_map_1b_a_jpg" x="0" y="0" width="120" height="120"/>
-	<e:Image id="mc" width="100" height="100" x="10" y="8"/>
-	<e:Image id="chooseMC" source="black_bg_alpha_png" x="10" y="8" width="100" height="100"/>
-	<e:Image source="bg17_png" x="10" scaleX="0.65" scaleY="-0.65" top="8" scale9Grid="12,5,56,31" width="100"/>
-	<e:Label id="levelText" text="10级" size="20" bold="false" x="13" y="10" stroke="2"/>
-	<e:Label id="nameText" text="10级" size="22" bold="false" horizontalCenter="0.5" bottom="0"/>
-</e:Skin>

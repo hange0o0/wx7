@@ -38,7 +38,7 @@ class CacheManager_wx4{
                 var vo:any = new cls();
                 for(var j: number = 0;j < fields.length;j++) {
                     var value = cols[j];
-                    vo[fields[j]] = value && !isNaN(value) ? Number(value) : value;
+                    vo[fields[j]] = (value && value.length<20 && !isNaN(value)) ? Number(value) : value;
                 }
                 vo.reInit();
                 this.table[key][vo[cls.key]] = vo;

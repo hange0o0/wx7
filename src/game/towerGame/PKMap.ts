@@ -40,10 +40,11 @@ class PKMap extends game.BaseContainer_wx4 {
         this.map.initMap(id)
     }
 
-    public draw(data){
+    public draw(data,noPos?){
         this.map.draw(data)
         this.renewTree(data);
-        this.renewPos(data);
+        if(!noPos)
+            this.renewPos(data);
     }
 
 
@@ -135,7 +136,7 @@ class PKMap extends game.BaseContainer_wx4 {
     }
 
 
-    public renewTower(gunData){
+    public renewTower(gunData,showDis?){
         while(this.gunArr.length)
         {
             TowerItem.freeItem(this.gunArr.pop());
@@ -152,6 +153,13 @@ class PKMap extends game.BaseContainer_wx4 {
             gunItem.x = x*64 + 32
             gunItem.y = y*64 + 32
             gunItem.data = gunData[s]
+            if(showDis)
+                gunItem.resetBottomMC(this.bottomCon)
+        }
+
+        for(var i=0;i<this.gunArr.length;i++)
+        {
+            this.gunArr[i].onAddTower(this.gunArr);
         }
     }
 

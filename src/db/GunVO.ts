@@ -11,6 +11,7 @@ class GunVO {
 
     public id: number;
     public name: string;
+    public level: number;
     public atk: number;
     public atkspeed: number;
     public atkdis: number;
@@ -29,6 +30,20 @@ class GunVO {
 
     public reInit(){
         this.enemys = this.enemy.split(',')
+    }
+
+    private enemyVOs
+    public getEnemys(){
+       if(!this.enemyVOs)
+       {
+           this.enemyVOs = [];
+           for(var i=0;i<this.enemys.length;i++)
+           {
+               this.enemyVOs.push(MonsterVO.getObject(this.enemys[i]))
+           }
+           ArrayUtil_wx4.sortByField(this.enemyVOs,['level','id'],[0,0])
+       }
+        return this.enemyVOs;
     }
 
     //对这个怪有攻击加成

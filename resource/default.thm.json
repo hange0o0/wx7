@@ -57,11 +57,9 @@
 		"resource/skin/game/pk/PKUISkin.exml",
 		"resource/skin/game/rank/RankItemSkin.exml",
 		"resource/skin/game/rank/RankUISkin.exml",
-		"resource/skin/game/skill/SkillChooseItem1Skin.exml",
-		"resource/skin/game/skill/SkillChooseItem2Skin.exml",
-		"resource/skin/game/skill/SkillChooseUISkin.exml",
-		"resource/skin/game/skill/SkillInfoUISkin.exml",
+		"resource/skin/game/skill/SkillEnemyItemSkin.exml",
 		"resource/skin/game/skill/SkillListItemSkin.exml",
+		"resource/skin/game/towerGame/TowerItemSkin.exml",
 		"resource/skin/game/skill/SkillListUISkin.exml",
 		"resource/skin/game/skill/SkillUnlockUISkin.exml",
 		"resource/skin/game/towerGame/ChangeGunItemSkin.exml",
@@ -69,7 +67,6 @@
 		"resource/skin/game/towerGame/DrawMapUISkin.exml",
 		"resource/skin/game/towerGame/PKMapSkin.exml",
 		"resource/skin/game/towerGame/PKTowerUISkin.exml",
-		"resource/skin/game/towerGame/TowerItemSkin.exml",
 		"resource/skin/guide/GuideSkin.exml"
 	],
 	"path": "resource/default.thm.json"

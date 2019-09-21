@@ -75,11 +75,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.pkMap.initMap(data.id)
         this.ww = data.width
         this.hh = data.height
-        var arr1 = data.data.split('|');
-        for(var i=0;i<arr1.length;i++)
-        {
-            arr1[i] = arr1[i].split(',')
-        }
+        var arr1 = data.getRoadData();
 
         this.mapData = [];
         for(var i=0;i<this.hh;i++)

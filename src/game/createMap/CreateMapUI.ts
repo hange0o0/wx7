@@ -146,9 +146,9 @@ class CreateMapUI extends game.BaseUI_wx4 {
         var arr = []
         for(var i=0;i<this.mapData.length;i++)
         {
-            arr.push(this.mapData[i].join(','))
+            arr.push(this.mapData[i].join(''))
         }
-        return arr.join('|')
+        return arr.join('')
     }
 
     private onTouch(e){
@@ -273,11 +273,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
             this.ww = data.width
             this.hh = data.height
-            var arr1 = data.data.split('|');
-            for(var i=0;i<arr1.length;i++)
-            {
-                arr1[i] = arr1[i].split(',')
-            }
+            var arr1 = data.getRoadData();
             for(var i=0;i<this.hh;i++)
             {
                 this.mapData.push([]);

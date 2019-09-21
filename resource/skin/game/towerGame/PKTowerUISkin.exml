@@ -6,6 +6,6 @@
 		<e:HorizontalLayout gap="30"/>
 		</e:layout>
 	</e:List>
-	<e:Label id="levetText" text="第 10 关" y="25" horizontalCenter="0"/>
+	<e:Label id="levetText" text="第 10 关" y="30" horizontalCenter="0" stroke="3" size="24" bold="true"/>
 	<e:Image id="closeBtn" x="20" y="20" source="stop_btn_png"/>
 </e:Skin>

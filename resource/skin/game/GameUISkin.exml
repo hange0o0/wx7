@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="GameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="bg_1_jpg" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
+	<e:Group id="mapCon" left="0" right="0" top="150" bottom="360"/>
 	<e:Group x="10" y="20">
 		<e:Image source="border_png" x="0" y="0" scale9Grid="31,6,37,42" width="220"/>
 		<e:Image source="coin_mc_png" x="9" y="9"/>
@@ -21,46 +23,30 @@
 	<e:Image id="ad1" width="90" height="90" right="20" y="120"/>
 	<e:Image id="ad2" width="90" height="90" right="20" y="230"/>
 	<e:Image source="main_bg_01_png" bottom="0" left="0" right="0" scale9Grid="13,13,84,84"/>
-	<e:Group horizontalCenter="0" bottom="20">
-		<e:Group id="skillBtn" x="0" y="0" width="180">
-			<e:Image source="main_tab_02_png" x="0" y="0"/>
+	<e:Group horizontalCenter="0" bottom="20" locked="true">
+		<e:Group id="skillBtn" x="0" y="0" width="180" height="70">
+			<e:Image source="main_tab_02_png" x="0" verticalCenter="0"/>
 			<e:Label text="图鉴" x="70" bold="true" verticalCenter="0"/>
 			<e:Image id="skillRedMC" source="common_redpoint_01_png" right="0" top="0"/>
 		</e:Group>
-		<e:Group id="equipBtn" x="-28" y="-1042" width="180" scaleX="1" scaleY="1">
-			<e:Image x="0" y="0" source="main_tab_01_png"/>
-			<e:Label text="装备" bold="true" x="70" verticalCenter="0"/>
-			<e:Image id="equipRedMC" source="common_redpoint_01_png" right="0" top="0"/>
-		</e:Group>
-		<e:Group id="levelBtn" x="20" y="20" width="180">
-			<e:Image x="0" y="0" source="main_icon_health_png"/>
+		<e:Group id="levelBtn" x="20" y="20" width="180" height="70">
+			<e:Image x="0" source="main_tab_01_png" verticalCenter="0"/>
 			<e:Label text="升级" x="70" bold="true" verticalCenter="0"/>
 			<e:Image id="levelRedMC" source="common_redpoint_01_png" right="0" top="0"/>
+		</e:Group>
+		<e:Group id="editBtn" x="-28" y="-1042" width="180" scaleX="1" scaleY="1" height="70">
+			<e:Image x="-4.56" source="main_icon_edit_png" scaleX="0.8" scaleY="0.8" verticalCenter="4"/>
+			<e:Label text="原创" bold="true" x="70" verticalCenter="0"/>
+			<e:Image id="equipRedMC" source="common_redpoint_01_png" right="0" top="0"/>
 		</e:Group>
 		<e:layout>
 			<e:HorizontalLayout gap="40"/>
 		</e:layout>
 	</e:Group>
-	<e:Group id="addForceBtn" height="30" bottom="360" horizontalCenter="0.5">
-		<e:Label id="addForceText" text="Label" size="24" lineSpacing="10" textAlign="center" textColor="0xf9e5a2" borderColor="0xf9e5a2" y="0" horizontalCenter="0"/>
-		<e:Rect width="100%" height="2" x="0" bottom="0" fillColor="0xf9e5a2"/>
+	<e:Label id="levelText" text="第 1 关" horizontalCenter="0" size="30" y="120" bold="true" stroke="5"/>
+	<e:Image id="startBtn" source="start_game_png" horizontalCenter="0" bottom="200"/>
+	<e:Group id="needEnergyGroup" horizontalCenter="0" bottom="300">
+		<e:Image x="0" source="common_energy_png" scaleX="0.9" scaleY="0.9" y="0"/>
+		<e:Label id="needEnergyText" text="Label" x="41" size="24" textColor="0xFCD766" y="4"/>
 	</e:Group>
-	<e:Group id="jumpWX4Btn" height="30" bottom="120" horizontalCenter="0">
-		<e:Label text=" 点此了解城破原因 " size="24" lineSpacing="10" textAlign="center" textColor="0xF9E5A2" borderColor="0xF9E5A2" y="0" horizontalCenter="0"/>
-		<e:Rect width="100%" height="2" x="0" bottom="0" fillColor="0xF9E5A2"/>
-	</e:Group>
-	<e:Group horizontalCenter="0" bottom="200">
-		<e:Button id="startBtn2" label="双人生存" x="10" y="10" skinName="Btn1Skin" width="200" height="80" icon="lock_icon_png"/>
-		<e:Group x="260" y="0">
-			<e:Group id="needEnergyGroup" y="-40" horizontalCenter="0">
-				<e:Image x="0" source="common_energy_png" scaleX="0.9" scaleY="0.9" y="0"/>
-				<e:Label id="needEnergyText" text="Label" x="41" size="24" textColor="0xFCD766" y="4"/>
-			</e:Group>
-			<e:Button id="startBtn1" label="单人闯关" x="0" y="0" width="200" height="80" skinName="Btn2Skin"/>
-		</e:Group>
-		<e:layout>
-			<e:HorizontalLayout gap="60"/>
-		</e:layout>
-	</e:Group>
-	<e:Label id="desText" text="Label" horizontalCenter="0" bottom="405" size="22"/>
 			</e:Skin>

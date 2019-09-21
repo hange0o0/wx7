@@ -70,4 +70,21 @@ class MonsterVO {
     public getThumb(){
         return 'm_head'+this.id+'_jpg'
     }
+
+    private enemys;
+    public getEnemys(){
+        if(!this.enemys)
+        {
+            this.enemys = [];
+
+            for(var s in GunVO.data)
+            {
+                var gvo = GunVO.data[s];
+                if(gvo.enemys.indexOf(this.id + '') != -1)
+                    this.enemys.push(gvo)
+            }
+            ArrayUtil_wx4.sortByField(this.enemys,['level','id'],[0,0])
+        }
+        return this.enemys
+    }
 }

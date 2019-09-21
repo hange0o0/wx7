@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="SkillEnemyItemSkin" width="80" height="80" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing"  states="normal,lock" >
+	<e:Image left="0" right="0" top="0" source="dungeon_map_1b_a_jpg" source.lock="dungeon_map_1d_jpg" height.lock="80" left.normal="0" right.normal="0" top.normal="0" bottom.normal="0" bottom="0"/>
+	<e:Image id="mc" source="black_bg_alpha_png" includeIn="normal" width="70" height="70" horizontalCenter="0" verticalCenter="0"/>
+</e:Skin>

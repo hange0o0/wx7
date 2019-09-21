@@ -9,9 +9,12 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     private list: eui.List;
     private startBtn: eui.Button;
+    private backBtn: eui.Button;
     private addForceBtn: eui.Button;
-    private levetText: eui.Label;
+    private resetBtn: eui.Button;
     private closeBtn: eui.Image;
+    private levetText: eui.Label;
+
 
 
 
@@ -53,45 +56,53 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.closeBtn,()=>{
             this.hide()
         })
+        this.addBtnEvent(this.backBtn,()=>{
+            this.hide()
+        })
         this.addBtnEvent(this.addForceBtn,()=>{
             this.hide()
         })
-        this.addBtnEvent(this.startBtn,()=>{
-            if(this.startBtn.label == '重置')
+        this.addBtnEvent(this.resetBtn,()=>{
+            var change = false
+            for(var i=0;i<this.hh;i++)
             {
-                var change = false
-                for(var i=0;i<this.hh;i++)
+                for(var j=0;j<this.ww;j++)
                 {
-                    for(var j=0;j<this.ww;j++)
+                    if(this.mapData[i][j] == 1)
                     {
-                        if(this.mapData[i][j] == 1)
-                        {
-                            this.mapData[i][j] = 0;
-                            change  = true;
-                        }
+                        this.mapData[i][j] = 0;
+                        change  = true;
                     }
                 }
-                if(change)
-                {
-                    this.renewMap();
-                    this.movePaths = []
-                    this.showArrow();
-                    this.saveLocal();
-                }
             }
-            else
+            if(change)
             {
-                this.onStartGame();
+                this.renewMap();
+                this.movePaths = []
+                this.showArrow();
+                this.saveLocal();
             }
+        })
+        this.addBtnEvent(this.startBtn,()=>{
+            this.onStartGame();
         })
     }
 
     public onStartGame(){
+        for(var i=0;i<this.movePaths.length;i++)
+        {
+            if(!this.movePaths[i])
+            {
+                MyWindow.ShowTips('有出怪点被阻档了！')
+                return;
+            }
+        }
+
         for(var s in this.towerPos)
         {
             if(!this.towerPos[s])
             {
-                this.towerPos[s] = Math.ceil(Math.random()*50);
+                this.towerPos[s] = 6//Math.ceil(Math.random()*50);
                 //MyWindow.ShowTips('这个位置还没放置飞刀哦！' + s)
                 //return;
             }
@@ -206,11 +217,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.pkMap.initMap(data.id)
         this.ww = data.width
         this.hh = data.height
-        var arr1 = data.data.split('|');
-        for(var i=0;i<arr1.length;i++)
-        {
-            arr1[i] = arr1[i].split(',')
-        }
+        var arr1 = data.getRoadData();
 
         this.mapData = [];
 
@@ -287,12 +294,10 @@ class DrawMapUI extends game.BaseUI_wx4 {
         if(allRoadOK)
         {
             this.startBtn.skinName = 'Btn2Skin'
-            this.startBtn.label = '开始'
         }
         else
         {
             this.startBtn.skinName = 'Btn1Skin'
-            this.startBtn.label = '重置'
         }
 
     }

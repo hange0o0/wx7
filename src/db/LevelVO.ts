@@ -47,4 +47,14 @@ class LevelVO {
         }
         return this.roadNum;
     }
+
+    public getRoadData(){
+        var arr = this.data.split('');
+        var resultData = [];
+        for(var i=0;i<this.height;i++)
+        {
+            resultData.push(arr.slice(i*this.width,(i+1)*this.width))
+        }
+        return resultData
+    }
 }

@@ -35,6 +35,8 @@ class Config {
     public static wx_insert = '';
     public static myAppID = 'wxfd2a9596bb791751';
 
+    public static readLocal = true;
+
 
 
 

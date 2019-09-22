@@ -10,15 +10,7 @@
 				<e:HorizontalLayout verticalAlign="middle"/>
 			</e:layout>
 			</e:Group>
-			<e:Label text="你赚到了" y="0" horizontalCenter="0" size="26"/>
-		</e:Group>
-		<e:Group width="600" x="0" y="10">
-			<e:Label text="获得技能碎片" y="0" horizontalCenter="0" size="26"/>
-			<e:List id="skillList" height="140" y="50" horizontalCenter="0">
-				<e:layout>
-					<e:HorizontalLayout gap="30" paddingLeft="20" paddingRight="20" paddingTop="10"/>
-				</e:layout>
-			</e:List>
+			<e:Label text="你获得了" y="0" horizontalCenter="0" size="26"/>
 		</e:Group>
 		<e:Group x="50" y="178">
 			<e:Button id="awardBtn" label="马上领取" skinName="Btn1Skin" width="300" x="0" y="0" height="80"/>

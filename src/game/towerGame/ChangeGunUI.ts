@@ -1,95 +1,122 @@
-class ChangeGunUI extends game.BaseWindow_wx4{
+class ChangeGunUI extends game.BaseWindow_wx4 {
 
-    private static _instance:ChangeGunUI;
-    public static getInstance() {
-        if (!this._instance) this._instance = new ChangeGunUI();
+    private static _instance: ChangeGunUI;
+    public static getInstance(): ChangeGunUI {
+        if(!this._instance)
+            this._instance = new ChangeGunUI();
         return this._instance;
     }
 
     private scroller: eui.Scroller;
     private list: eui.List;
-    private atkText: eui.Label;
-    private mc: eui.Image;
+    private con: eui.Group;
+    private txt1: eui.Label;
+    private txt2: eui.Label;
     private nameText: eui.Label;
+    private towerItem: TowerItem;
+    private enemyList: eui.List;
+    private btnGroup: eui.Group;
     private dropBtn: eui.Button;
     private okBtn: eui.Button;
 
 
 
-    private atkSpeed = 0;
-    private doubleRate = 0;
-    private actionStep = 0;
-    public get data(){
-        return this.list.selectedItem;
-    }
+
+
+
+
+
+
+
+    public data;
     public constructor() {
         super();
         this.skinName = "ChangeGunUISkin";
-
+        this.canBGClose = false
     }
 
     public childrenCreated() {
         super.childrenCreated();
-        this.setTitle('更换武器')
+
+        this.setTitle('配备武器')
+
         this.scroller.viewport = this.list;
-        this.list.itemRenderer = GunListItem
+        this.list.itemRenderer = ChangeGunItem
+
+        this.enemyList.itemRenderer = SkillEnemyItem
+        this.enemyList.touchChildren = this.enemyList.touchEnabled = false;
+
+
+        this.list.addEventListener(eui.ItemTapEvent.CHANGE, this.renewChoose, this);
+
+
+
+        this.towerItem.x += 32
+        this.towerItem.y += 32
     }
+
 
     public show(){
         super.show()
     }
 
+    public hide() {
+        super.hide();
+    }
+
     public onShow(){
-        this.actionStep = 100;
         this.renew();
-        this.renewChoose();
-        this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renewList)
-        this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
-    }
 
-    private onE(){
-        //this.gunItem.move2();
-        this.actionStep -- ;
-        if(this.actionStep <=0)
-        {
-            this.actionStep = this.atkSpeed
-        }
-    }
-
-    public renewList(){
-        MyTool.renewList(this.list);
-        this.renewChoose();
+        //this.inputText.text = ''
     }
 
     public renew(){
+
         var list = ObjectUtil_wx4.objToArray(GunVO.data)
-        list.length = GunManager.getInstance().getUnlockNum();
+        ArrayUtil_wx4.sortByField(list,['level','id'],[0,0]);
+        this.setTitle('装备图鉴')
+        this.currentState = 's1'
         this.list.dataProvider = new eui.ArrayCollection(list)
     }
 
-    private createText(title,des){
-        return title + '：' + this.createHtml(des,0xFFFFFF);
-    }
+
 
     public renewChoose(){
-        var GM = GunManager.getInstance();
-        var vo:GunVO = GunVO.getObject(GM.gunid);
-
-
-        this.nameText.text = vo.name;
-        var arr = [];
-        arr.push(this.createText('攻击伤害',vo.atk + '%'))
-        arr.push(this.createText('攻击间隔',MyTool.toFixed(vo.atkspeed/100,1) + '秒'))
-        arr.push(this.createText('攻击距离',vo.atkdis + ''))
-
-        this.setHtml(this.atkText,arr.join('\n'));
-
-        this.atkSpeed = PKTool.getStepByTime(vo.atkspeed)
-        this.actionStep = this.atkSpeed
-
+        if(!this.list.selectedItem)
+            return;
+        this.renewGunInfo(this.list.selectedItem)
+        MyTool.runListFun(this.list,'setSelect')
     }
 
-    public hide(){
-        super.hide();
+    private renewGunInfo(gvo){
+        this.nameText.text = gvo.name
+
+        var arr1 = [];
+        var arr2 = [];
+        arr1.push('攻击：' + this.createHtml(gvo.atk,0xFFFF00))
+        arr1.push('射程：' + this.createHtml(gvo.atkdis,0xFFFF00))
+        if(gvo.skilltype)
+            arr1.push('技能：' + gvo.getDes())
+
+        arr2.push('攻速：' + this.createHtml(MyTool.toFixed(1000/gvo.atkspeed,1),0xFFFF00))
+        arr2.push('数量：' + this.createHtml(gvo.shootnum,0xFFFF00))
+        this.setHtml(this.txt1,arr1.join('\n'))
+        this.setHtml(this.txt2,arr2.join('\n'))
+
+        var enemy = gvo.getEnemys();
+        this.enemyList.dataProvider = new eui.ArrayCollection(enemy);
+
     }
 }
+
+class ChangeGunItem extends SkillListItem{
+
+    public constructor() {
+        super();
+    }
+
+    public setSelect(){
+        this['selectMC'].visible = this.data == SkillListUI.getInstance().list.selectedItem;
+    }
+}
+

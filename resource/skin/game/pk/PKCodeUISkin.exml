@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="PKCodeUISkin" width="640" height="960" xmlns:e="http://ns.egret.com/eui">
-	<e:Image id="bg" source="bg_1_jpg" x="0" y="0" fillMode="repeat" width="20" height="20"/>
-	<e:Group id="con" width="640" height="960" x="0" y="0">
-		<e:Group id="bottomCon" left="0" right="0" top="0" bottom="0"/>
-		<e:Group id="roleCon" left="0" right="0" top="0" bottom="0"/>
-		<e:Group id="bulletCon" left="0" right="0" top="0" bottom="0"/>
-	</e:Group>
-</e:Skin>

@@ -39,7 +39,7 @@ class SkillListItem extends game.BaseItem{
         {
             this.mc.source = 'pk_skill_unknow_png'
             this.touchChildren = this.touchEnabled = false
-            this.nameText.text = '第 '+vo.level+' 关'
+            this.nameText.text = '?????'
         }
         else
         {
@@ -58,7 +58,7 @@ class SkillListItem extends game.BaseItem{
             this.currentState = 's2'
             this.mc.source = 'pk_skill_unknow_png'
             this.touchChildren = this.touchEnabled = false
-            this.nameText.text = '第 '+vo.level+' 关'
+            this.nameText.text = '?????'
         }
         else
         {

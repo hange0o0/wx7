@@ -1,47 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="PlayerUpUISkin" width="560" height="760" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="PlayerUpUISkin" width="560" height="560" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 		<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
-	<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" width="420" height="260" horizontalCenter="0" bottom="140"/>
+	<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" width="460" height="260" horizontalCenter="0" bottom="150"/>
 	<e:Group horizontalCenter="0" bottom="50">
 		<e:Button id="closeBtn" label="关闭" width="180" x="0" y="0" skinName="Btn1Skin"/>
-		<e:Button id="sendBtn" label="升级" width="180" skinName="Btn2Skin" x="0" y="0"/>
+		<e:Button id="sendBtn" label="升 1 级" width="180" skinName="Btn2Skin" x="0" y="0"/>
 		<e:layout>
 			<e:HorizontalLayout gap="50"/>
 		</e:layout>
 	</e:Group>
-	<ns1:PlayerItem id="playerItem" y="200" skinName="PlayerItemSkin" scaleX="1.5" scaleY="1.5" horizontalCenter="0"/>
-	<e:Group horizontalCenter="0" bottom="160">
-		<e:Group x="0" y="0">
+	<e:Group bottom="180" horizontalCenter="0.5">
+		<e:Group x="0" y="0" width="400">
 			<e:Image source="icon_force_png" x="0" y="2"/>
-			<e:Group x="65" verticalCenter="0">
-				<e:Label id="atk1" text="Label" x="0" y="0" width="80" size="24" textAlign="center" textColor="0xd8fc74"/>
-				<e:Image source="arrow_png" x="32" y="1"/>
-				<e:Label id="atk2" text="Label" x="10" y="10" width="80" textAlign="center" size="24" textColor="0xd8fc74"/>
-				<e:layout>
-					<e:HorizontalLayout verticalAlign="middle"/>
-				</e:layout>
-			</e:Group>
+			<e:Label id="atk1" text="当前战力：+1000%" x="60" y="12" size="24" textAlign="left" textColor="0xd8fc74"/>
 		</e:Group>
-		<e:Group x="10" y="10">
-			<e:Image x="0" y="2" source="main_icon_health_png" scaleX="0.6" scaleY="0.6"/>
-			<e:Group x="65">
-			<e:Label id="hp1" text="Label" x="0" y="0" size="24" width="80" textAlign="center" textColor="0xd8fc74"/>
-			<e:Image source="arrow_png" x="32" y="1"/>
-			<e:Label id="hp2" text="Label" x="10" y="10" size="24" width="80" textAlign="center" textColor="0xd8fc74"/>
-			<e:layout>
-				<e:HorizontalLayout verticalAlign="middle"/>
-			</e:layout>
-			</e:Group>
+		<e:Group x="10" y="10" width="400">
+			<e:Image source="icon_force_png" x="0" y="2"/>
+			<e:Label id="atk2" text="下一级战力：+100000%" x="60" y="12" size="24" textColor="0xD8FC74" textAlign="left"/>
 		</e:Group>
-		<e:Group x="48" y="106">
-			<e:Image source="border_png" x="0" y="0" scale9Grid="31,6,37,42" width="200"/>
-			<e:Image source="coin_mc_png" x="9" y="9"/>
-			<e:Label id="coinText" text="Label" verticalCenter="0" size="24" textColor="0xFCD766" right="30"/>
+		<e:Group x="100" y="154" width="400">
+			<e:Image source="coin_mc_png" x="9" verticalCenter="0"/>
+			<e:Group y="0" x="180">
+				<e:Image source="border_png" x="0" y="0" scale9Grid="31,6,37,42" width="200"/>
+				<e:Label id="coinText" text="Label" verticalCenter="0" size="24" textColor="0xFCD766" x="30"/>
+			</e:Group>
+			<e:Label text="升级需求：" x="60" size="24" verticalCenter="0" textColor="0xfcd766"/>
 		</e:Group>
 		<e:layout>
 			<e:VerticalLayout gap="30" verticalAlign="middle" horizontalAlign="center"/>
 		</e:layout>
 	</e:Group>
-	<e:Label id="levelText" text="Label" size="24" horizontalCenter="0" bottom="420"/>
+	<e:Label id="levelText" text="Label" size="24" horizontalCenter="0" bottom="430"/>
 
 </e:Skin>

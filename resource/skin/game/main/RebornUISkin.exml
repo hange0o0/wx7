@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="RebornUISkin" width="520" height="600" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="RebornUISkin" width="520" height="640" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="window_bg_png" left="0" right="0" top="0" bottom="0" scale9Grid="38,37,36,31"/>
 	<e:Label text="马上复活" y="50" size="60" bold="true" horizontalCenter="0"/>
-	<e:Label id="desText" text="时间到后满血复活，并获得5秒无敌状态" horizontalCenter="1.5" textAlign="center" lineSpacing="20" size="24" bottom="79" textColor="0xb7b7b7"/>
+	<e:Label id="desText" text="复活后将获得 10 秒无敌状态" horizontalCenter="1.5" textAlign="center" lineSpacing="20" size="24" bottom="170" textColor="0xb7b7b7"/>
 	<e:Group id="rebornGroup" y="160" horizontalCenter="0">
 		<e:Image source="reborn_bg_png" x="0" y="0" width="260" height="260"/>
 		<e:Label id="cdText" text="10" size="100" bold="true" verticalCenter="0" horizontalCenter="0"/>
 	</e:Group>
-	<e:Image id="stopBtn" source="stop_btn_png" x="20" y="20"/>
+	<e:Button id="rebornBtn" label="复活" skinName="Btn1Skin" width="200" height="70" horizontalCenter="0" bottom="50"/>
 </e:Skin>

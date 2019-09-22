@@ -8,7 +8,6 @@ class ResultUI extends game.BaseUI_wx4{
 
     private bg: eui.Image;
     private coinText: eui.Label;
-    private skillList: eui.List;
     private awardBtn: eui.Button;
     private shareBtn: eui.Button;
     private failGroup: eui.Group;
@@ -17,6 +16,7 @@ class ResultUI extends game.BaseUI_wx4{
     private titleText: eui.Label;
     private ad1: eui.Image;
     private ad2: eui.Image;
+
 
 
 

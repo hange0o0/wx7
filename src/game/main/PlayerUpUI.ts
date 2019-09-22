@@ -11,10 +11,9 @@ class PlayerUpUI extends game.BaseWindow_wx4 {
     private sendBtn: eui.Button;
     private atk1: eui.Label;
     private atk2: eui.Label;
-    private hp1: eui.Label;
-    private hp2: eui.Label;
     private coinText: eui.Label;
     private levelText: eui.Label;
+
 
 
 
@@ -74,11 +73,9 @@ class PlayerUpUI extends game.BaseWindow_wx4 {
         var v1 = PKM.getPlayerValue(PKM.playerLevel)
         var v2 = PKM.getPlayerValue(PKM.playerLevel + 1)
 
-        this.atk1.text = v1.atk + ''
-        this.atk2.text = v2.atk + ''
+        this.atk1.text ='当前攻击：+ ' +  v1 + '%'
+        this.atk2.text = '下一级攻击：+ ' +  v2 + '%'
 
-        this.hp1.text = v1.hp + ''
-        this.hp2.text = v2.hp + ''
 
         this.levelText.text = '当前等级：'+PKM.playerLevel+'级'
         this.coinText.textColor = this.cost > UM_wx4.coin?0xFF0000:0xFCD766

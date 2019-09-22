@@ -9,6 +9,8 @@ class GameUI extends game.BaseUI_wx4 {
 
 
     private mapCon: eui.Group;
+    private leftBtn: eui.Image;
+    private rightBtn: eui.Image;
     private coinText: eui.Label;
     private energyText: eui.Label;
     private soundBtn: eui.Image;
@@ -28,7 +30,11 @@ class GameUI extends game.BaseUI_wx4 {
     private needEnergyText: eui.Label;
 
 
+
     public pkMap = new PKMap();
+    public pkMap2 = new PKMap();
+    public currentLevel
+    public tempLevel
 
 
 
@@ -37,6 +43,7 @@ class GameUI extends game.BaseUI_wx4 {
     private adType
     private adValue
     private moveState = 0
+    private dragPos
     public constructor() {
         super();
         this.skinName = "GameUISkin";
@@ -47,7 +54,14 @@ class GameUI extends game.BaseUI_wx4 {
 
         this.mapCon.addChild(this.pkMap);
         this.pkMap.horizontalCenter = 0
-        this.pkMap.verticalCenter = 0
+        this.pkMap.verticalCenter = 0;
+        //this.pkMap.cacheAsBitmap = true;
+
+
+        this.mapCon.addChild(this.pkMap2);
+        this.pkMap2.horizontalCenter = -640
+        this.pkMap2.verticalCenter = 0
+        //this.pkMap2.cacheAsBitmap = true;
 
 
         this.addBtnEvent(this.feedBackBtn,()=>{
@@ -62,7 +76,7 @@ class GameUI extends game.BaseUI_wx4 {
 
 
         this.addBtnEvent(this.editBtn,()=>{
-            MyWindow.Alert('自定义地图玩家即将开启！')
+            MyWindow.Alert('自定义地图玩法即将开启！')
         })
 
         this.addBtnEvent(this.skillBtn,()=>{
@@ -77,8 +91,22 @@ class GameUI extends game.BaseUI_wx4 {
             RankUI.getInstance().show();
         })
 
+
         this.addBtnEvent(this.startBtn,()=>{
             CreateListUI.getInstance().show();
+        })
+
+
+        this.addBtnEvent(this.leftBtn,()=>{
+            egret.Tween.removeTweens(this.pkMap)
+            egret.Tween.get(this.pkMap,{onChange:this.onScroll,onChangeObj:this}).
+                to({horizontalCenter:640},(640-Math.abs(this.pkMap.horizontalCenter))*0.5).call(this.onScrollEnd,this)
+        })
+
+        this.addBtnEvent(this.rightBtn,()=>{
+            egret.Tween.removeTweens(this.pkMap)
+            egret.Tween.get(this.pkMap,{onChange:this.onScroll,onChangeObj:this}).
+                to({horizontalCenter:-640},(640-Math.abs(this.pkMap.horizontalCenter))*0.5).call(this.onScrollEnd,this)
         })
 
 
@@ -116,7 +144,54 @@ class GameUI extends game.BaseUI_wx4 {
         },this)
 
 
+        this.mapCon.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onBegin,this)
+        this.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onMove,this)
+        this.addEventListener(egret.TouchEvent.TOUCH_END,this.onEnd,this)
+        this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onEnd,this)
+
         this.skillRedMC.visible = false;
+    }
+
+    private onBegin(e){
+        egret.Tween.removeTweens(this.pkMap)
+        if(!this.dragPos)
+        {
+            this.dragPos = {
+                x:e.stageX,
+                y:e.stageY,
+                horizontalCenter:this.pkMap.horizontalCenter
+            }
+        }
+    }
+
+    private onMove(e){
+        if(!this.dragPos)
+            return
+
+        this.pkMap.horizontalCenter = this.dragPos.horizontalCenter +(e.stageX - this.dragPos.x);
+        this.onScroll();
+    }
+
+    private onEnd(e){
+        if(!this.dragPos)
+            return
+        this.dragPos = null;
+        egret.Tween.removeTweens(this.pkMap)
+        if(this.pkMap.horizontalCenter > 200 && this.currentLevel > 1)
+        {
+            egret.Tween.get(this.pkMap,{onChange:this.onScroll,onChangeObj:this}).
+                to({horizontalCenter:640},(640-Math.abs(this.pkMap.horizontalCenter))*0.5).call(this.onScrollEnd,this)
+        }
+        else if(this.pkMap.horizontalCenter < -200  && this.currentLevel < UM_wx4.level)
+        {
+            egret.Tween.get(this.pkMap,{onChange:this.onScroll,onChangeObj:this}).
+                to({horizontalCenter:-640},(640-Math.abs(this.pkMap.horizontalCenter))*0.5).call(this.onScrollEnd,this)
+        }
+        else
+        {
+            egret.Tween.get(this.pkMap,{onChange:this.onScroll,onChangeObj:this}).
+                to({horizontalCenter:0},(Math.abs(this.pkMap.horizontalCenter))*0.5)
+        }
     }
 
     public resetAD(){
@@ -158,12 +233,17 @@ class GameUI extends game.BaseUI_wx4 {
             UM_wx4.level = parseInt(_get['level']);
         SoundManager.getInstance().playSound('bg')
 
+        this.currentLevel = UM_wx4.level;
 
 
+        this.tempLevel = -1;
+        this.pkMap.horizontalCenter = 0
         this.renewSound();
         this.renewCoin();
         this.renewEnergy();
-        this.renewLevel();
+        this.renewLevel()
+        this.renewLevel2()
+        this.renewBtn()
         this.renewNeedEnergy();
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renewCoin)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
@@ -326,16 +406,87 @@ class GameUI extends game.BaseUI_wx4 {
         //ui.renewConY(true);
     }
 
+    private onScroll(){
+        this.renewLevel2();
+        if(this.pkMap.horizontalCenter > 0)
+            this.pkMap2.horizontalCenter = this.pkMap.horizontalCenter - 640
+        else
+            this.pkMap2.horizontalCenter = this.pkMap.horizontalCenter + 640
+    }
+
+    private onScrollEnd(){
+        var level = this.currentLevel
+        if(this.pkMap.horizontalCenter > 320)
+        {
+            level --;
+            if(level <= 0)
+                level = 1;
+        }
+        else if(this.pkMap.horizontalCenter < -320)
+        {
+            level ++;
+            if(level > UM_wx4.level)
+                level = UM_wx4.level;
+        }
+        if(level == this.currentLevel)
+        {
+            egret.Tween.removeTweens(this.pkMap)
+            egret.Tween.get(this.pkMap,{onChange:this.onScroll,onChangeObj:this}).
+                to({horizontalCenter:0},Math.abs(this.pkMap.horizontalCenter)*0.5)
+        }
+        else
+        {
+            this.currentLevel = level;
+            this.tempLevel = -1;
+            this.renewLevel();
+            this.pkMap.horizontalCenter = 0;
+            this.renewLevel2();
+            this.renewBtn()
+        }
+    }
+
+    private renewBtn(){
+        this.leftBtn.visible = this.currentLevel > 1
+        this.rightBtn.visible = this.currentLevel < UM_wx4.level
+    }
+
     public renewLevel(){
-        var level = UM_wx4.level
+        var level = this.currentLevel
         var vo = LevelVO.getObject(level);
         this.pkMap.width = 64*vo.width
         this.pkMap.height = 64*vo.height
         this.levelText.text = '第 '+level+' 关'
         this.pkMap.initMap(level)
         this.pkMap.draw(vo.getRoadData(),true);
+        this.pkMap.sortY();
 
         this.pkMap.scaleX = this.pkMap.scaleY = 0.6*TowerManager.getInstance().getScale(vo.width,vo.height)
+    }
+
+    public renewLevel2(){
+        if(Math.abs(this.pkMap.horizontalCenter) < 20)
+        {
+            this.pkMap2.visible = false
+            return;
+        }
+        var level = this.pkMap.horizontalCenter > 0?this.currentLevel-1:this.currentLevel+1
+        if(level > UM_wx4.level || level <= 0)
+        {
+            this.pkMap2.visible = false
+            return;
+        }
+        this.pkMap2.visible = true
+        if(this.tempLevel != level)
+        {
+            this.tempLevel = level
+            var vo = LevelVO.getObject(level);
+            this.pkMap2.width = 64*vo.width
+            this.pkMap2.height = 64*vo.height
+            this.pkMap2.initMap(level)
+            this.pkMap2.draw(vo.getRoadData(),true);
+            this.pkMap.sortY();
+            this.pkMap2.scaleX = this.pkMap2.scaleY = 0.6*TowerManager.getInstance().getScale(vo.width,vo.height)
+        }
     }
 
 
@@ -369,7 +520,7 @@ class GameUI extends game.BaseUI_wx4 {
     }
 
     private renewRed(){
-        this.equipRedMC.visible = GunManager.getInstance().myGun.length < GunManager.getInstance().getUnlockNum();
+        this.equipRedMC.visible = false;//GunManager.getInstance().myGun.length < GunManager.getInstance().getUnlockNum();
         this.levelRedMC.visible = UM_wx4.coin >= PKManager.getInstance().getUpCost()
     }
 }

@@ -47,10 +47,16 @@ class TowerItem extends game.BaseItem{
     public atk = 0
     public atkDis = 0
     public shootNum = 0
-    public level = 0
-    public levelRate = 1
 
     public effectTowers = []//影响我的塔
+
+    public atkAdd = 0
+    public atkStep = 0
+    public speedAdd = 0
+    public speedStep = 0
+
+    public stateFireMV
+    public statePoisonMV
 
     public childrenCreated() {
         super.childrenCreated();
@@ -87,15 +93,26 @@ class TowerItem extends game.BaseItem{
             this.tw.setPaused(false)
             this.gvo = GunVO.getObject(this.data)
             this.mc.source = this.gvo.getUrl();
-            this.level = TowerManager.getInstance().level;
 
-            this.levelRate = 1+(this.level-1)/5
             this.lastHurtTime = 0
             this.atkSpeed = PKTool.getStepByTime(this.gvo.atkspeed)
-            this.atk = Math.ceil(this.gvo.atk*this.levelRate)
+            this.atk = Math.ceil(this.gvo.atk*TC.forceRate)
             this.atkDis = this.gvo.atkdis
             this.shootNum = this.gvo.shootnum
 
+        }
+
+        this.atkAdd = 0
+        this.atkStep = 0
+        this.speedAdd = 0
+        this.speedStep = 0
+        if(this.stateFireMV) {
+            this.stateFireMV.stop()
+            MyTool.removeMC(this.stateFireMV)
+        }
+        if(this.statePoisonMV) {
+            this.statePoisonMV.stop()
+            MyTool.removeMC(this.statePoisonMV)
         }
     }
 
@@ -110,6 +127,7 @@ class TowerItem extends game.BaseItem{
             return;
 
         var atkdis = this.gvo.atkdis;
+        var addValue = this.gvo.sv1/100;
         for(var i=0;i<towerList.length;i++)
         {
             var tower:TowerItem = towerList[i];
@@ -122,11 +140,11 @@ class TowerItem extends game.BaseItem{
                 switch(skillType)
                 {
                     case 'atk':
-                        value = Math.ceil(tower.gvo.atk*0.1)
+                        value = Math.ceil(tower.gvo.atk*addValue)
                         this.atk += value;
                         break;
                     case 'speed':
-                        value = -(Math.floor(PKTool.getStepByTime(this.gvo.atkspeed)*0.1) || 1)
+                        value = -(Math.floor(PKTool.getStepByTime(this.gvo.atkspeed)*addValue) || 1)
                         if(this.atkSpeed + value < 1)
                         {
                             value = -(this.atkSpeed - 1)
@@ -136,7 +154,7 @@ class TowerItem extends game.BaseItem{
                         this.atkSpeed += value;
                         break;
                     case 'dis':
-                        value = Math.ceil(tower.gvo.atkdis*0.1)
+                        value = Math.ceil(tower.gvo.atkdis*addValue)
                         this.atkDis += value;
                         break;
                 }
@@ -217,6 +235,11 @@ class TowerItem extends game.BaseItem{
         MyTool.removeMC(this);
         MyTool.removeMC(this.disBottomMC);
         this.stop();
+
+        if(this.statePoisonMV)
+            this.statePoisonMV.stop()
+        if(this.stateFireMV)
+            this.stateFireMV.stop()
     }
 
     public stop(){
@@ -234,6 +257,9 @@ class TowerItem extends game.BaseItem{
     public onE(monsterArr){
         if(!this.data)
             return;
+        this.runBuff();
+
+
 
         if(TC.actionStep - this.lastHurtTime < this.atkSpeed)
             return;
@@ -259,6 +285,94 @@ class TowerItem extends game.BaseItem{
                 this.lastHurtTime = TC.actionStep;
             }
         }
+    }
+
+    private runBuff(){
+        if(this.atkStep)
+        {
+            this.atkStep --;
+            if(this.atkStep <= 0)
+            {
+                this.atkStep = 0;
+                this.stateFireMV.stop()
+                MyTool.removeMC(this.stateFireMV)
+                this.atk -= this.atkAdd;
+            }
+        }
+
+        if(this.speedStep)
+        {
+            this.speedStep --;
+            if(this.speedStep <= 0)
+            {
+                this.speedStep = 0;
+                this.statePoisonMV.stop()
+                MyTool.removeMC(this.statePoisonMV)
+                this.atkSpeed -= this.speedAdd;
+            }
+        }
+    }
+
+
+    public addAtk(step,value){
+        if(!step)
+            return;
+        if(!this.atkStep)
+        {
+            if(!this.stateFireMV)
+            {
+                this.stateFireMV = new MovieSimpleSpirMC2()
+                this.stateFireMV.anchorOffsetX = 531/3/2
+                this.stateFireMV.anchorOffsetY = 532/2*0.8
+                this.stateFireMV.x = 32
+                this.stateFireMV.y = 32
+                this.stateFireMV.setData('effect18_png',531/3,532/2,5,84)
+                this.stateFireMV.widthNum = 3
+                this.stateFireMV.stop()
+            }
+            this.addChild(this.stateFireMV)
+            this.stateFireMV.play()
+        }
+
+        var atkAdd = Math.ceil(value/100*this.atk)
+        this.atk += atkAdd;
+
+        this.atkStep = Math.max(step,this.atkStep);
+        this.atkAdd += atkAdd;
+    }
+
+
+    public addSpeed(step,value){
+        if(!step)
+            return;
+        if(!this.speedStep)//表现晕
+        {
+            if(!this.statePoisonMV)
+            {
+                this.statePoisonMV = new MovieSimpleSpirMC2()
+                this.statePoisonMV.anchorOffsetX = 560/4/2
+                this.statePoisonMV.anchorOffsetY = 412/2*0.8
+                this.statePoisonMV.x = 50
+                this.statePoisonMV.y = 300
+                this.statePoisonMV.setData('effect17_png',560/4,412/2,7,84)
+                this.statePoisonMV.widthNum = 4
+                this.statePoisonMV.stop()
+            }
+            this.addChild(this.statePoisonMV)
+            this.statePoisonMV.play()
+        }
+
+        var speedAdd = -(Math.floor(PKTool.getStepByTime(this.gvo.atkspeed)*value/100) || 1)
+        if(this.atkSpeed + speedAdd < 1)
+        {
+            speedAdd = -(this.atkSpeed - 1)
+            if(speedAdd > 0)
+                speedAdd = 0;
+        }
+        this.atkSpeed += speedAdd;
+
+        this.speedStep = Math.max(step,this.speedStep);
+        this.speedAdd += speedAdd;
     }
 
 }

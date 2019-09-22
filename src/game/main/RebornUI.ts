@@ -9,16 +9,12 @@ class RebornUI extends game.BaseWindow_wx4{
     private desText: eui.Label;
     private rebornGroup: eui.Group;
     private cdText: eui.Label;
-    private stopBtn: eui.Image;
-
-
+    private rebornBtn: eui.Button;
 
 
     private shape = new egret.Shape()
     private step = 0;
-
-
-    private totalTime = 30*8
+    private isStoping = false;
 
     public constructor() {
         super();
@@ -28,45 +24,50 @@ class RebornUI extends game.BaseWindow_wx4{
 
     public childrenCreated() {
         super.childrenCreated();
+
+        this.addBtnEvent(this.rebornBtn,()=>{
+            this.isStoping = true;
+            ShareTool.openGDTV((type)=>{
+                this.hide();
+            },()=>{this.isStoping = false})
+        })
+
         this.rebornGroup.addChildAt(this.shape,1);
         this.shape.x = 130
         this.shape.y = 130
-
-        this.addBtnEvent(this.stopBtn,()=>{
-            StopUI.getInstance().show();
-        })
     }
 
     public onShow(){
-        this.step = 30*100
+        this.isStoping = false;
+        this.step = 30*10;
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
-        this.stopBtn.visible = false;
     }
 
-    public showFinish(){
-        this.stopBtn.visible = true;
-        this.stopBtn.x = 20 - this.x
-        this.stopBtn.y = 20 - this.y + GameManager_wx4.paddingTop()
-    }
+
 
     private onE(){
-
+        if(!GameManager_wx4.getInstance().isActive)
+            return;
+        if(ChangeJumpUI.getInstance().stage)
+            return;
+        if(this.isStoping)
+            return;
         if(this.step <= 0)
         {
             this.hide();
-            SoundManager.getInstance().playEffect('reborn')
+            ResultUI.getInstance().show();
             return;
         }
         this.step --;
-        this.renew();
+        var cd = Math.ceil(this.step/30);
+        this.cdText.text = cd + '';
+        MyTool.getSector(128,-90,-this.step/300*360,0xFFFFFF,0.3,this.shape)
     }
 
 
     public renew(){
-        var cd = Math.ceil(this.step/30);
-        this.cdText.text = cd + '';
-        MyTool.getSector(128,-90,-this.step/this.totalTime*360,0xFFFFFF,0.3,this.shape)
+
     }
 
     public hide(){

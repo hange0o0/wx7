@@ -7,7 +7,7 @@ class PKManager {
         return this.instance;
     }
 
-    public maxEnergy = 30;
+    public maxEnergy = 20;
     public energyCD = 30*60;
 
     public energy = 1;
@@ -16,8 +16,7 @@ class PKManager {
     public lastChooseData
 
     public playerLevel = 1
-    public atkAdd = 10
-    public hpAdd = 60
+    public atkAdd = 20
     public initData(data) {
         data = data || {}
         var energyData = data.energy || {};
@@ -35,19 +34,9 @@ class PKManager {
         }
     }
 
-    public getPlayerValue(level?,noAddForce?){
+    public getPlayerValue(level?){
         level = level || this.playerLevel
-        var atk = 60 + (level-1)*this.atkAdd
-        var hp = 600 + (level-1)*this.hpAdd
-        if(!noAddForce && UM_wx4.addForceEnd > TM_wx4.now())
-        {
-            atk = Math.ceil(atk*1.2);
-            hp = Math.ceil(hp*1.2)
-        }
-        return {
-            atk:atk,
-            hp:hp
-        }
+        return (level-1)*this.atkAdd
     }
 
     public resetEnergy(){

@@ -32,11 +32,11 @@ class TowerCode {
 
 
     public skillBase = {
-        1:{name:'攻击提升',des:'提升场上所有武器#1%的攻击力，持续#2秒',cd:30,value1:50,value2:10},
-        2:{name:'攻速提升',des:'提升场上所有武器#1%的攻击速度，持续#2秒',cd:30,value1:50,value2:10},
-        3:{name:'大地震击',des:'使当前场上所有怪物晕眩#1秒',cd:30,value1:5},
-        4:{name:'急速冷却',des:'使当前场上所有怪物减速#1%，持续#2秒',cd:30,value1:50,value2:10},
-        5:{name:'闪电风暴',des:'召唤闪电攻击场上所有怪物，造成#1点伤害',cd:30*30,value1:100},
+        1:{name:'攻击提升',des:'提升场上所有武器 #1% 的攻击力，持续 #2 秒',cd:30,value1:50,value2:10},
+        2:{name:'攻速提升',des:'提升场上所有武器 #1% 的攻击速度，持续 #2 秒',cd:30,value1:50,value2:10},
+        3:{name:'大地震击',des:'使当前场上所有怪物晕眩 #1 秒',cd:30,value1:5},
+        4:{name:'急速冷却',des:'使当前场上所有怪物减速 #1% ，持续 #2 秒',cd:30,value1:50,value2:10},
+        5:{name:'闪电风暴',des:'召唤闪电攻击场上所有怪物，造成 #1 点伤害',cd:40,value1:100},
     }
     public lastSkillTime = {};
 
@@ -70,7 +70,7 @@ class TowerCode {
     }
 
     public onSkillUse(sid){
-        this.lastSkillTime[sid]  = this.skillBase[sid].cd
+        this.lastSkillTime[sid]  = this.skillBase[sid].cd*this.frameRate
     }
 
 

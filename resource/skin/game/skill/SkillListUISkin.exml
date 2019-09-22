@@ -26,7 +26,7 @@
 		<e:Label id="txt1" text="攻击：1234" y="60" size="22" x="165" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F" width="380"/>
 		<e:Label id="txt2" text="攻击：1234" y="60" size="22" x="350" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F"/>
 		<e:Label id="nameText" text="Label" y="20" size="24" textColor="0x9BD2FF" x="165"/>
-		<ns1:TowerItem id="towerItem" x="45" y="180" skinName="TowerItemSkin"/>
+		<ns1:TowerItem id="towerItem" x="45" y="200" skinName="TowerItemSkin"/>
 		<e:Group x="165" bottom="15">
 			<e:List id="enemyList" height="80" x="85" y="0">
 				<e:layout>

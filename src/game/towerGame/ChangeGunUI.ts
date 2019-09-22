@@ -8,7 +8,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     }
 
     private scroller: eui.Scroller;
-    private list: eui.List;
+    public list: eui.List;
     private con: eui.Group;
     private txt1: eui.Label;
     private txt2: eui.Label;
@@ -116,7 +116,7 @@ class ChangeGunItem extends SkillListItem{
     }
 
     public setSelect(){
-        this['selectMC'].visible = this.data == SkillListUI.getInstance().list.selectedItem;
+        this['selectMC'].visible = this.data == ChangeGunUI.getInstance().list.selectedItem;
     }
 }
 

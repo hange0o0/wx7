@@ -31,7 +31,7 @@
 	<e:Image id="ad1" width="90" height="90" right="20" y="120"/>
 	<e:Image id="ad2" width="90" height="90" right="20" y="230"/>
 	<e:Image source="main_bg_01_png" bottom="0" left="0" right="0" scale9Grid="13,13,84,84"/>
-	<e:Group horizontalCenter="0" bottom="20" locked="true">
+	<e:Group horizontalCenter="0" bottom="20">
 		<e:Group id="skillBtn" x="0" y="0" width="180" height="70">
 			<e:Image source="main_tab_02_png" x="0" verticalCenter="0"/>
 			<e:Label text="图鉴" x="70" bold="true" verticalCenter="0"/>
@@ -43,7 +43,7 @@
 			<e:Image id="levelRedMC" source="common_redpoint_01_png" right="0" top="0"/>
 		</e:Group>
 		<e:Group id="editBtn" x="-28" y="-1042" width="180" scaleX="1" scaleY="1" height="70">
-			<e:Image x="-4.56" source="main_icon_edit_png" scaleX="0.8" scaleY="0.8" verticalCenter="4"/>
+			<e:Image x="-4.56" source="main_icon_edit_png" scaleX="0.8" scaleY="0.8" verticalCenter="6"/>
 			<e:Label text="原创" bold="true" x="70" verticalCenter="0"/>
 			<e:Image id="equipRedMC" source="common_redpoint_01_png" right="0" top="0"/>
 		</e:Group>

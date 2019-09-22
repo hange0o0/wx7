@@ -53,6 +53,7 @@ class SkillListUI extends game.BaseWindow_wx4 {
 
         this.towerItem.x += 32
         this.towerItem.y += 32
+        this.towerItem.scaleX = this.towerItem.scaleY = 1.2
 
         this.con.addChild(this.heroItem);
     }

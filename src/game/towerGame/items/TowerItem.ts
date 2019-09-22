@@ -352,8 +352,8 @@ class TowerItem extends game.BaseItem{
                 this.statePoisonMV = new MovieSimpleSpirMC2()
                 this.statePoisonMV.anchorOffsetX = 560/4/2
                 this.statePoisonMV.anchorOffsetY = 412/2*0.8
-                this.statePoisonMV.x = 50
-                this.statePoisonMV.y = 300
+                this.statePoisonMV.x = 32
+                this.statePoisonMV.y = 32
                 this.statePoisonMV.setData('effect17_png',560/4,412/2,7,84)
                 this.statePoisonMV.widthNum = 4
                 this.statePoisonMV.stop()

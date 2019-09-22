@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="PKTowerUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
 	<e:Image source="bg_10_jpg" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
-	<e:List id="list" height="100" bottom="20" horizontalCenter="0">
+	<e:Image source="main_bg_01_png" bottom="0" left="0" right="0" scale9Grid="13,13,84,84" height="120"/>
+	<e:List id="list" height="100" bottom="5" horizontalCenter="0">
 		<e:layout>
-		<e:HorizontalLayout gap="30"/>
+		<e:HorizontalLayout gap="20"/>
 		</e:layout>
 	</e:List>
 	<e:Label id="levetText" text="第 10 关" y="30" horizontalCenter="0" stroke="3" size="24" bold="true"/>
 	<e:Image id="closeBtn" x="20" y="20" source="stop_btn_png"/>
 
-		<e:Group id="skillInfoGroup" width="620" horizontalCenter="0" bottom="140" height="120">
+		<e:Group id="skillInfoGroup" width="620" horizontalCenter="0" bottom="120" height="120">
 		<e:Image left="0" right="0" top="0" bottom="0" source="black_bg_alpha_png"/>
 		<ns1:PKSkillItem id="skillInfoItem" x="10" skinName="PKSkillItemSkin" verticalCenter="0"/>
-		<e:Label id="desText" text="Label" y="48" size="22" left="130" right="10" lineSpacing="8"/>
-		<e:Group x="130" y="15">
-			<e:Label id="skillNameText" text="Label" y="0" size="24" textColor="0x9bd2ff" x="0"/>
-			<e:Label id="skillCDText" text="Label" y="0" size="24" x="0" textColor="0xfce7b0"/>
-			<e:layout>
-				<e:HorizontalLayout gap="20"/>
-			</e:layout>
-		</e:Group>
-			<e:Label text="再次点击图标即可使用" size="20" textColor="0x969696" horizontalCenter="0" top="-25"/>
+		<e:Label id="desText" text="Label" y="50" size="22" left="120" right="20" lineSpacing="8"/>
+			<e:Label id="skillNameText" text="Label" y="14" size="26" textColor="0x9bd2ff" x="120" bold="true"/>
+			<e:Label id="skillCDText" text="Label" y="15" size="24" textColor="0xfce7b0" right="20"/>
+			<e:Label text="再次点击图标即可使用" size="20" horizontalCenter="0" bottom="5" textColor="0xaaaaaa"/>
 	</e:Group>
 </e:Skin>

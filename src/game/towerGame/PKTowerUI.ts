@@ -7,7 +7,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         return this._instance;
     }
 
-    private list: eui.List;
+    public list: eui.List;
     private levetText: eui.Label;
     private closeBtn: eui.Image;
     private skillInfoGroup: eui.Group;
@@ -56,9 +56,10 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.pkMap.verticalCenter = -80
 
 
-        this.list.itemRenderer = CreateMapItem
+        this.list.itemRenderer = PKSkillItem
         this.list.selectedIndex = 0;
-        this.list.dataProvider = new eui.ArrayCollection([1,0])//1,
+        this.list.dataProvider = new eui.ArrayCollection([1,2,3,4,5])//1,
+        this.skillInfoGroup.touchChildren = this.skillInfoGroup.touchEnabled = false;
 
         this.addBtnEvent(this.closeBtn,()=>{
             this.hide()
@@ -71,6 +72,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
                     this.hideSkillInfo();
             }
         })
+
 
     }
 
@@ -133,6 +135,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
             PKBulletItem.freeItem(this.bulletArr.pop())
         }
 
+        this.levetText.text = '第 '+this.data.id+' 关'
         this.chooseSkill = null;
         this.pkMap.width = 64*this.ww
         this.pkMap.height = 64*this.hh
@@ -142,6 +145,10 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
         this.renewMap();
         TC.initData(this.data.id);
+
+
+        this.hideSkillInfo();
+        MyTool.renewList(this.list);
 
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
     }
@@ -189,6 +196,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         }
 
 
+        MyTool.runListFun(this.list,'onE')
         this.pkMap.sortY();
     }
 
@@ -243,14 +251,17 @@ class PKTowerUI extends game.BaseUI_wx4 {
                     break;
             }
             TC.onSkillUse(sid)
+            this.hideSkillInfo()
             return;
         }
+
+        this.chooseSkill = sid
         this.skillInfoGroup.visible = true;
         this.skillInfoItem.data = sid;
         var svo = TC.skillBase[sid];
 
         this.skillNameText.text = svo.name
-        this.setHtml(this.skillCDText,'技能间隔:' + this.createHtml(MyTool.toFixed(svo.cd/30,1) + '秒',0xFFFF00))
+        this.setHtml(this.skillCDText,'技能CD: ' + this.createHtml(svo.cd + '秒',0xFFFF00))
 
 
         var v2 = this.createHtml(svo.value2,0xFFFF00)
@@ -259,12 +270,21 @@ class PKTowerUI extends game.BaseUI_wx4 {
         else
             var v1 = this.createHtml(svo.value1,0xFFFF00)
         this.setHtml(this.desText, svo.des.replace('#1',v1).replace('#2',v2))
-
+        this.renewSelectSkill();
     }
 
     public hideSkillInfo(){
         this.chooseSkill = null
         this.skillInfoGroup.visible = false;
+        this.renewSelectSkill();
+    }
+
+    private renewSelectSkill(){
+        for(var i=0;i<this.list.numChildren;i++)
+        {
+            var item:any = this.list.getChildAt(i)
+            item.setSelect(this.chooseSkill)
+        }
     }
 
     private skill1(){
@@ -328,13 +348,14 @@ class PKTowerUI extends game.BaseUI_wx4 {
             mItem.addHp(hurt);
             var mv = PKTool.playMV({
                 mvType:1,
-                num:5,
+                num:3,
                 key:'monster1_mv',
-                type:'on',
+                type:'in',
                 anX:91/2,
                 anY:208*0.8,
                 item:mItem,
-                once:true
+                once:true,
+                xy:{x:50-10,y:300}
             })
         }
     }

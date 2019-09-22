@@ -34,15 +34,11 @@ class LevelVO {
     public getRoadNum(){
         if(!this.roadNum)
         {
-            var arr1 = this.data.split('|');
+            var arr1 = this.data.split('');
             for(var i=0;i<arr1.length;i++)
             {
-                var temp = arr1[i].split(',')
-                for(var j=0;j<temp.length;j++)
-                {
-                    if(temp[j] == '5')
-                        this.roadNum ++;
-                }
+                if(arr1[i] == '5')
+                    this.roadNum ++;
             }
         }
         return this.roadNum;

@@ -233,14 +233,6 @@ class CreateMapUI extends game.BaseUI_wx4 {
                 this.mapData[i].push(0);
             }
         }
-
-        var stopNum = this.ww%2 == 0?2:3
-        var begin = (this.ww-stopNum)/2
-        for(var i=0;i<stopNum;i++)
-        {
-            this.mapData[0][i + begin] = 4
-            this.mapData[this.hh-1][i + begin] = 4
-        }
     }
 
     public show(data?){

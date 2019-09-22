@@ -24,7 +24,7 @@ class PKSkillItem extends game.BaseItem{
 
 
     public dataChanged(){
-        this.mc.source = 'skill_'+this.data.sid+'_jpg'
+        this.mc.source = 'skill_'+this.data+'_jpg'
         this.selectMC.visible = false;
         this.setRateVisible(false);
     }
@@ -41,13 +41,11 @@ class PKSkillItem extends game.BaseItem{
     public onE(){
         if(!this.data)
             return;
-        if(!this.data.isActive)
-            return;
-        var cd = TC.getSkillCD(this.data.sid)
+        var cd = TC.getSkillCD(this.data)
         if(cd)
         {
             this.setRateVisible(true);
-            this.rateMC.height = Math.min(1,cd/this.data.maxCD)*80
+            this.rateMC.height = Math.min(1,cd/TC.skillBase[this.data].cd/TC.frameRate)*80
         }
         else
         {

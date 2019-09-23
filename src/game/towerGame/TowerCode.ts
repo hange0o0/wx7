@@ -10,7 +10,8 @@ class TowerCode {
     public frameRate = 30   //PKTool.getStepByTime 也要改
 
     public actionStep = 0;
-    public forceRate = 1;
+    public forceRate = 1;//塔的战力加成
+    public monsterHPRate = 1;//怪物生成值加成
 
 
 
@@ -118,6 +119,7 @@ class TowerCode {
         this.roundAutoMonster.length = 0;
         this.totalAutoMonster = this.getLevelMonster(level);
         this.gunList = [1,1,1,2,2,3,3];
+        this.monsterHPRate = 1 + level/4
     }
 
 
@@ -127,37 +129,32 @@ class TowerCode {
         var vo = LevelVO.getObject(level);
         var roadNum = vo.getRoadNum()
 
-        var monsterList = [];
-        for(var s in MonsterVO.data)
-        {
-            if(MonsterVO.data[s].level <= level && !MonsterVO.data[s].isHero())
-            {
-                monsterList.push(MonsterVO.data[s])
-            }
-        }
+        var monsterList = vo.getMonsterArr().concat();
+
 
         var returnArr = []
 
-
-        var round = 999//Math.min(10,3 + Math.floor(level/10))
-        this.maxRound = round;
+        this.maxRound = monsterList.length;
         this.round = 0;
         var step = 10
 
         var roadIndex = 0;
-        while(round > 0)
+        var maxCost = 60 * 10 * Math.pow(level,1.2)
+        var roundTimeStep = 30*15 + Math.floor(Math.pow(level,1.1))
+
+        while(monsterList.length > 0)
         {
+            var mvo = MonsterVO.getObject(monsterList.shift())
 
             var roadRandom = roadIndex == roadNum;
             if(roadRandom)
                 roadIndex = 0
 
-            round --;
             var list = [];
             returnArr.push(list);
-            var mvo = monsterList[Math.floor(this.random()*monsterList.length)]
-            var num = 10;
-            var stepAdd = 30;
+
+            var num = Math.round(maxCost/mvo.cost);
+            var stepAdd = Math.round(roundTimeStep/num);
             while(num > 0)
             {
                 num --;
@@ -174,7 +171,7 @@ class TowerCode {
                         roadIndex = 0;
                 }
             }
-            //step += 10*30;
+            step += 3*30;//两波怪之间的间隔
             roadIndex ++;
             if(roadRandom)
                 roadIndex = 0;

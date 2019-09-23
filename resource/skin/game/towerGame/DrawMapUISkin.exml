@@ -7,7 +7,7 @@
 		</e:layout>
 	</e:List>
 	<e:Button id="startBtn" label="开始" skinName="Btn2Skin" width="150" bottom="90" right="20"/>
-	<e:Button id="backBtn" label="返回" width="150" bottom="20" right="20" skinName="Btn1Skin"/>
+	<e:Button id="randomBtn" label="随机放刀" width="150" bottom="20" right="20" skinName="Btn1Skin"/>
 	<e:Button id="addForceBtn" label="攻击+50%" skinName="Btn2Skin" width="150" bottom="90" left="20"/>
 	<e:Button id="resetBtn" label="重置" width="150" bottom="20" left="20" skinName="Btn1Skin"/>
 	<e:Group horizontalCenter="0" bottom="10">
@@ -17,6 +17,6 @@
 			<e:HorizontalLayout gap="40"/>
 		</e:layout>
 	</e:Group>
-	<e:Image id="closeBtn" source="close_btn_png" x="20" y="20" visible="false"/>
+	<e:Image id="closeBtn" source="close_btn_png" x="20" y="20"/>
 	<e:Label id="levetText" text="第 10 关" y="30" horizontalCenter="0" stroke="3" size="24" bold="true"/>
 </e:Skin>

@@ -69,6 +69,7 @@
 		"bin-debug/game/pk/PKTool.js",
 		"bin-debug/game/rank/RankItem.js",
 		"bin-debug/game/rank/RankUI.js",
+		"bin-debug/game/skill/GunInfoUI.js",
 		"bin-debug/game/skill/SkillEnemyItem.js",
 		"bin-debug/game/skill/SkillListItem.js",
 		"bin-debug/game/skill/SkillListUI.js",

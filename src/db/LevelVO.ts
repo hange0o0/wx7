@@ -23,12 +23,53 @@ class LevelVO {
 
 
     private roadNum = 0
+    private roundNum = 0
+    private monsterArr
     public constructor() {
 
     }
 
     public reInit(){
 
+    }
+
+    //回合数
+    public getRoundNum(){
+        if(!this.roundNum)
+            this.roundNum = Math.min(10,3 + Math.floor(this.id/10))
+        return this.roundNum
+    }
+
+    //怪物列表
+    public getMonsterArr(){
+        if(!this.monsterArr)
+        {
+            this.monsterArr = []
+            var lastRandomSeed  = TC.randomSeed
+            TC.randomSeed = this.id*12345678901;
+            var monsterList = [];
+            for(var s in MonsterVO.data)
+            {
+                if(MonsterVO.data[s].level <= this.id)
+                {
+                    monsterList.push(MonsterVO.data[s])
+                }
+            }
+
+            var roundNum = this.getRoundNum();
+            var lastID = 0;
+            while(this.monsterArr.length < roundNum)
+            {
+                var mvo = monsterList[Math.floor(TC.random()*monsterList.length)]
+                if(mvo.id == lastID)
+                    continue;
+                this.monsterArr.push(mvo.id);
+                lastID = mvo.id;
+            }
+            TC.randomSeed = lastRandomSeed;
+        }
+
+        return this.monsterArr
     }
 
     public getRoadNum(){

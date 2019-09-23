@@ -28,12 +28,15 @@ class TowerItem extends game.BaseItem{
 
     private mc: eui.Image;
     private disBottomMC: eui.Image;
+    private disBottomMVMC: eui.Image;
     private effectGroup: eui.Group;
     private speedMC: eui.Image;
     private disMC: eui.Image;
     private atkMC: eui.Image;
 
 
+    public posX
+    public posY
 
 
     public tid = 0
@@ -89,6 +92,7 @@ class TowerItem extends game.BaseItem{
         this.effectTowers = [];
         this.gvo = null;
         MyTool.removeMC(this.disBottomMC);
+        MyTool.removeMC(this.disBottomMVMC);
         this.effectGroup.removeChildren();
         if(this.data)
         {
@@ -118,13 +122,11 @@ class TowerItem extends game.BaseItem{
         }
     }
 
-    public getDis(m1,m2)
+    public getDis(m2)
     {
-        var x1 = Math.floor(m1.x/64)
-        var y1 = Math.floor(m1.y/64)
         var x2 = Math.floor(m2.x/64)
         var y2 = Math.floor(m2.y/64)
-        return Math.max(Math.abs(x1-x2),Math.abs(y1-y2))
+        return Math.max(Math.abs(this.posX-x2),Math.abs(this.posY-y2))
     }
 
     //加入新塔后调用
@@ -144,7 +146,7 @@ class TowerItem extends game.BaseItem{
             var tower:TowerItem = towerList[i];
             if(tower == this)
                 continue;
-            var dis = this.getDis(tower,this);
+            var dis = this.getDis(tower);
             if(dis <= atkdis)
             {
                 var value = 0;
@@ -231,8 +233,12 @@ class TowerItem extends game.BaseItem{
             return;
 
         this.lastMap = map;
-
+        egret.Tween.removeTweens(this.disBottomMC)
         con && con.addChild(this.disBottomMC);
+        this.setItemSize(map,this.disBottomMC)
+    }
+
+    public setItemSize(map,mc){
         var atkDis = this.atkDis
         if(atkDis > this.gvo.atkdis)
             atkDis = this.gvo.atkdis + 1;
@@ -245,12 +251,26 @@ class TowerItem extends game.BaseItem{
         var top = Math.min(yy,atkDis)
         var bottom = Math.min(map.hh - (yy + 1),atkDis)
 
-        this.disBottomMC.width = (left+right + 1)*64
-        this.disBottomMC.height = (top+bottom + 1)*64
-        this.disBottomMC.anchorOffsetX = left*64 + 32;
-        this.disBottomMC.anchorOffsetY = top*64 + 32;;
-        this.disBottomMC.x = this.x
-        this.disBottomMC.y = this.y
+        mc.width = (left+right + 1)*64
+        mc.height = (top+bottom + 1)*64
+        mc.anchorOffsetX = left*64 + 32;
+        mc.anchorOffsetY = top*64 + 32;;
+        mc.x = this.x
+        mc.y = this.y
+    }
+
+    public showLight(pkMap){
+        egret.Tween.removeTweens(this.disBottomMVMC)
+        this.disBottomMVMC.alpha = 1;
+        this.disBottomMVMC.scaleX = this.disBottomMVMC.scaleY = 0.1;
+        this.setItemSize(pkMap,this.disBottomMVMC)
+        pkMap.bottomCon.addChild(this.disBottomMVMC)
+        egret.Tween.get(this.disBottomMVMC).to({alpha:0.5,scaleX:1,scaleY:1},500).
+            wait(1500).to({alpha:0,scaleX:0.1,scaleY:0.1},500).call(this.removeLight,this)
+    }
+
+    private removeLight(){
+        MyTool.removeMC(this.disBottomMVMC)
     }
 
     public renewEffect(){
@@ -308,16 +328,48 @@ class TowerItem extends game.BaseItem{
             atkDis = this.gvo.atkdis + 1;
         for(var i=0;i<len;i++)
         {
-            var mItem = monsterArr[i]
+            var mItem:PKMonsterItem = monsterArr[i]
             if(mItem.isDie)
                 continue
-            if(this.getDis(this,mItem) > atkDis)
+            if(this.getDis(mItem) > atkDis)
                 continue
             atkList.push(mItem)
         }
 
         ArrayUtil_wx4.sortByField(atkList,['totalDis'],[0])
-        for(var i=0;i<this.shootNum;i++)
+
+        var shootNum = this.shootNum;
+        var skillType = this.gvo.skilltype
+        if(skillType)//优先加状态
+        {
+            var skills=['fire','yun','poison','ice']
+            if(skills.indexOf(skillType) != -1)
+            {
+                for(var i=0;i<atkList.length;i++)
+                {
+                    mItem = atkList[i]
+                    if(mItem.fireStep && skillType == 'fire')
+                        continue;
+                    if(mItem.yunStep && skillType == 'yun')
+                        continue;
+                    if(mItem.poisonStep && skillType == 'poison')
+                        continue;
+                    if(mItem.iceStep && skillType == 'ice')
+                        continue;
+
+                    PKTowerUI.getInstance().createBullet(this,mItem)
+                    this.lastHurtTime = TC.actionStep;
+
+                    atkList.splice(i,1);
+                    i--;
+                    shootNum--;
+                    if(shootNum <= 0)
+                        break;
+                }
+            }
+        }
+
+        for(var i=0;i<shootNum;i++)
         {
             if(atkList[i])
             {

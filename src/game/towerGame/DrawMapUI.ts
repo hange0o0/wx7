@@ -9,11 +9,12 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     private list: eui.List;
     private startBtn: eui.Button;
-    private backBtn: eui.Button;
+    private randomBtn: eui.Button;
     private addForceBtn: eui.Button;
     private resetBtn: eui.Button;
     private closeBtn: eui.Image;
     private levetText: eui.Label;
+
 
 
 
@@ -57,12 +58,20 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.closeBtn,()=>{
             this.hide()
         })
-        this.addBtnEvent(this.backBtn,()=>{
-            this.hide()
+        this.addBtnEvent(this.randomBtn,()=>{
+            var list = TC.gunList.concat();
+            ArrayUtil_wx4.random(list,2)
+            for(var s in this.towerPos)
+            {
+                this.towerPos[s] = list.pop();
+            }
+            this.onChoosGun()
         })
+
         this.addBtnEvent(this.addForceBtn,()=>{
             this.hide()
         })
+
         this.addBtnEvent(this.resetBtn,()=>{
             var change = false
             for(var i=0;i<this.hh;i++)
@@ -277,6 +286,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
+        this.levetText.text = '第 '+this.data.id+' 关'
         this.pkMap.width = 64*this.ww
         this.pkMap.height = 64*this.hh
         this.scale = TowerManager.getInstance().getScale(this.ww,this.hh)
@@ -322,6 +332,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
     public onChoosGun(){
         this.pkMap.renewTower(this.towerPos,true);
     }
+
+
 
 
 

@@ -73,7 +73,23 @@ class PKTowerUI extends game.BaseUI_wx4 {
             }
         })
 
+        this.addBtnEvent(this.pkMap,this.onMap)
 
+
+    }
+
+    private onMap(e){
+        var itemSize = 64*this.scale;
+        var x = Math.floor((e.stageX - this.pkMap.x)/itemSize)
+        var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
+        if(y >= this.hh || y < 0 || x >= this.ww || x < 0)
+            return;
+        if(this.mapData[y][x] != 2)
+            return;
+        if(this.towerPos[x+'_'+y])
+        {
+            GunInfoUI.getInstance().show(this.towerPos[x+'_'+y],x,y)
+        }
     }
 
 

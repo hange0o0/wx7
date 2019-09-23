@@ -111,8 +111,9 @@ class PKMonsterItem extends game.BaseItem {
         
         this.isDie = 0
         this.speed = this.mvo.speed/10
-        this.hp = this.mvo.hp
-        this.maxHp = this.mvo.hp;
+        var hp = Math.ceil(TC.monsterHPRate * this.mvo.hp);
+        this.hp = hp
+        this.maxHp = hp;
         this.speedRate = 1;
         
         
@@ -181,6 +182,7 @@ class PKMonsterItem extends game.BaseItem {
             this.addChild(this.stateYunMV)
             this.stateYunMV.y = 300 - this.mvo.height - 35;
             this.stateYunMV.play()
+            this.standMV()
         }
         this.yunStep = Math.max(step,this.yunStep);
     }

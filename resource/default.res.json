@@ -1793,6 +1793,11 @@
 			"name":"monster1_mv_3_png",
 			"type":"image",
 			"url":"game_assets2/ani/monster1/monster1_mv_3.png"
+		},
+		{
+			"name":"tower_dis_mv_png",
+			"type":"image",
+			"url":"game_assets/tower_dis_mv.png"
 		}
 	]
 }

@@ -140,6 +140,18 @@ class PKMap extends game.BaseContainer_wx4 {
         return img
     }
 
+    public showTowerLight(x,y){
+        var arr = this.gunArr;
+        for(var i=0;i<arr.length;i++)
+        {
+            var tower = arr[i];
+            if(tower.posX == x && tower.posY == y)
+            {
+                tower.showLight(this);
+                return;
+            }
+        }
+    }
 
     public renewTower(gunData,showDis?){
         while(this.gunArr.length)
@@ -155,6 +167,8 @@ class PKMap extends game.BaseContainer_wx4 {
             var gunItem = TowerItem.createItem();
             this.gunArr.push(gunItem);
             this.roleCon.addChild(gunItem);
+            gunItem.posX = x
+            gunItem.posY = y
             gunItem.x = x*64 + 32
             gunItem.y = y*64 + 32
             gunItem.data = gunData[s]

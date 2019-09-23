@@ -83,10 +83,15 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
 
     public hide() {
         super.hide();
+        if(this.towerPos[this.key])
+        {
+            DrawMapUI.getInstance().pkMap.showTowerLight(this.xx,this.yy);
+        }
     }
 
     public onShow(){
         this.renew();
+        this.renewChoose();
 
         //this.inputText.text = ''
     }

@@ -55,16 +55,12 @@ class DebugUI extends game.BaseUI_wx4 {
         })
 
 
-        this.addB('加10000钱',()=>{
-            var coin = 10000
+        this.addB('加1000000钱',()=>{
+            var coin = 1000000
            UM_wx4.addCoin(coin)
             MyWindow.ShowTips('钱 + ' + NumberUtil_wx4.addNumSeparator(coin,2))
         })
-        this.addB('加10000000000钱',()=>{
-            var coin = 10000000000
-           UM_wx4.addCoin(coin)
-            MyWindow.ShowTips('钱 + ' + NumberUtil_wx4.addNumSeparator(coin,2))
-        })
+
 
         this.addB('跳1关',()=>{
             UM_wx4.level ++;
@@ -83,22 +79,32 @@ class DebugUI extends game.BaseUI_wx4 {
             MyWindow.ShowTips('第'+UM_wx4.level+'关')
         })
 
-        this.addB('加好友1',()=>{
-            UM_wx4.shareUser[1] = !UM_wx4.shareUser[1]
+        this.addB('加好友',()=>{
+            UM_wx4.shareUser.push(1)
             MyWindow.ShowTips(UM_wx4.shareUser[1])
         })
 
-        this.addB('加好友2',()=>{
-            UM_wx4.shareUser[2] = !UM_wx4.shareUser[2]
-            MyWindow.ShowTips(UM_wx4.shareUser[2])
-        })
 
-        this.addB('胜一场',()=>{
+        var dataBtn = this.addB('使用缓存数据',()=>{
+            var txt = egret.localStorage.getItem('levelData');
+            if(txt)
+            {
+                var arr = txt.split('\n')
+                arr.shift();
+                CM_wx4.initData(arr.join('\n'),'level');
+            }
             MyWindow.ShowTips('OK')
+            dataBtn.label = '使用缓存数据OK'
+            dataBtn.touchEnabled = false
+            dataBtn.touchChildren = false
+            dataBtn.skinName = 'Btn1Skin'
         })
 
         this.addB('插屏广告',()=>{
             MyADManager.getInstance().showInsert()
+        })
+        this.addB('复制数据',()=>{
+            MyTool.copyStr(egret.localStorage.getItem('levelData'))
         })
     }
 
@@ -109,6 +115,7 @@ class DebugUI extends game.BaseUI_wx4 {
         btn.label = label;
         this.con.addChild(btn);
         this.addBtnEvent(btn,fun);
+        return btn
     }
 
     public onShow(){

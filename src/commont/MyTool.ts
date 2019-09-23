@@ -5,6 +5,32 @@ class MyTool {
 
          */
     }
+    public static copyStr(str:any){
+        if(window["wx"]){
+            str += "";//保证是string
+            console.log(str);
+            window["wx"].setClipboardData({
+                data: str,
+                success: function(res) {
+                    console.log('success')
+                },
+                fail: function(res) {
+                     console.log('fail')
+                }
+            })
+            return;
+        }
+        var input = document.createElement("input");
+        input.value = str;
+        document.body.appendChild(input);
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+        document.execCommand('Copy');
+        document.body.removeChild(input);
+
+    }
+
+
     public static getRes(name,isPacket2=true){
          if(isPacket2)
             return "stage2/images/" + name;

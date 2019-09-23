@@ -1,7 +1,7 @@
 {
 	"groups":[
 		{
-			"keys":"lock_png,hp_bar_jpg,item_empty_png,window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,icon_hp_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,build_btn_png,pk_hero_jpg,data_txt,gun_txt,logo_png,common_head_bg_jpg,ui_loading_png,guide_png,skill_txt,level_txt,map_6_1_png,map_5_1_png",
+			"keys":"lock_png,hp_bar_jpg,item_empty_png,window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,icon_hp_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,build_btn_png,pk_hero_jpg,data_txt,gun_txt,logo_png,common_head_bg_jpg,ui_loading_png,guide_png,skill_txt,level_txt",
 			"name":"preload_png"
 		},
 		{

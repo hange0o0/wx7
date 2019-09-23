@@ -49,72 +49,118 @@ class DebugManager {
         //
         //
         ///////////////////////////////////
-        //var arr = [];
-        //for(var i=0;i<50;i++)
-        //{
-        //    arr.push([]);
-        //}
-        //
-        //var list = ObjectUtil_wx4.objToArray(MonsterVO.data)
-        //ArrayUtil_wx4.sortByField(list,['level'],[0])
-        //
-        //var key1 = list.concat();
-        //for(var i=0;i<50;i++)
-        //{
-        //    arr[i].push(list[i].id)
-        //}
-        //
-        //while(true)
-        //{
-        //    ArrayUtil_wx4.random(list,10)
-        //    var ok = true;
-        //    for(var i=0;i<list.length;i++)
-        //    {
-        //        if(list[i] == key1[i])
-        //        {
-        //            ok = false;
-        //            break;
-        //        }
-        //    }
-        //    if(ok)
-        //    {
-        //        var key2 = list.concat();
-        //        for(var i=0;i<50;i++)
-        //        {
-        //            arr[i].push(list[i].id)
-        //        }
-        //        break;
-        //    }
-        //}
-        //
-        //
-        //while(true)
-        //{
-        //    ArrayUtil_wx4.random(list,10)
-        //    var ok = true;
-        //    for(var i=0;i<list.length;i++)
-        //    {
-        //        if(list[i] == key1[i] || list[i] == key2[i])
-        //        {
-        //            ok = false;
-        //            break;
-        //        }
-        //    }
-        //    if(ok)
-        //    {
-        //        for(var i=0;i<50;i++)
-        //        {
-        //            arr[i].push(list[i].id)
-        //        }
-        //        break;
-        //    }
-        //}
-        //
-        //for(var i=0;i<50;i++)
-        //{
-        //    arr[i] = arr[i].join(',')
-        //}
-        //console.log(arr.join('\n'))
+        var arr = [];
+        for(var i=0;i<50;i++)
+        {
+            arr.push([]);
+        }
+
+        var list = ObjectUtil_wx4.objToArray(MonsterVO.data)
+        ArrayUtil_wx4.sortByField(list,['level'],[0])
+
+        var key1 = list.concat();
+        for(var i=0;i<50;i++)
+        {
+            arr[i].push(list[i].id)
+        }
+
+
+        var atkList = []
+        var effectList = []
+        var effectType = ['ice','yun','atk','speed','dis']
+        for(var s in GunVO.data)
+        {
+            var gvo = GunVO.data[s]
+            if(effectType.indexOf(gvo.skilltype) == -1)
+                atkList.push(gvo.id)
+            else
+                effectList.push(gvo.id)
+        }
+
+
+
+        while(true)
+        {
+            ArrayUtil_wx4.random(list,10)
+            var newList = list.concat();
+            var ok = true;
+            for(var i=0;i<atkList.length;i++)
+            {
+                var index = atkList[i] - 1;
+                var temp = arr[index]
+                var mid = newList.pop().id;
+                if(temp.indexOf(mid) != -1)
+                {
+                    ok = false;
+                    break;
+                }
+                var mid = newList.pop().id;
+                if(temp.indexOf(mid) != -1)
+                {
+                    ok = false;
+                    break;
+                }
+            }
+            if(ok)
+            {
+                var newList = list.concat();
+                for(var i=0;i<atkList.length;i++)
+                {
+                    var index = atkList[i] - 1;
+                    var temp = arr[index]
+                    var mid = newList.pop().id;
+                    temp.push(mid)
+                    var mid = newList.pop().id;
+                    temp.push(mid)
+                }
+                break;
+            }
+        }
+
+
+        while(true)
+        {
+            ArrayUtil_wx4.random(list,10)
+            var newList = list.concat();
+            var ok = true;
+            for(var i=0;i<effectList.length;i++)
+            {
+                var index = effectList[i] - 1;
+                var temp = arr[index]
+                var mid = newList.pop().id;
+                if(temp.indexOf(mid) != -1)
+                {
+                    ok = false;
+                    break;
+                }
+                var mid = newList.pop().id;
+                if(temp.indexOf(mid) != -1)
+                {
+                    ok = false;
+                    break;
+                }
+            }
+            if(ok)
+            {
+                var newList = list.concat();
+                for(var i=0;i<effectList.length;i++)
+                {
+                    var index = effectList[i] - 1;
+                    var temp = arr[index]
+                    var mid = newList.pop().id;
+                    temp.push(mid)
+                    var mid = newList.pop().id;
+                    temp.push(mid)
+                }
+                break;
+            }
+        }
+
+        for(var i=0;i<50;i++)
+        {
+            arr[i] = arr[i].join(',')
+        }
+        console.log(arr.join('\n'))
 
 
 

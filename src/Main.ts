@@ -169,7 +169,7 @@ class Main extends eui.UILayer {
         CM_wx4.initData(RES.getRes("gun_txt"),'gun');
         //CM_wx4.initData(RES.getRes("skill_txt"),'skill');
         CM_wx4.initData(RES.getRes("level_txt"),'level');
-        if(Config.readLocal)
+        if(DEBUG)//|| Config.readLocal
         {
             var txt = egret.localStorage.getItem('levelData');
             if(txt)

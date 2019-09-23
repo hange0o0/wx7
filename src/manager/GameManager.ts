@@ -293,6 +293,8 @@ if(window["wx"])
     window["GameManager_wx4"] = GameManager_wx4
     window["BasePanel"] = BasePanel
     window["HPBar"] = HPBar
+    window["TowerItem"] = TowerItem
+    window["PKSkillItem"] = PKSkillItem
 
 
     var wx =  window["wx"];

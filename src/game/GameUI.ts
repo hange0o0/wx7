@@ -123,6 +123,11 @@ class GameUI extends game.BaseUI_wx4 {
         },this,true)
 
 
+        MyTool.addLongTouch(this.energyText,()=>{
+            DebugUI.getInstance().debugTimer = egret.getTimer()
+            MyWindow.ShowTips('体力很重要')
+        },this)
+
         MyTool.addLongTouch(this.coinText,()=>{
             if(egret.getTimer() - DebugUI.getInstance().debugTimer < 3000)
             {

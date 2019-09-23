@@ -52,6 +52,7 @@
 		"resource/skin/game/towerGame/TowerItemSkin.exml",
 		"resource/skin/game/skill/SkillListUISkin.exml",
 		"resource/skin/game/skill/SkillUnlockUISkin.exml",
+		"resource/skin/game/towerGame/ChangeGunItemSkin.exml",
 		"resource/skin/game/towerGame/ChangeGunUISkin.exml",
 		"resource/skin/game/towerGame/DrawMapUISkin.exml",
 		"resource/skin/game/towerGame/items/HPBarSkin.exml",

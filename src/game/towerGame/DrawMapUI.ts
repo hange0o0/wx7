@@ -32,6 +32,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     public towerPos = {}
     public movePaths = []
     public isChange = false
+    public touchPos
     public constructor() {
         super();
         this.skinName = "DrawMapUISkin";
@@ -168,9 +169,13 @@ class DrawMapUI extends game.BaseUI_wx4 {
         var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
         if(y >= this.hh || y < 0 || x >= this.ww || x < 0)
             return;
+        this.touchPos = {
+            x:x,
+            y:y,
+        }
+
         if(this.mapData[y][x] != 0 && this.mapData[y][x]!= 1)
             return;
-
         var type = this.list.selectedItem || 0;
         if(this.mapData[y][x] != type)
         {
@@ -202,6 +207,18 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
     private onTouchEnd(e){
+        if(this.touchPos)
+        {
+            var itemSize = 64*this.scale;
+            var x = Math.floor((e.stageX - this.pkMap.x)/itemSize)
+            var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
+            if(this.touchPos.x == x && this.touchPos.y == y && this.mapData[y][x] == 2)//点了塔
+            {
+                ChangeGunUI.getInstance().show(this.towerPos,x,y)
+            }
+            this.touchPos = null;
+        }
+
         if(this.isChange)
         {
             this.isChange = false;
@@ -256,7 +273,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     private renewMap(){
         this.pkMap.draw(this.mapData);
-        this.pkMap.renewTower(this.towerPos);
+        this.pkMap.renewTower(this.towerPos,true);
     }
 
     public onShow(){
@@ -300,6 +317,10 @@ class DrawMapUI extends game.BaseUI_wx4 {
             this.startBtn.skinName = 'Btn1Skin'
         }
 
+    }
+
+    public onChoosGun(){
+        this.pkMap.renewTower(this.towerPos,true);
     }
 
 

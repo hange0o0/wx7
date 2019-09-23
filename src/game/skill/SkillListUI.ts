@@ -145,7 +145,7 @@ class SkillListUI extends game.BaseWindow_wx4 {
         if(gvo.skilltype)
             arr1.push('技能：' + gvo.getDes())
 
-        arr2.push('攻速：' + this.createHtml(MyTool.toFixed(1000/gvo.atkspeed,1),0xFFFF00))
+        arr2.push('攻速：' + this.createHtml(MyTool.toFixed(30/gvo.atkspeed,1),0xFFFF00))
         arr2.push('数量：' + this.createHtml(gvo.shootnum,0xFFFF00))
         this.setHtml(this.txt1,arr1.join('\n'))
         this.setHtml(this.txt2,arr2.join('\n'))

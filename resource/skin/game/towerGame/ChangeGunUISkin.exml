@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="ChangeGunUISkin" width="600" height="900" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing"   states="s1,s2" >
+	<w:Config id="16d5cc0717f"/>
 	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
 	<e:Scroller id="scroller" top="380" bottom="120" bounces="false" anchorOffsetY="0" left="20" right="20" top.s1="80">
 		<e:Group>
@@ -10,12 +11,12 @@
 			</e:List>
 		</e:Group>
 	</e:Scroller>
-	<e:Group id="con" y="80" left="20" right="20" height="300" includeIn="s2">
+	<e:Group id="con" y="80" left="20" right="20" height="300" visible.s1="false">
 		<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" left="0" right="0" top="0" bottom="0"/>
 		<e:Label id="txt1" text="攻击：1234" y="60" size="22" x="165" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F" width="380"/>
 		<e:Label id="txt2" text="攻击：1234" y="60" size="22" x="350" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F"/>
 		<e:Label id="nameText" text="Label" y="20" size="24" textColor="0x9BD2FF" x="165"/>
-		<ns1:TowerItem id="towerItem" x="45" y="180" skinName="TowerItemSkin"/>
+		<ns1:TowerItem id="towerItem" x="45" y="200" skinName="TowerItemSkin" y.s2="200"/>
 		<e:Group x="165" bottom="15">
 			<e:List id="enemyList" height="80" x="85" y="0">
 				<e:layout>
@@ -27,7 +28,7 @@
 	</e:Group>
 
 		<e:Group id="btnGroup" horizontalCenter="0" bottom="30">
-		<e:Button id="dropBtn" label="更多武器" x="0" y="0" width="200" skinName="Btn1Skin" icon="video_icon_png"/>
+		<e:Button id="moreBtn" label="更多武器" x="0" y="0" width="200" skinName="Btn1Skin" icon="video_icon_png"/>
 		<e:Button id="okBtn" label="更换" x="10" y="10" skinName="Btn2Skin" width="200"/>
 		<e:layout>
 			<e:HorizontalLayout gap="50"/>

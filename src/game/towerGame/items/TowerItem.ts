@@ -82,6 +82,8 @@ class TowerItem extends game.BaseItem{
     }
 
     public dataChanged():void {
+        if(!this.mv)
+            return;
         this.mv.gotoAndPay()
         this.mc.source = ''
         this.effectTowers = [];
@@ -95,7 +97,7 @@ class TowerItem extends game.BaseItem{
             this.mc.source = this.gvo.getUrl();
 
             this.lastHurtTime = 0
-            this.atkSpeed = PKTool.getStepByTime(this.gvo.atkspeed)
+            this.atkSpeed = this.gvo.atkspeed
             this.atk = Math.ceil(this.gvo.atk*TC.forceRate)
             this.atkDis = this.gvo.atkdis
             this.shootNum = this.gvo.shootnum
@@ -116,6 +118,15 @@ class TowerItem extends game.BaseItem{
         }
     }
 
+    public getDis(m1,m2)
+    {
+        var x1 = Math.floor(m1.x/64)
+        var y1 = Math.floor(m1.y/64)
+        var x2 = Math.floor(m2.x/64)
+        var y2 = Math.floor(m2.y/64)
+        return Math.max(Math.abs(x1-x2),Math.abs(y1-y2))
+    }
+
     //加入新塔后调用
     public onAddTower(towerList){
         if(!this.gvo)
@@ -126,14 +137,14 @@ class TowerItem extends game.BaseItem{
         if(skills.indexOf(skillType) == -1)
             return;
 
-        var atkdis = this.gvo.atkdis;
-        var addValue = this.gvo.sv1/100;
+        var atkdis = this.gvo.sv1;
+        var addValue = this.gvo.sv2/100;
         for(var i=0;i<towerList.length;i++)
         {
             var tower:TowerItem = towerList[i];
             if(tower == this)
                 continue;
-            var dis = MyTool.getDis(tower,this);
+            var dis = this.getDis(tower,this);
             if(dis <= atkdis)
             {
                 var value = 0;
@@ -145,16 +156,18 @@ class TowerItem extends game.BaseItem{
                         break;
                     case 'speed':
                         value = -(Math.floor(PKTool.getStepByTime(this.gvo.atkspeed)*addValue) || 1)
-                        if(this.atkSpeed + value < 1)
-                        {
-                            value = -(this.atkSpeed - 1)
-                            if(value >= 0)
-                                continue;
-                        }
+                        //if(this.atkSpeed + value < 1)
+                        //{
+                        //    value = -(this.atkSpeed - 1)
+                        //    if(value >= 0)
+                        //        continue;
+                        //}
                         this.atkSpeed += value;
                         break;
                     case 'dis':
-                        value = Math.ceil(tower.gvo.atkdis*addValue)
+                        //if(this.atkDis > this.gvo.atkdis)
+                        //    continue;
+                        value =1;
                         this.atkDis += value;
                         break;
                 }
@@ -209,12 +222,33 @@ class TowerItem extends game.BaseItem{
         }
     }
 
-    public resetBottomMC(con?){
+    private lastMap;
+    public resetBottomMC(map?,con?){
         if(!this.gvo)
             return;
+        map = map || this.lastMap;
+        if(!map)
+            return;
+
+        this.lastMap = map;
+
         con && con.addChild(this.disBottomMC);
-        this.disBottomMC.width = this.disBottomMC.height = this.atkDis*2;
-        this.disBottomMC.anchorOffsetX = this.disBottomMC.anchorOffsetY = this.atkDis;
+        var atkDis = this.atkDis
+        if(atkDis > this.gvo.atkdis)
+            atkDis = this.gvo.atkdis + 1;
+
+        var xx = Math.floor(this.x/64)
+        var yy = Math.floor(this.y/64)
+
+        var left = Math.min(xx,atkDis)
+        var right = Math.min(map.ww - (xx + 1),atkDis)
+        var top = Math.min(yy,atkDis)
+        var bottom = Math.min(map.hh - (yy + 1),atkDis)
+
+        this.disBottomMC.width = (left+right + 1)*64
+        this.disBottomMC.height = (top+bottom + 1)*64
+        this.disBottomMC.anchorOffsetX = left*64 + 32;
+        this.disBottomMC.anchorOffsetY = top*64 + 32;;
         this.disBottomMC.x = this.x
         this.disBottomMC.y = this.y
     }
@@ -261,17 +295,23 @@ class TowerItem extends game.BaseItem{
 
 
 
-        if(TC.actionStep - this.lastHurtTime < this.atkSpeed)
+        var atkSpeed = this.atkSpeed
+        if(atkSpeed < 1)
+            atkSpeed = 1
+        if(TC.actionStep - this.lastHurtTime < atkSpeed)
             return;
 
         var atkList = [];
         var len = monsterArr.length;
+        var atkDis = this.atkDis
+        if(atkDis > this.gvo.atkdis)
+            atkDis = this.gvo.atkdis + 1;
         for(var i=0;i<len;i++)
         {
             var mItem = monsterArr[i]
             if(mItem.isDie)
                 continue
-            if(MyTool.getDis(this,mItem) > this.atkDis)
+            if(this.getDis(this,mItem) > atkDis)
                 continue
             atkList.push(mItem)
         }
@@ -363,12 +403,12 @@ class TowerItem extends game.BaseItem{
         }
 
         var speedAdd = -(Math.floor(PKTool.getStepByTime(this.gvo.atkspeed)*value/100) || 1)
-        if(this.atkSpeed + speedAdd < 1)
-        {
-            speedAdd = -(this.atkSpeed - 1)
-            if(speedAdd > 0)
-                speedAdd = 0;
-        }
+        //if(this.atkSpeed + speedAdd < 1)
+        //{
+        //    speedAdd = -(this.atkSpeed - 1)
+        //    if(speedAdd > 0)
+        //        speedAdd = 0;
+        //}
         this.atkSpeed += speedAdd;
 
         this.speedStep = Math.max(step,this.speedStep);

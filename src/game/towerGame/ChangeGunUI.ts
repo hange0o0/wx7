@@ -16,7 +16,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     private towerItem: TowerItem;
     private enemyList: eui.List;
     private btnGroup: eui.Group;
-    private dropBtn: eui.Button;
+    private moreBtn: eui.Button;
     private okBtn: eui.Button;
 
 
@@ -28,7 +28,13 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
 
 
 
-    public data;
+
+    public towerPos;
+    public xx;
+    public yy;
+    public key;
+    public listObj;
+    public lastSelectGun
     public constructor() {
         super();
         this.skinName = "ChangeGunUISkin";
@@ -53,10 +59,25 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
 
         this.towerItem.x += 32
         this.towerItem.y += 32
+        this.towerItem.scaleX = this.towerItem.scaleY = 1.2
+
+        this.addBtnEvent(this.moreBtn,()=>{
+
+        })
+
+        this.addBtnEvent(this.okBtn,()=>{
+            this.towerPos[this.key] = this.lastSelectGun
+            DrawMapUI.getInstance().onChoosGun()
+            this.hide()
+        })
     }
 
 
-    public show(){
+    public show(towerPos?,xx?,yy?){
+        this.towerPos = towerPos
+        this.xx = xx
+        this.yy = yy
+        this.key = xx+'_' + yy
         super.show()
     }
 
@@ -71,12 +92,53 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     }
 
     public renew(){
+        var arr = TC.gunList;
+        var listObj = this.listObj = {};
+        for(var i=0;i<arr.length;i++)
+        {
+            var gid = arr[i];
+            if(!listObj[gid])
+            {
+                listObj[gid] = {id:gid,num:0}
+            }
+            listObj[gid].num ++;
+        }
+        for(var s in this.towerPos)
+        {
+            var gid = <number>this.towerPos[s]
+            if(gid && listObj[gid])// && s != this.key
+                listObj[gid].num --;
 
-        var list = ObjectUtil_wx4.objToArray(GunVO.data)
-        ArrayUtil_wx4.sortByField(list,['level','id'],[0,0]);
-        this.setTitle('装备图鉴')
-        this.currentState = 's1'
+        }
+        var list = ObjectUtil_wx4.objToArray(listObj);
+        ArrayUtil_wx4.sortByField(list,['id'],[0]);
         this.list.dataProvider = new eui.ArrayCollection(list)
+
+        this.lastSelectGun = this.towerPos[this.key];
+        if(this.lastSelectGun)
+        {
+            this.setTitle('更换武器')
+            this.currentState = 's2'
+
+            var index = -1;
+            for(var i=0;i<list.length;i++)
+            {
+                if(list[i].id == this.towerPos[this.key])
+                {
+                    index = i;
+                    break;
+                }
+            }
+            this.list.selectedIndex = index;
+        }
+        else
+        {
+            this.setTitle('装备武器')
+            this.currentState = 's1'
+            this.list.selectedIndex = -1;
+        }
+
+        MyTool.removeMC(this.okBtn);
     }
 
 
@@ -84,13 +146,29 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     public renewChoose(){
         if(!this.list.selectedItem)
             return;
+        this.currentState = 's2'
+        if(this.list.selectedItem.id != this.lastSelectGun)//换了武器
+        {
+            if(this.listObj[this.lastSelectGun])
+                this.listObj[this.lastSelectGun].num ++;
+            this.lastSelectGun = this.list.selectedItem.id
+            this.listObj[this.lastSelectGun].num --;
+            MyTool.runListFun(this.list,'renewNum')
+
+            if(this.lastSelectGun == this.towerPos[this.key])
+                MyTool.removeMC(this.okBtn);
+            else
+                this.btnGroup.addChild(this.okBtn);
+        }
+
         this.renewGunInfo(this.list.selectedItem)
         MyTool.runListFun(this.list,'setSelect')
     }
 
-    private renewGunInfo(gvo){
+    private renewGunInfo(data){
+        var gvo = GunVO.getObject(data.id)
         this.nameText.text = gvo.name
-
+        this.towerItem.data = gvo.id;
         var arr1 = [];
         var arr2 = [];
         arr1.push('攻击：' + this.createHtml(gvo.atk,0xFFFF00))
@@ -98,7 +176,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         if(gvo.skilltype)
             arr1.push('技能：' + gvo.getDes())
 
-        arr2.push('攻速：' + this.createHtml(MyTool.toFixed(1000/gvo.atkspeed,1),0xFFFF00))
+        arr2.push('攻速：' + this.createHtml(MyTool.toFixed(30/gvo.atkspeed,1),0xFFFF00))
         arr2.push('数量：' + this.createHtml(gvo.shootnum,0xFFFF00))
         this.setHtml(this.txt1,arr1.join('\n'))
         this.setHtml(this.txt2,arr2.join('\n'))
@@ -106,17 +184,6 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         var enemy = gvo.getEnemys();
         this.enemyList.dataProvider = new eui.ArrayCollection(enemy);
 
-    }
-}
-
-class ChangeGunItem extends SkillListItem{
-
-    public constructor() {
-        super();
-    }
-
-    public setSelect(){
-        this['selectMC'].visible = this.data == ChangeGunUI.getInstance().list.selectedItem;
     }
 }
 

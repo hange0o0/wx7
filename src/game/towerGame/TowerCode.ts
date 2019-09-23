@@ -18,6 +18,7 @@ class TowerCode {
     public maxRound = 1;
     public roundAutoMonster = []
     public totalAutoMonster = []
+    public gunList = [1,1,1,2,2,3,3]//可选的武器
 
 
 
@@ -29,6 +30,7 @@ class TowerCode {
 
     private dataArr
     private astar
+
 
 
     public skillBase = {
@@ -115,6 +117,7 @@ class TowerCode {
         PKMonsterAction_wx3.getInstance().init();
         this.roundAutoMonster.length = 0;
         this.totalAutoMonster = this.getLevelMonster(level);
+        this.gunList = [1,1,1,2,2,3,3];
     }
 
 

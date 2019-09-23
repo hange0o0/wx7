@@ -103,21 +103,28 @@ class PKBulletItem extends game.BaseItem {
         var gvo = this.owner.gvo;
         switch(gvo.skilltype)
         {
+            //case 'ice':
+            //    return '降低目标 ' + MyTool.createHtml('50%',0xFFFF00) + ' 的移动速度，持续 '+ MyTool.createHtml(this.sv1,0xFFFF00) + '秒'
+            //case 'fire':
+            //    return '点燃目标，每秒造成 ' + MyTool.createHtml('30',0xFFFF00) + ' 点伤害，持续 '+ MyTool.createHtml(this.sv1,0xFFFF00) + '秒'
+            //case 'poison':
+            //    return '使目标中毒，每秒造成 ' + MyTool.createHtml('10',0xFFFF00) + ' 点伤害，直至目标死亡'
+            //case 'yun':
+            //    return '有 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的机率使目标陷入晕眩，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒'
             case 'ice':
-                //return '降低目标 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的移动速度，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒'
-                this.target.setIce(PKTool.getStepByTime(gvo.sv2*1000),1-gvo.sv1/100)
+                this.target.setIce(PKTool.getStepByTime(gvo.sv1*1000),0.5)
                 break
             case 'fire':
                 //return '点燃目标，每秒造成 ' + MyTool.createHtml(this.sv1 + '',0xFFFF00) + ' 点伤害，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒'
-                this.target.setFire(PKTool.getStepByTime(gvo.sv2*1000),Math.ceil(gvo.sv1*TC.forceRate))
+                this.target.setFire(PKTool.getStepByTime(gvo.sv1*1000),Math.ceil(30*TC.forceRate))
                 break
             case 'poison':
                 //return '使目标中毒，每秒造成 ' + MyTool.createHtml(this.sv1 + '',0xFFFF00) + ' 点伤害，直至目标死亡'
-                this.target.setPoison(Number.MAX_VALUE,Math.ceil(gvo.sv1*TC.forceRate))
+                this.target.setPoison(Number.MAX_VALUE,Math.ceil(10*TC.forceRate))
                 break
             case 'yun':
                 //return '有 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的机率使目标陷入晕眩，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒
-                if(TC.random() < gvo.sv2/100)
+                if(TC.random() < gvo.sv1/100)
                     this.target.setYun(PKTool.getStepByTime(gvo.sv2*1000))
                 break
         }

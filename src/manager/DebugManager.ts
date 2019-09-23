@@ -121,6 +121,142 @@ class DebugManager {
     }
 
 
+    public setGun(){
+        while(true)
+        {
+            var typeObj = {}
+
+            var typeArr = ['atk','speed','dis','num','']
+            for(var s in GunVO.data)
+            {
+                var vo:GunVO = GunVO.data[s]
+                if(!typeObj[vo.skilltype])
+                    typeObj[vo.skilltype] = [];
+                typeObj[vo.skilltype].push(vo);
+            }
+            for(var s in typeObj)
+            {
+                var arr = typeObj[s];
+                ArrayUtil_wx4.random(arr)
+                for(var i=0;i<arr.length;i++)
+                {
+                    var type = typeArr.shift();
+                    typeArr.push(type);
+                    this.setOneGun(arr[i],type)
+                }
+            }
+
+            var maxScore = 0;
+            var minScore = 990;
+            for(var s in GunVO.data)
+            {
+                var gvo:GunVO = GunVO.data[s]
+                var score = this.getScore(gvo)
+                minScore = Math.min(minScore,score)
+                maxScore = Math.max(maxScore,score)
+            }
+            if(maxScore > 500)
+                continue;
+            if(minScore < 150)
+                continue;
+
+            for(var s in GunVO.data)
+            {
+                var gvo:GunVO = GunVO.data[s]
+                var score = this.getScore(gvo)
+                console.log(gvo.id + '\tatk:' + gvo.atk + '\tspeed:' + gvo.atkspeed + '\tdis:' + gvo.atkdis + '\tnum:' + gvo.shootnum + '\tscore:' + Math.round(score))
+            }
+            console.log('maxScore',maxScore)
+            console.log('minScore',minScore)
+
+            this.getValue('atk')
+            this.getValue('atkspeed')
+            this.getValue('atkdis')
+            this.getValue('shootnum')
+
+            break;
+        }
+
+
+    }
+
+    private getScore(gvo){
+        return gvo.atk*(1000/Math.pow(gvo.atkspeed,1.05))*gvo.atkdis/150*gvo.shootnum
+    }
+
+    private setOneGun(gvo:GunVO,type){
+        var atk = 100
+        var speed = 800
+        var dis = 150
+        var num = 1
+
+        gvo.atk = (0.8 + 0.4*Math.random())*atk
+        gvo.atkspeed = (0.8 + 0.4*Math.random())*speed
+        gvo.atkdis = (0.8 + 0.4*Math.random())*dis
+        gvo.shootnum = num + (Math.random()<0.3?1:0)
+
+        if(type == 'atk')
+        {
+            gvo.atk *= 2.5
+            if(num == 2)
+                gvo.atkspeed *= 2.5
+        }
+        else if(type == 'speed')
+        {
+            gvo.atkspeed /= 2.5
+            if(num == 2)
+                gvo.atk /= 2
+        }
+        else if(type == 'dis')
+        {
+            gvo.atkdis *= 2
+            if(num == 2)
+            {
+                gvo.atk /= 1.5
+                gvo.atkspeed *= 1.5
+            }
+            else
+            {
+                var v = 1.2
+                gvo.atk *= v
+                gvo.atkspeed /= v
+            }
+        }
+        else if(type == 'num')
+        {
+            gvo.shootnum += 2 + Math.floor(Math.random()*3)
+
+            var v = 1+gvo.shootnum*0.1
+            gvo.atk /= v
+        }
+        else
+        {
+            var v = 1.5
+            gvo.atk *= v
+            gvo.atkdis *= v
+            if(num == 2)
+            {
+                gvo.atk /= 2.5
+            }
+        }
+
+        gvo.atk = Math.round(gvo.atk/5)*5
+        gvo.atkspeed = Math.round(gvo.atkspeed/50)*50
+        gvo.atkdis = Math.min(250,Math.round(gvo.atkdis/5)*5)
+
+
+    }
+
+    public getValue(key){
+        var arr = [];
+        for(var s in GunVO.data)
+        {
+            var gvo:GunVO = GunVO.data[s]
+            arr.push(gvo[key])
+        }
+        console.log(key)
+        console.log(arr.join('\n'))
+    }
 
 
 

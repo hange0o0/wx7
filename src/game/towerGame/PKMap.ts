@@ -24,6 +24,9 @@ class PKMap extends game.BaseContainer_wx4 {
     public map = new Map();
     public randomSeedIn
 
+    public ww
+    public hh
+
     public constructor() {
         super();
         this.skinName = "PKMapSkin";
@@ -41,6 +44,8 @@ class PKMap extends game.BaseContainer_wx4 {
     }
 
     public draw(data,noPos?){
+        this.hh = data.length;
+        this.ww = data[0].length;
         this.map.draw(data)
         this.renewTree(data);
         if(!noPos)
@@ -154,7 +159,7 @@ class PKMap extends game.BaseContainer_wx4 {
             gunItem.y = y*64 + 32
             gunItem.data = gunData[s]
             if(showDis)
-                gunItem.resetBottomMC(this.bottomCon)
+                gunItem.resetBottomMC(this,this.bottomCon)
         }
 
         for(var i=0;i<this.gunArr.length;i++)

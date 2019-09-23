@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="TowerItemSkin" width="64" height="64" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image id="mc" horizontalCenter="0" bottom="50"/>
-	<e:Image id="disBottomMC" source="tower_dis_png" x="32" y="32" anchorOffsetX="50" anchorOffsetY="50"/>
+	<e:Image id="disBottomMC" source="tower_dis_png" x="32" y="32" anchorOffsetX="50" anchorOffsetY="50" scale9Grid="12,12,76,76"/>
 	<e:Group id="effectGroup" scaleX="0.6" scaleY="0.6" horizontalCenter="0" bottom="0">
 		<e:Image id="speedMC" source="buff_speed_png" x="0" y="0"/>
 		<e:Image id="disMC" source="buff_dis_png" x="0" y="0"/>

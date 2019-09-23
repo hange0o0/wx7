@@ -110,7 +110,7 @@ class PKMonsterItem extends game.BaseItem {
         this.targetPos = null;
         
         this.isDie = 0
-        this.speed = this.mvo.speed
+        this.speed = this.mvo.speed/10
         this.hp = this.mvo.hp
         this.maxHp = this.mvo.hp;
         this.speedRate = 1;

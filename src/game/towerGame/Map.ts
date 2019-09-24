@@ -1,4 +1,4 @@
-class Map extends egret.DisplayObjectContainer {
+class Map extends eui.Group {
     public constructor() {
         super();
         this.cacheAsBitmap = true

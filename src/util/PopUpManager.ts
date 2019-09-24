@@ -58,13 +58,14 @@ class PopUpManager {
                 display.alpha = 0
             display.addEventListener(egret.Event.ENTER_FRAME,onEnterFrame,this);
         }
-        
+
+        var marginY = display['isShowAD']?100:0
         function onEnterFrame() {
             display.removeEventListener(egret.Event.ENTER_FRAME,onEnterFrame,this);
             
 //            console.log(display.width,display.height);
             var x = display['baseX'] = (ww - display.width) / 2;
-            var y = display['baseY'] = (hh - display.height) / 2;
+            var y = display['baseY'] = (hh - display.height) / 2 - marginY;
             var x2 = (ww - display.width*1.1) / 2;
             var y2 = (hh - display.height*1.1) / 2;
             display.alpha = 1;

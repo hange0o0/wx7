@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="StopUISkin" width="560" height="580" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="StopUISkin" width="560" height="450" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<e:Group horizontalCenter="0" bottom="0">
 		<e:Button id="okBtn" label="继续游戏" width="180" x="0" y="0" skinName="Btn2Skin"/>
 		<e:Button id="closeBtn" label="认输退出" skinName="Btn1Skin" width="180" x="0" y="0"/>
@@ -7,6 +7,6 @@
 			<e:VerticalLayout gap="30"/>
 		</e:layout>
 	</e:Group>
-	<e:Image source="continue_png" x="230" y="143"/>
+	<e:Image source="continue_png" x="230" y="0"/>
 
 </e:Skin>

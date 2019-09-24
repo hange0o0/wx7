@@ -29,7 +29,15 @@ class RebornUI extends game.BaseWindow_wx4{
             this.isStoping = true;
             ShareTool.openGDTV((type)=>{
                 this.hide();
+                TC.rebornTime ++;
+                TC.wudiEnd = TC.actionStep + 10*30
+                PKTowerUI.getInstance().onReborn();
+                PKManager.getInstance().sendGameReborn(type)
             },()=>{this.isStoping = false})
+        })
+
+        this.addBtnEvent(this.rebornGroup,()=>{
+            this.step -= 30*3;
         })
 
         this.rebornGroup.addChildAt(this.shape,1);
@@ -38,6 +46,7 @@ class RebornUI extends game.BaseWindow_wx4{
     }
 
     public onShow(){
+        TC.isStop = true;
         this.isStoping = false;
         this.step = 30*10;
         this.renew();
@@ -56,7 +65,7 @@ class RebornUI extends game.BaseWindow_wx4{
         if(this.step <= 0)
         {
             this.hide();
-            ResultUI.getInstance().show();
+            ResultUI.getInstance().show(false);
             return;
         }
         this.step --;

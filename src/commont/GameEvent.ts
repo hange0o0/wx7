@@ -9,7 +9,7 @@ class GameEvent {
         SKILL_USE:'SKILL_USE',
 
 
-        ADD_BOSS:'ADD_BOSS',
+        LOAD_SERVER_DATA:'LOAD_SERVER_DATA',
         REMOVE_BOSS:'REMOVE_BOSS',
 
 

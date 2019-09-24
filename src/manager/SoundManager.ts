@@ -188,12 +188,12 @@ class SoundManager {
         {
             const innerAudioContext = window['wx'].createInnerAudioContext()
             innerAudioContext.autoplay = true
-            innerAudioContext.src = "resource/sound/" + v +".mp3";
+            innerAudioContext.src = "resource/game_assets2/sound/" + v +".mp3";
             return;
         }
 
         //console.log('call:',v)
-        var url = "resource/sound/" + v + ".mp3"
+        var url = "resource/game_assets2/sound/" + v + ".mp3"
         var loader:egret.URLLoader = new egret.URLLoader();
         loader.dataFormat = egret.URLLoaderDataFormat.SOUND;
         loader.once(egret.Event.COMPLETE, ()=> {
@@ -223,7 +223,7 @@ class SoundManager {
 
 
 
-        var url = "resource/sound/" + key + ".mp3"
+        var url = "resource/game_assets2/sound/" + key + ".mp3"
         if (this.currentKey == url) return;
 
 

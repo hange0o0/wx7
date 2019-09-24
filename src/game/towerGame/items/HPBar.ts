@@ -5,7 +5,6 @@ class HPBar extends game.BaseItem{
     }
 
     public barMC: eui.Image;
-    public hpText: eui.BitmapLabel;
 
     public childrenCreated() {
         super.childrenCreated();
@@ -17,7 +16,6 @@ class HPBar extends game.BaseItem{
         if(hp < 0)
             hp = 0
         var rate = hp/this.data.maxHp
-        this.hpText.text = hp
         this.barMC.width = 69 * rate
     }
 

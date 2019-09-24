@@ -9,18 +9,12 @@
 		</e:List>
 		<e:Label text="宽：" x="10.64" textColor="0x000000" size="22" y="159.68"/>
 		<e:Label text="高：" x="10.64" textColor="0x000000" size="22" y="199.68"/>
-		<e:EditableText id="widthText" width="60" height="30" text="120" x="57.64" textColor="0x000000" border="true" size="24" y="154.68"/>
-		<e:EditableText id="heightText" width="60" height="30" text="120" x="56.97" textColor="0x000000" border="true" size="24" y="195.68"/>
-		<e:Label text="树：" x="248.66" textColor="0x000000" size="22" y="162.02"/>
-		<e:Label text="塔：" x="248.66" textColor="0x000000" size="22" y="202.02"/>
-		<e:EditableText id="treeText" width="60" height="30" text="120" x="295.66" textColor="0x000000" border="true" size="24" y="157.02"/>
-		<e:Label text="路：" x="370.65" textColor="0x000000" size="22" y="162.02"/>
-		<e:EditableText id="roadText" width="60" height="30" text="120" x="417.65" textColor="0x000000" border="true" size="24" y="157.02"/>
-		<e:EditableText id="towerText" width="60" height="30" text="120" x="294.99" textColor="0x000000" border="true" size="24" y="198.02"/>
-		<e:Button id="setBtn" label="设置" x="132.31" y="160.35" skinName="Btn2Skin"/>
-		<e:Button id="randomBtn" label="随机" x="530" y="161.01" skinName="Btn2Skin"/>
-		<e:Button id="saveBtn" label="保存" y="12.34" skinName="Btn2Skin" right="10"/>
-		<e:Button id="backBtn" label="退出" y="86.01" skinName="Btn2Skin" right="10"/>
+		<e:EditableText id="widthText" width="50" height="30" text="12" x="101.64" textColor="0x000000" border="true" size="24" y="156.68" textAlign="center"/>
+		<e:EditableText id="heightText" width="50" height="30" text="120" x="98.97" textColor="0x000000" border="true" size="24" y="201.68" textAlign="center"/>
+		<e:Button id="setBtn" label="设置" x="254" y="161.01" skinName="Btn2Skin"/>
+		<e:Button id="randomBtn" label="随机" x="398" y="161.01" skinName="Btn2Skin"/>
+		<e:Button id="saveBtn" label="保存" y="89.68" skinName="Btn2Skin" right="10"/>
+		<e:Button id="backBtn" label="退出" y="163.35" skinName="Btn2Skin" right="10"/>
 		<e:Group bottom="249" horizontalCenter="0">
 			<e:Button id="beforeBtn" label="上一关" y="53.35" skinName="Btn2Skin" x="0"/>
 			<e:Label id="levelText" text="Label" x="61.65" y="0" textColor="0x000000" width="100" textAlign="center"/>
@@ -29,6 +23,10 @@
 				<e:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="30"/>
 			</e:layout>
 		</e:Group>
-		<e:Button id="testBtn" label="测试" skinName="Btn2Skin" right="10" bottom="250"/>
+		<e:Button id="testBtn" label="测试" skinName="Btn2Skin" right="10" bottom="165"/>
+		<e:Button id="wDecBtn" label="-" x="54.64" y="149.68" skinName="Btn2Skin" height="40" width="40"/>
+		<e:Button id="wAddBtn" label="+" x="157.64" y="151.68" skinName="Btn2Skin" height="40" width="40"/>
+		<e:Button id="hDecBtn" label="-" x="54.64" y="195.68" skinName="Btn2Skin" height="40" width="40"/>
+		<e:Button id="hAddBtn" label="+" x="159.64" y="195.68" skinName="Btn2Skin" height="40" width="40"/>
 	</e:Group>
 </e:Skin>

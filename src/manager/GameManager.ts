@@ -269,7 +269,7 @@ function wx4_function(v){}
 function sendClientError(str){
     //var url =  'http://172.17.196.195:90/error_wx2/log_error.php'
     //if(window["wx"])
-    var url =  'https://www.hangegame.com/error_wx2/log_error.php'
+    var url =  'https://www.hangegame.com/error_wx7/log_error.php'
     Net.getInstance().send(url,{str:str});
 }
 //window.onerror=handleErr;
@@ -277,7 +277,7 @@ function sendFeedBack(str){
     try{
         str =  UM_wx4.gameid + "--" + str
     }catch(e){}
-    var url =  'https://www.hangegame.com/error_wx2/log_feedback.php'
+    var url =  'https://www.hangegame.com/error_wx7/log_feedback.php'
     Net.getInstance().send(url,{str:str});
 }
 

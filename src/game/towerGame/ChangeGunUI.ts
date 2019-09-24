@@ -44,7 +44,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     public childrenCreated() {
         super.childrenCreated();
 
-        this.setTitle('配备武器')
+        this.setTitle('配备塔器')
 
         this.scroller.viewport = this.list;
         this.list.itemRenderer = ChangeGunItem
@@ -62,7 +62,21 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         this.towerItem.scaleX = this.towerItem.scaleY = 1.2
 
         this.addBtnEvent(this.moreBtn,()=>{
+            var arr = PKManager.getInstance().addGunList();
 
+            var listObj = this.listObj;
+            for(var i=0;i<arr.length;i++)
+            {
+                var gid = arr[i];
+                if(!listObj[gid])
+                {
+                    listObj[gid] = {id:gid,num:0}
+                }
+                listObj[gid].num ++;
+            }
+            var list = ObjectUtil_wx4.objToArray(listObj);
+            ArrayUtil_wx4.sortByField(list,['id'],[0]);
+            this.list.dataProvider = new eui.ArrayCollection(list)
         })
 
         this.addBtnEvent(this.okBtn,()=>{
@@ -90,6 +104,11 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     }
 
     public onShow(){
+        if(UM_wx4.level < 8)
+            MyTool.removeMC(this.moreBtn)
+        else
+            this.btnGroup.addChildAt(this.moreBtn,0)
+
         this.renew();
         this.renewChoose();
 
@@ -97,11 +116,12 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     }
 
     public renew(){
-        var arr = TC.gunList;
+        var arr = PKManager.getInstance().gunList;
         var listObj = this.listObj = {};
+        var gid:any;
         for(var i=0;i<arr.length;i++)
         {
-            var gid = arr[i];
+            gid = arr[i];
             if(!listObj[gid])
             {
                 listObj[gid] = {id:gid,num:0}
@@ -110,7 +130,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         }
         for(var s in this.towerPos)
         {
-            var gid = <number>this.towerPos[s]
+            gid = this.towerPos[s]
             if(gid && listObj[gid])// && s != this.key
                 listObj[gid].num --;
 
@@ -122,7 +142,8 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         this.lastSelectGun = this.towerPos[this.key];
         if(this.lastSelectGun)
         {
-            this.setTitle('更换武器')
+            this.setTitle('更换塔器')
+            this.okBtn.label="更换塔器"
             this.currentState = 's2'
 
             var index = -1;
@@ -138,7 +159,8 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         }
         else
         {
-            this.setTitle('装备武器')
+            this.setTitle('装备塔器')
+            this.okBtn.label="装备塔器"
             this.currentState = 's1'
             this.list.selectedIndex = -1;
         }

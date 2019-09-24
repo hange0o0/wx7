@@ -23,7 +23,7 @@ class PKMonsterItem extends game.BaseItem {
 
     public path
     public targetPos
-    public scale = 2/3
+    public scale = 1
 
 
 
@@ -255,6 +255,7 @@ class PKMonsterItem extends game.BaseItem {
             if(!this.targetPos)//到终点
             {
                 this.isDie = 2
+                PKTowerUI.getInstance().onFail();
                 return;
             }
         }

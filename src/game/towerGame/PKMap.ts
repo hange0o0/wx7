@@ -26,7 +26,9 @@ class PKMap extends game.BaseContainer_wx4 {
 
     public ww
     public hh
+    public data
 
+    public wudiArr = []
     public constructor() {
         super();
         this.skinName = "PKMapSkin";
@@ -44,6 +46,7 @@ class PKMap extends game.BaseContainer_wx4 {
     }
 
     public draw(data,noPos?){
+        this.data = data
         this.hh = data.length;
         this.ww = data[0].length;
         this.map.draw(data)
@@ -53,8 +56,47 @@ class PKMap extends game.BaseContainer_wx4 {
     }
 
 
+    public showWUDI(){
+        var data = this.data
+        for(var i=0;i<data.length;i++)
+        {
+            for(var j=0;j<data[i].length;j++)
+            {
+                var type = data[i][j]
+                if(type == 6)
+                {
+                    var mv = MovieSimpleSpirMC.create();
+                    mv.setData(this.getMVList('wudi',8))
+                    mv.anchorOffsetX = 102/2 - 2
+                    mv.anchorOffsetY = 102/2
+                    this.bottomCon.addChild(mv)
+                    mv.gotoAndPay()
+                    mv.x =  j*64 + 32
+                    mv.y =  i*64 + 32 + 10
+                    this.posArr.push(mv)
+                    this.wudiArr.push(mv)
+                }
+
+            }
+        }
+    }
+
+    public hideWUDI(){
+        for(var i=0;i<this.wudiArr.length;i++)
+        {
+            var mv = this.wudiArr[i];
+            var index = this.posArr.indexOf(mv);
+            if(index != -1)
+            {
+                this.posArr.splice(index,index);
+            }
+            mv.dispose();
+        }
+        this.wudiArr.length = 0;
+    }
 
     private renewPos(data){
+        this.wudiArr.length = 0;
        while(this.posArr.length)
        {
            this.posArr.pop().dispose()
@@ -140,17 +182,21 @@ class PKMap extends game.BaseContainer_wx4 {
         return img
     }
 
-    public showTowerLight(x,y){
+    public getTowerByPos(x,y){
         var arr = this.gunArr;
         for(var i=0;i<arr.length;i++)
         {
             var tower = arr[i];
             if(tower.posX == x && tower.posY == y)
             {
-                tower.showLight(this);
-                return;
+                return tower;
             }
         }
+    }
+
+    public showTowerLight(x,y){
+        var tower = this.getTowerByPos(x,y)
+        tower && tower.showLight(this);
     }
 
     public renewTower(gunData,showDis?){

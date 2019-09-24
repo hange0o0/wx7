@@ -2,15 +2,14 @@
 <e:Skin class="CreateListUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
 	<e:Group horizontalCenter="0" bottom="30">
-		<e:Button id="closeBtn" label="close" x="0" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="0" width="180"/>
-		<e:Button id="getSaveBtn" label="save" x="360" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="0" width="180"/>
-		<e:Button id="newBtn" label="new" x="180" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="0" width="180"/>
 		<e:Button id="renewBtn" label="刷新" x="190" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="10" width="180"/>
+		<e:Button id="newBtn" label="new" x="180" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="0" width="180"/>
+		<e:Button id="closeBtn" label="close" x="0" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="0" width="180"/>
 		<e:layout>
-			<e:HorizontalLayout/>
+			<e:HorizontalLayout gap="30"/>
 		</e:layout>
 	</e:Group>
-	<e:Scroller id="scroller" left="0" right="0" top="0" bottom="120">
+	<e:Scroller id="scroller" left="0" right="0" top="0" bottom="100">
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="106" y="104">
 				<e:layout>

@@ -30,6 +30,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
 
     public data;
+    public isTest = false;
 
 
     public mapData;
@@ -62,7 +63,12 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.skillInfoGroup.touchChildren = this.skillInfoGroup.touchEnabled = false;
 
         this.addBtnEvent(this.closeBtn,()=>{
-            this.hide()
+            if(this.isTest)
+                this.hide();
+            else
+            {
+                StopUI.getInstance().show();
+            }
         })
 
         this.addBtnEvent(this,(e)=>{
@@ -88,7 +94,17 @@ class PKTowerUI extends game.BaseUI_wx4 {
             return;
         if(this.towerPos[x+'_'+y])
         {
-            GunInfoUI.getInstance().show(this.towerPos[x+'_'+y],x,y)
+            var tower = this.pkMap.getTowerByPos(x,y);
+            if(tower.isLighting)
+            {
+                GunInfoUI.getInstance().show(this.towerPos[x+'_'+y],x,y)
+            }
+            else
+            {
+                tower.showLight(this.pkMap)
+                if(UM_wx4.level < 10)
+                    MyWindow.ShowTips('再次点击底座可查看详情')
+            }
         }
     }
 
@@ -160,7 +176,12 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.pkMap.scaleX = this.pkMap.scaleY = this.scale;
 
         this.renewMap();
-        TC.initData(this.data.id);
+        TC.initData(this.data);
+        if(this.isTest)//测试关卡固定属性
+        {
+            TC.monsterHPRate = 1;
+            TC.forceRate = 1;
+        }
 
 
         this.hideSkillInfo();
@@ -169,10 +190,31 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
     }
 
+    public onFail(){
+        if(TC.wudiEnd > TC.actionStep)
+            return;
+        if(TC.rebornTime)//复活过
+        {
+            ResultUI.getInstance().show(false);
+        }
+        else
+        {
+            RebornUI.getInstance().show();
+        }
+
+    }
+
+    public onReborn(){
+        TC.isStop = false;
+        //显示无敌
+        this.pkMap.showWUDI();
+    }
+
     private onE(){
+        if(TC.isStop)
+            return;
+
         TC.onStep();
-
-
         var len = this.monsterArr.length;
         for(var i=0;i<len;i++)
         {
@@ -214,14 +256,32 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
         MyTool.runListFun(this.list,'onE')
         this.pkMap.sortY();
+
+        if(TC.wudiEnd &&  TC.wudiEnd < TC.actionStep)//移除无敌显示
+        {
+            TC.wudiEnd = 0;
+            this.pkMap.hideWUDI();
+        }
+
+        if(this.monsterArr.length == 0 && TC.roundAutoMonster.length == 0 && TC.totalAutoMonster.length == 0)//过关了
+        {
+            ResultUI.getInstance().show(true);
+        }
     }
 
     public addMonster(mid,roadIndex = 0){
+        var path = this.movePaths[roadIndex].concat();
+        if(!path && !DEBUG)
+        {
+            path = this.movePaths[0].concat();
+            if(!path)
+                return;
+        }
         var newItem = PKMonsterItem.createItem();
         this.monsterArr.push(newItem);
         this.pkMap.roleCon.addChild(newItem);
         newItem.data = mid;
-        newItem.setPath(this.movePaths[roadIndex].concat());
+        newItem.setPath(path);
 
         var startPos = TC.getMonsterPosByPath(newItem.path.shift());
         newItem.resetXY(startPos.x,startPos.y)

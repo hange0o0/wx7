@@ -26,7 +26,7 @@ class ResultUI extends game.BaseUI_wx4{
 
 
     public isWin;
-    public result;
+    public resultCoin;
     public rate = 3;
     public constructor() {
         super();
@@ -49,25 +49,18 @@ class ResultUI extends game.BaseUI_wx4{
         })
 
         this.addBtnEvent(this.awardBtn,()=>{
-            MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(this.result.coin,2),0xFFFF00),1000)
-            MyWindow.ShowTips('获得技能碎片：'+MyTool.createHtml('+' + this.result.skillNum,0xFFFF00),1000)
+            UM_wx4.addCoin(this.resultCoin)
+            MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(this.resultCoin,2),0xFFFF00),1000)
             this.close();
             SoundManager.getInstance().playEffect('coin')
         })
 
         this.addBtnEvent(this.shareBtn,()=>{
             ShareTool.openGDTV(()=>{
-                MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(this.result.coin*this.rate,2),0xFFFF00),1000)
-                MyWindow.ShowTips('获得技能碎片：'+MyTool.createHtml('+' + this.result.skillNum*this.rate,0xFFFF00),1000)
+                UM_wx4.addCoin(this.resultCoin*this.rate)
+                MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(this.resultCoin*this.rate,2),0xFFFF00),1000)
                 this.close();
                 SoundManager.getInstance().playEffect('coin')
-                this.rate --
-                while(this.rate > 0)
-                {
-                    //PKManager.getInstance().endGame(this.result);
-                    this.rate --
-                }
-
             })
         })
 
@@ -76,6 +69,8 @@ class ResultUI extends game.BaseUI_wx4{
 
     public close(){
         this.hide();
+        PKTowerUI.getInstance().hide();
+        GameUI.getInstance().onLevelChange()
     }
 
     public onShow(){
@@ -83,9 +78,11 @@ class ResultUI extends game.BaseUI_wx4{
     }
 
     public show(isWin?){
+        TC.isStop = true;
         this.isWin = isWin;
         PKManager.getInstance().sendGameEnd(isWin)
-        if(this.isWin)
+        PKManager.getInstance().onGameEnd(this.isWin)
+        if(this.isWin && TC.currentVO.id == UM_wx4.level)
         {
             UM_wx4.level ++;
             UM_wx4.upWXLevel();
@@ -95,13 +92,13 @@ class ResultUI extends game.BaseUI_wx4{
 
 
     public renew(){
-        //var rate = PKC.monsterList.length/PKC.roundMonsterNum
-        //this.result = this.isWin?PKManager.getInstance().getWinResult():PKManager.getInstance().getFailResult(1-rate)
-        //if(this.isWin)
-        //    SoundManager.getInstance().playEffect('win')
-        //else
-        //    SoundManager.getInstance().playEffect('lose')
-        //
+        var rate = (TC.appearMonsterNum - PKTowerUI.getInstance().monsterArr.length)/TC.totalMonsterNum
+        this.resultCoin = this.isWin?PKManager.getInstance().getWinCoin(TC.currentVO.id):PKManager.getInstance().getFailCoin(TC.currentVO.id,rate)
+        if(this.isWin)
+            SoundManager.getInstance().playEffect('win')
+        else
+            SoundManager.getInstance().playEffect('lose')
+
         //var list = [];
         //for(var s in this.result.skill)
         //{
@@ -119,53 +116,48 @@ class ResultUI extends game.BaseUI_wx4{
         //    list[i].currentLevel = SkillManager.getInstance().getSkillLevel(list[i].id)
         //}
         //this.skillList.dataProvider = new eui.ArrayCollection(list);
-        //this.coinText.text = '金币 +' + NumberUtil_wx4.addNumSeparator(this.result.coin);
-        //
-        //this.failGroup.visible = !this.isWin;
-        //if(this.failGroup.visible)
-        //{
-        //
-        //    var mLen = PKC.monsterList.length;
-        //    var mNum = mLen + PKC.autoMonster.length;
-        //    var rate = mNum/PKC.roundMonsterNum
-        //    this.barMC.width = 360*rate;
-        //    this.rateText.text = '剩余怪物：'+(mNum)
-        //
-        //    this.titleText.text = '惜败！'
-        //    this.titleText.textColor = 0xFF0000
-        //}
-        //else
-        //{
-        //    this.titleText.text = '大胜！'
-        //    this.titleText.textColor = 0xFFFF00
-        //}
-        //
-        //
-        //var adArr = MyADManager.getInstance().getListByNum(10);
-        //var ad = ArrayUtil_wx4.randomOne(adArr,true);
-        //if(ad)
-        //{
-        //    this.ad1['adData'] = ad;
-        //    this.ad1.source = ad.logo
-        //    this.ad1.visible = true;
-        //}
-        //else
-        //{
-        //    this.ad1.visible = false;
-        //}
-        //
-        //
-        //var ad = ArrayUtil_wx4.randomOne(adArr,true);
-        //if(ad)
-        //{
-        //    this.ad2['adData'] = ad;
-        //    this.ad2.source = ad.logo
-        //    this.ad2.visible = true;
-        //}
-        //else
-        //{
-        //    this.ad2.visible = false;
-        //}
+        this.coinText.text = '金币 +' + NumberUtil_wx4.addNumSeparator(this.resultCoin);
+
+        this.failGroup.visible = !this.isWin;
+        if(this.failGroup.visible)
+        {
+            this.barMC.width = 360*rate;
+            this.rateText.text = '完成进度：'+MyTool.toFixed(rate*100,1) + '%'
+
+            this.titleText.text = '惜败！'
+            this.titleText.textColor = 0xFF0000
+        }
+        else
+        {
+            this.titleText.text = '大胜！'
+            this.titleText.textColor = 0xFFFF00
+        }
+
+        var adArr = MyADManager.getInstance().getListByNum(10);
+        var ad = ArrayUtil_wx4.randomOne(adArr,true);
+        if(ad)
+        {
+            this.ad1['adData'] = ad;
+            this.ad1.source = ad.logo
+            this.ad1.visible = true;
+        }
+        else
+        {
+            this.ad1.visible = false;
+        }
+
+
+        var ad = ArrayUtil_wx4.randomOne(adArr,true);
+        if(ad)
+        {
+            this.ad2['adData'] = ad;
+            this.ad2.source = ad.logo
+            this.ad2.visible = true;
+        }
+        else
+        {
+            this.ad2.visible = false;
+        }
     }
 
     public hide(){

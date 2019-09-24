@@ -17,17 +17,22 @@ class TowerCode {
 
     public round = 1;
     public maxRound = 1;
+    public totalMonsterNum = 1;
+    public appearMonsterNum = 1;
     public roundAutoMonster = []
     public totalAutoMonster = []
-    public gunList = [1,1,1,2,2,3,3]//可选的武器
+
 
 
 
 
     public isStop = false
     public randomSeed = 99999999;
+    public currentVO;
 
     public isPKing = false
+    public wudiEnd = 0
+    public rebornTime = 0
 
     private dataArr
     private astar
@@ -35,8 +40,8 @@ class TowerCode {
 
 
     public skillBase = {
-        1:{name:'攻击提升',des:'提升场上所有武器 #1% 的攻击力，持续 #2 秒',cd:30,value1:50,value2:10},
-        2:{name:'攻速提升',des:'提升场上所有武器 #1% 的攻击速度，持续 #2 秒',cd:30,value1:50,value2:10},
+        1:{name:'攻击提升',des:'提升场上所有塔器 #1% 的攻击力，持续 #2 秒',cd:30,value1:50,value2:10},
+        2:{name:'攻速提升',des:'提升场上所有塔器 #1% 的攻击速度，持续 #2 秒',cd:30,value1:50,value2:10},
         3:{name:'大地震击',des:'使当前场上所有怪物晕眩 #1 秒',cd:30,value1:5},
         4:{name:'急速冷却',des:'使当前场上所有怪物减速 #1% ，持续 #2 秒',cd:30,value1:50,value2:10},
         5:{name:'闪电风暴',des:'召唤闪电攻击场上所有怪物，造成 #1 点伤害',cd:40,value1:100},
@@ -105,41 +110,47 @@ class TowerCode {
             var data = this.roundAutoMonster.shift();
             var mid = _get['mid'] || data.id;
             PKTowerUI.getInstance().addMonster(mid,data.road)
+            this.appearMonsterNum ++
         }
     }
 
 
 
 
-    public initData(level){
+    public initData(levelVO){
+        this.currentVO = levelVO
         this.isStop = false;
         this.actionStep = 0;
+        this.rebornTime = 0;
+        this.wudiEnd = 0
         this.lastSkillTime = {}
-        PKMonsterAction_wx3.getInstance().init();
         this.roundAutoMonster.length = 0;
-        this.totalAutoMonster = this.getLevelMonster(level);
-        this.gunList = [1,1,1,2,2,3,3];
-        this.monsterHPRate = 1 + level/4
+        this.totalAutoMonster = this.getLevelMonster(levelVO);
+        this.monsterHPRate = 1 + (levelVO.id-1)/4
+        this.appearMonsterNum = 0
+        this.forceRate = PKManager.getInstance().getForceRate();
+
     }
 
 
-    public getLevelMonster(level){
+    public getLevelMonster(vo){
+        var level = vo.id;
         this.randomSeed = level*1234567890;
 
-        var vo = LevelVO.getObject(level);
-        var roadNum = vo.getRoadNum()
+        var roadNum = vo.roadNum
 
-        var monsterList = vo.getMonsterArr().concat();
+        var monsterList = vo.monsterArr.concat();
 
 
         var returnArr = []
 
         this.maxRound = monsterList.length;
         this.round = 0;
+        this.totalMonsterNum = 0;
         var step = 10
 
         var roadIndex = 0;
-        var maxCost = 60 * 10 * Math.pow(level,1.2)
+        var maxCost = (vo.towerNum*20) * 10 * Math.pow(1.005,level)
         var roundTimeStep = 30*15 + Math.floor(Math.pow(level,1.1))
 
         while(monsterList.length > 0)
@@ -170,6 +181,7 @@ class TowerCode {
                     if(roadIndex >= roadNum)
                         roadIndex = 0;
                 }
+                this.totalMonsterNum ++;
             }
             step += 3*30;//两波怪之间的间隔
             roadIndex ++;

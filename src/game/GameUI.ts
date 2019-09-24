@@ -9,8 +9,8 @@ class GameUI extends game.BaseUI_wx4 {
 
 
     private mapCon: eui.Group;
-    private leftBtn: eui.Image;
-    private rightBtn: eui.Image;
+    private leftBtn: eui.Group;
+    private rightBtn: eui.Group;
     private coinText: eui.Label;
     private energyText: eui.Label;
     private soundBtn: eui.Image;
@@ -25,9 +25,12 @@ class GameUI extends game.BaseUI_wx4 {
     private editBtn: eui.Group;
     private equipRedMC: eui.Image;
     private levelText: eui.Label;
-    private startBtn: eui.Image;
     private needEnergyGroup: eui.Group;
     private needEnergyText: eui.Label;
+    private btnGroup: eui.Group;
+    private startBtn: eui.Image;
+    private swapBtn: eui.Button;
+
 
 
 
@@ -75,6 +78,24 @@ class GameUI extends game.BaseUI_wx4 {
         })
 
 
+        this.addBtnEvent(this.swapBtn,()=>{
+            var energy = PKManager.getInstance().getEnergy()
+            if(!energy)
+            {
+                MyWindow.ShowTips('没有体力，无法进行扫荡')
+                return;
+            }
+            var coin = PKManager.getInstance().getWinCoin(UM_wx4.level - 1) * energy
+            MyWindow.Confirm('确定花光 '+this.createHtml(energy,0x00ff00)+' 体力进行扫荡？\n本次扫荡可获得 '+
+                this.createHtml(NumberUtil_wx4.addNumSeparator(coin,2),0xffff00)+' 金币',(b)=>{
+                if(b==1)
+                {
+                    MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(coin,2),0xFFFF00),1000)
+                    UM_wx4.addCoin(coin)
+                    PKManager.getInstance().addEnergy(-energy)
+                }
+            },['取消','扫荡']);
+        })
         this.addBtnEvent(this.editBtn,()=>{
             MyWindow.Alert('自定义地图玩法即将开启！')
         })
@@ -93,7 +114,15 @@ class GameUI extends game.BaseUI_wx4 {
 
 
         this.addBtnEvent(this.startBtn,()=>{
-            CreateListUI.getInstance().show();
+            var vo = LevelVO.getObject(this.currentLevel);
+            if(!vo)
+            {
+                MyWindow.Alert('新的关卡即将开启，请耐心等侯')
+                return;
+            }
+            DrawMapUI.getInstance().isTest = false
+            DrawMapUI.getInstance().show(vo);
+
         })
 
 
@@ -208,17 +237,17 @@ class GameUI extends game.BaseUI_wx4 {
     }
 
     private renewNeedEnergy(){
-        var PKM = PKManager.getInstance();
-        if(PKM.lastChooseData.length == 0)
-        {
-            var enery = PKM.getEnergyCost();
-            this.needEnergyText.text = '-' + enery + '';
+        //var PKM = PKManager.getInstance();
+        //if(PKM.lastChooseData.length == 0)
+        //{
+        //    var enery = PKM.getEnergyCost(level);
+            this.needEnergyText.text = '-' + 1 + '';
             this.needEnergyGroup.visible = true
-        }
-        else
-        {
-            this.needEnergyGroup.visible = false
-        }
+        //}
+        //else
+        //{
+        //    this.needEnergyGroup.visible = false
+        //}
     }
 
     private renewSound(){
@@ -239,6 +268,8 @@ class GameUI extends game.BaseUI_wx4 {
         SoundManager.getInstance().playSound('bg')
 
         this.currentLevel = UM_wx4.level;
+        if(!LevelVO.getObject(UM_wx4.level))
+            TowerManager.getInstance().getServerData();
 
 
         this.tempLevel = -1;
@@ -254,14 +285,17 @@ class GameUI extends game.BaseUI_wx4 {
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renewGun)
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
+        this.addPanelOpenEvent(GameEvent.client.LOAD_SERVER_DATA,this.onLoadServerData)
 
-        if(UM_wx4.pastDayCoin.coin)
-        {
-            PassDayAwardUI.getInstance().show();
-        }
+        //if(UM_wx4.pastDayCoin.coin)
+        //{
+        //    PassDayAwardUI.getInstance().show();
+        //}
         this.showTips();
 
         this.resetAD();
+
+
 
 
         //var map = new Map();
@@ -301,8 +335,27 @@ class GameUI extends game.BaseUI_wx4 {
         //this.addChild(map)
         //map.x = (640 - 64*7)/2
         //map.y = (GameManager_wx4.uiHeight - 64*9)/2
+        this.onLevelChange();
 
+    }
 
+    public onLoadServerData(){
+        this.tempLevel = -1;
+        this.renewLevel()
+        this.renewLevel2()
+    }
+
+    public onLevelChange(){
+        if(UM_wx4.level > 10)
+            this.btnGroup.addChild(this.swapBtn)
+        else
+            MyTool.removeMC(this.swapBtn)
+
+        if(this.currentLevel == UM_wx4.level - 1)
+        {
+            this.renewLevel()
+            this.renewLevel2()
+        }
     }
 
 
@@ -458,6 +511,8 @@ class GameUI extends game.BaseUI_wx4 {
     public renewLevel(){
         var level = this.currentLevel
         var vo = LevelVO.getObject(level);
+        if(!vo)
+            vo = TowerManager.getInstance().emptyLevelVO
         this.pkMap.width = 64*vo.width
         this.pkMap.height = 64*vo.height
         this.levelText.text = '第 '+level+' 关'
@@ -485,6 +540,8 @@ class GameUI extends game.BaseUI_wx4 {
         {
             this.tempLevel = level
             var vo = LevelVO.getObject(level);
+            if(!vo)
+                vo = TowerManager.getInstance().emptyLevelVO
             this.pkMap2.width = 64*vo.width
             this.pkMap2.height = 64*vo.height
             this.pkMap2.initMap(level)
@@ -498,14 +555,13 @@ class GameUI extends game.BaseUI_wx4 {
     public onVisibleChange(){
         if(this.visible)
         {
-            this.renewLevel();
             this.showTips();
-            this.renewNeedEnergy();
-            if(UM_wx4.pastDayCoin.coin)
-            {
-                PassDayAwardUI.getInstance().show();
-            }
-
+            //this.renewNeedEnergy();
+            //if(UM_wx4.pastDayCoin.coin)
+            //{
+            //    PassDayAwardUI.getInstance().show();
+            //}
+            //
             //this.addChildAt(PKCodeUI.getInstance(),0)
             //PKC.isAuto = true;
             //PKCodeUI.getInstance().onShow()

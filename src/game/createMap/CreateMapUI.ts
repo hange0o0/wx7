@@ -10,9 +10,6 @@ class CreateMapUI extends game.BaseUI_wx4 {
     private list: eui.List;
     private widthText: eui.EditableText;
     private heightText: eui.EditableText;
-    private treeText: eui.EditableText;
-    private roadText: eui.EditableText;
-    private towerText: eui.EditableText;
     private setBtn: eui.Button;
     private randomBtn: eui.Button;
     private saveBtn: eui.Button;
@@ -21,6 +18,11 @@ class CreateMapUI extends game.BaseUI_wx4 {
     private levelText: eui.Label;
     private nextBtn: eui.Button;
     private testBtn: eui.Button;
+    private wDecBtn: eui.Button;
+    private wAddBtn: eui.Button;
+    private hDecBtn: eui.Button;
+    private hAddBtn: eui.Button;
+
 
 
 
@@ -33,14 +35,12 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
     public ww;
     public hh;
-    public treeNum;
-    public towerNum;
-    public roadNum;
     public mapData;
 
     public data;
     public isChange;
     public level
+    public scale = 1
     public constructor() {
         super();
         this.skinName = "CreateMapUISkin";
@@ -55,7 +55,25 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
         this.list.itemRenderer = CreateMapItem
         this.list.selectedIndex = 0;
-        this.list.dataProvider = new eui.ArrayCollection([0,2,3,4,5,6])//1,
+        this.list.dataProvider = new eui.ArrayCollection([0,1,2,3,4,5,6])//1,
+
+        this.addBtnEvent(this.wDecBtn,()=>{
+            this.ww --;
+            this.widthText.text = this.ww + ''
+        })
+        this.addBtnEvent(this.wAddBtn,()=>{
+            this.ww ++;
+            this.widthText.text = this.ww + ''
+        })
+        this.addBtnEvent(this.hDecBtn,()=>{
+            this.hh --;
+            this.heightText.text = this.hh + ''
+        })
+        this.addBtnEvent(this.hAddBtn,()=>{
+            this.hh ++;
+            this.heightText.text = this.hh + ''
+        })
+
 
 
 
@@ -71,6 +89,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
             this.data.height = this.hh;
             this.data.data = this.getSaveData();
             this.isChange = false;
+            this.data.reset();
             CreateMapManager.getInstance().save();
         })
         this.addBtnEvent(this.randomBtn,()=>{
@@ -82,7 +101,10 @@ class CreateMapUI extends game.BaseUI_wx4 {
             data.width = this.ww;
             data.height = this.hh;
             data.data = this.getSaveData();
+            data.reset();
+            DrawMapUI.getInstance().isTest = true;
             DrawMapUI.getInstance().show(data);
+
         })
         this.addBtnEvent(this.setBtn,()=>{
             this.setHeight()
@@ -146,14 +168,21 @@ class CreateMapUI extends game.BaseUI_wx4 {
         var arr = []
         for(var i=0;i<this.mapData.length;i++)
         {
-            arr.push(this.mapData[i].join(''))
+            var temp = this.mapData[i].concat();
+            for(var j=0;j<temp.length;j++)
+            {
+                if(temp[j] == 1)
+                    temp[j] = 0;
+            }
+            arr.push(temp.join(''))
         }
         return arr.join('')
     }
 
     private onTouch(e){
-        var x = Math.floor((e.stageX - this.map.x)/64)
-        var y = Math.floor((e.stageY - this.y - this.map.y)/64)
+        var itemSize = 64*this.scale;
+        var x = Math.floor((e.stageX - this.map.x)/itemSize)
+        var y = Math.floor((e.stageY - this.y - this.map.y)/itemSize)
         if(y >= this.hh || y < 0 || x >= this.ww || x < 0)
             return;
 
@@ -167,38 +196,160 @@ class CreateMapUI extends game.BaseUI_wx4 {
     }
 
     private randomMap(){
+
+        var ww = (5 + this.level/30)
+        var hh = (7 + this.level/30)
+        if(ww > 10)
+            ww = 10
+        if(hh > 15)
+            hh = 15
+
+
+        this.ww = Math.round(ww*(0.75+0.5*Math.random()))
+        this.hh = Math.round(hh*(0.75+0.5*Math.random()))
+        this.widthText.text = this.ww + ''
+        this.heightText.text = this.hh + ''
+
+        if(this.ww > 10)
+            this.ww = 10
+        if(this.hh > 15)
+            this.hh = 15
         this.resetMapData();
-        this.roadNum = parseInt(this.roadText.text)
-        this.treeNum = parseInt(this.treeText.text)
-        this.towerNum = parseInt(this.towerText.text)
-        var roadNum = this.roadNum
-        var treeNum = this.treeNum
-        var towerNum = this.towerNum
-        while(roadNum || treeNum || towerNum)
+
+        var towerNum = Math.round((this.ww*this.hh/12)*(0.8+0.4*Math.random()));
+        var nearNum = 0//
+        if(this.level >= 12)//靠近的位置出塔的数量
         {
-            var x = Math.floor(Math.random()*this.ww)
-            var y = Math.floor(Math.random()*this.hh)
+            nearNum ++;
+            if(Math.random() < 0.5)
+                nearNum ++;
+        }
+        if(this.level >= 50)
+        {
+            nearNum ++
+        }
+        if(this.level >= 100 && Math.random() < 0.5)
+        {
+            nearNum ++
+        }
+        if(this.level >= 150 && Math.random() < 0.5)
+        {
+            nearNum ++
+        }
+        if(nearNum >= towerNum)
+            nearNum = towerNum-1
+        var orginPos
+        //放入塔
+        while(towerNum >0)
+        {
+            if(orginPos)
+            {
+                var begin = -1
+                var size = 3
+                if(nearNum > 1 && Math.random()< 0.4)
+                {
+                    begin = -2;
+                    size = 5
+                }
+
+                var x = begin + Math.floor(Math.random()*size)
+                var y = begin + Math.floor(Math.random()*size)
+                if(x<0)
+                    x = 0
+                else if(x>= this.ww)
+                    x = this.ww - 1
+
+                if(y<0)
+                    y = 0
+                else if(y>= this.hh)
+                    y = this.hh - 1
+            }
+            else
+            {
+                var x = Math.floor(Math.random()*this.ww)
+                var y = Math.floor(Math.random()*this.hh)
+            }
+
             if(this.mapData[y][x])
                 continue;
 
             var id = 0
-            if(roadNum)
+            if(towerNum > 0)
             {
-                id = 4;
-                roadNum --
-            }
-            else if(treeNum)
-            {
-                id = 3;
-                treeNum --
-            }
-            else if(towerNum)
-            {
-                id = 2;
                 towerNum --
+                id = 2
             }
+
+            this.mapData[y][x] = id;
+            if(orginPos)
+            {
+                nearNum --;
+                if(nearNum <= 0)
+                    orginPos = null;
+            }
+            else if(nearNum > 0)
+            {
+                orginPos = {x:x,y:y}
+            }
+        }
+
+        //放入起点
+        var startNum = 1;
+        if(this.level > 50 && Math.random() < 0.5)
+            startNum ++;
+        if(this.level > 100 && Math.random() < 0.5)
+            startNum ++;
+        if(this.level > 150 && Math.random() < 0.5)
+            startNum ++;
+
+        var endNum = 1;
+        if(this.level > 80 && Math.random() < 0.5)
+            startNum ++;
+        if(this.level > 160 && Math.random() < 0.5)
+            startNum ++;
+
+        while(startNum >0 || endNum > 0)
+        {
+            if(Math.random() < 0.1)
+            {
+                var x = Math.floor(Math.random()*this.ww)
+                var y = Math.floor(Math.random()*this.hh)
+            }
+            else if(Math.random() > 0.5)
+            {
+                var x = Math.random() > 0.5?0:this.ww-1
+                var y = Math.floor(Math.random()*this.hh)
+            }
+            else
+            {
+                var x = Math.floor(Math.random()*this.ww)
+                var y = Math.random() > 0.5?0:this.hh-1
+            }
+
+            if(this.mapData[y][x] && this.mapData[y][x] != 1)
+                continue;
+
+            var id = 0
+            if(startNum > 0)
+            {
+                startNum --
+                id = 5
+            }
+            else if(endNum > 0)
+            {
+                endNum --
+                id = 6
+            }
+
             this.mapData[y][x] = id;
         }
+
+
+
+
+
+        var endNum = 1;
+
         this.isChange = true;
         this.renewMap();
     }
@@ -238,20 +389,11 @@ class CreateMapUI extends game.BaseUI_wx4 {
     public show(data?){
         this.data = data;
         this.mapData = [];
-        this.treeNum = 0
-        this.towerNum = 0
-        this.roadNum = 0
         if(!data)
         {
             var level = this.level = LevelVO.list.length + 1;
             this.ww = Math.min(10,6 + Math.floor(level/5))
             this.hh = Math.min(15,8 + Math.floor(level/5))
-
-            if(level > 10)
-                this.treeNum = Math.ceil((level-10)/5)
-            if(level > 30)
-                this.roadNum = Math.ceil((level-30)/5)
-            this.towerNum = 3 + Math.floor(level/10)
 
             this.resetMapData();
 
@@ -273,12 +415,6 @@ class CreateMapUI extends game.BaseUI_wx4 {
                 {
                     var id = Math.floor(arr1[i][j]) || 0
                     this.mapData[i].push(id);
-                    if(id == 3)
-                        this.treeNum ++
-                    if(id == 2)
-                        this.towerNum ++
-                    if(id == 4)
-                        this.roadNum ++
                 }
             }
         }
@@ -290,11 +426,17 @@ class CreateMapUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
+
         this.renew()
     }
 
     private renewMap(){
-        this.map.x = (640 - 64*this.ww)/2
+        this.scale = TowerManager.getInstance().getScale(this.ww,this.hh,350)
+        this.map.scaleX = this.map.scaleY = this.scale;
+
+
+        this.map.horizontalCenter = 0
+        this.map.verticalCenter = -150
         this.map.draw(this.mapData);
     }
 
@@ -303,10 +445,6 @@ class CreateMapUI extends game.BaseUI_wx4 {
         this.renewMap();
         this.widthText.text = this.ww + ''
         this.heightText.text = this.hh + ''
-        this.treeText.text = this.treeNum + ''
-        this.towerText.text = this.towerNum + ''
-        this.roadText.text = this.roadNum + ''
-
     }
 
 }

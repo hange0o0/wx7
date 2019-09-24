@@ -49,7 +49,7 @@ class SkillListUI extends game.BaseWindow_wx4 {
         this.heroItem = new PKMonsterMV_wx3()
         this.heroItem.x = 75
         this.heroItem.y = 170
-        this.heroItem.scaleX = this.heroItem.scaleY = 1.2
+        this.heroItem.scaleX = this.heroItem.scaleY = 1.5
 
         this.towerItem.x += 32
         this.towerItem.y += 32

@@ -126,7 +126,7 @@ class ShareTool {
         //监时用进入好友代替
         if(!Config.wx_video)
         {
-            ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success)
+            ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success,closeFun)
             return;
         }
 

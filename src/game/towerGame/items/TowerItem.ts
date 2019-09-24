@@ -61,6 +61,8 @@ class TowerItem extends game.BaseItem{
     public stateFireMV
     public statePoisonMV
 
+    private isLighting = false
+
     public childrenCreated() {
         super.childrenCreated();
         this.mc.bottom = 50;
@@ -93,6 +95,7 @@ class TowerItem extends game.BaseItem{
         this.gvo = null;
         MyTool.removeMC(this.disBottomMC);
         MyTool.removeMC(this.disBottomMVMC);
+        this.isLighting = false
         this.effectGroup.removeChildren();
         if(this.data)
         {
@@ -226,6 +229,7 @@ class TowerItem extends game.BaseItem{
 
     private lastMap;
     public resetBottomMC(map?,con?){
+        return;
         if(!this.gvo)
             return;
         map = map || this.lastMap;
@@ -260,6 +264,7 @@ class TowerItem extends game.BaseItem{
     }
 
     public showLight(pkMap){
+        this.isLighting = true
         egret.Tween.removeTweens(this.disBottomMVMC)
         this.disBottomMVMC.alpha = 1;
         this.disBottomMVMC.scaleX = this.disBottomMVMC.scaleY = 0.1;
@@ -270,6 +275,7 @@ class TowerItem extends game.BaseItem{
     }
 
     private removeLight(){
+        this.isLighting = false
         MyTool.removeMC(this.disBottomMVMC)
     }
 

@@ -1,11 +1,11 @@
 {
 	"groups":[
 		{
-			"keys":"lock_png,hp_bar_jpg,item_empty_png,window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,icon_hp_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,build_btn_png,pk_hero_jpg,data_txt,gun_txt,logo_png,common_head_bg_jpg,ui_loading_png,guide_png,skill_txt,level_txt",
+			"keys":"window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,data_txt,gun_txt,logo_png,common_head_bg_jpg,ui_loading_png,skill_txt,level_txt",
 			"name":"preload_png"
 		},
 		{
-			"keys":"enemy18_png,enemy46_png,enemy45_png,enemy44_png,enemy17_png,enemy16_png,enemy15_png,enemy74_png,enemy43_png,enemy14_png,enemy73_png,enemy41_png,enemy42_png,enemy72_png,enemy40_png,enemy12_png,enemy71_png,enemy36_png,enemy11_png,enemy9_png,enemy39_png,enemy69_png,enemy8_png,enemy7_png,enemy6_png,enemy5_png,enemy38_png,enemy68_png,enemy67_png,enemy66_png,enemy65_png,enemy64_png,enemy4_png,enemy63_png,enemy76_png,enemy70_png,enemy62_png,enemy61_png,effect2_png,480_json,600_json,960_json,enemy1_png,enemy2_png,enemy3_png,enemy31_png,enemy32_png,enemy33_png,enemy34_png,enemy35_png,enemy10_png,enemy13_png,enemy48_png,enemy77_png",
+			"keys":"enemy18_png,enemy46_png,enemy45_png,enemy44_png,enemy17_png,enemy16_png,enemy15_png,enemy74_png,enemy43_png,enemy14_png,enemy73_png,enemy41_png,enemy42_png,enemy72_png,enemy40_png,enemy12_png,enemy71_png,enemy36_png,enemy11_png,enemy9_png,enemy39_png,enemy69_png,enemy8_png,enemy7_png,enemy6_png,enemy5_png,enemy38_png,enemy68_png,enemy67_png,enemy66_png,enemy65_png,enemy64_png,enemy4_png,enemy63_png,enemy76_png,enemy70_png,enemy62_png,enemy61_png,effect2_png,960_json,enemy1_png,enemy2_png,enemy3_png,enemy31_png,enemy32_png,enemy33_png,enemy34_png,enemy35_png,enemy10_png,enemy13_png,enemy48_png,enemy77_png,400_json,320_json",
 			"name":"monster"
 		},
 		{
@@ -535,21 +535,6 @@
 			"url":"game_assets2/bg/bg_9.jpg"
 		},
 		{
-			"name":"lock_png",
-			"type":"image",
-			"url":"game_assets/lock.png"
-		},
-		{
-			"name":"hp_bar_jpg",
-			"type":"image",
-			"url":"game_assets/hp_bar.jpg"
-		},
-		{
-			"name":"item_empty_png",
-			"type":"image",
-			"url":"game_assets/item_empty.png"
-		},
-		{
 			"name":"black_bg_alpha_png",
 			"type":"image",
 			"url":"game_assets/black_bg_alpha.png"
@@ -643,11 +628,6 @@
 			"name":"friend_btn_png",
 			"type":"image",
 			"url":"game_assets/friend_btn.png"
-		},
-		{
-			"name":"icon_hp_png",
-			"type":"image",
-			"url":"game_assets/icon_hp.png"
 		},
 		{
 			"name":"head_border_png",
@@ -935,16 +915,6 @@
 			"url":"game_assets/arrow_btn.png"
 		},
 		{
-			"name":"build_btn_png",
-			"type":"image",
-			"url":"game_assets/build_btn.png"
-		},
-		{
-			"name":"pk_hero_jpg",
-			"type":"image",
-			"url":"game_assets/pk_hero.jpg"
-		},
-		{
 			"name":"data_txt",
 			"type":"text",
 			"url":"data/data.txt"
@@ -980,26 +950,6 @@
 			"url":"game_assets/ui_loading.png"
 		},
 		{
-			"name":"guide_png",
-			"type":"image",
-			"url":"game_assets/guide.png"
-		},
-		{
-			"name":"guide2_png",
-			"type":"image",
-			"url":"game_assets/guide2.png"
-		},
-		{
-			"name":"coin_ball_png",
-			"type":"image",
-			"url":"game_assets/coin_ball.png"
-		},
-		{
-			"name":"split_mc_png",
-			"type":"image",
-			"url":"game_assets/split_mc.png"
-		},
-		{
 			"name":"yellor_bg_png",
 			"type":"image",
 			"url":"game_assets/yellor_bg.png"
@@ -1020,16 +970,6 @@
 			"url":"game_assets/feed_back_btn.png"
 		},
 		{
-			"name":"480_json",
-			"type":"json",
-			"url":"game_assets2/monster/480.json"
-		},
-		{
-			"name":"600_json",
-			"type":"json",
-			"url":"game_assets2/monster/600.json"
-		},
-		{
 			"name":"960_json",
 			"type":"json",
 			"url":"game_assets2/monster/960.json"
@@ -1045,24 +985,9 @@
 			"url":"game_assets/common_coin.png"
 		},
 		{
-			"name":"move_ctrl_item_png",
-			"type":"image",
-			"url":"game_assets/move_ctrl_item.png"
-		},
-		{
-			"name":"pk_target_mc_png",
-			"type":"image",
-			"url":"game_assets/pk_target_mc.png"
-		},
-		{
 			"name":"warn_png",
 			"type":"image",
 			"url":"game_assets/warn.png"
-		},
-		{
-			"name":"move_ctrl_bg_png",
-			"type":"image",
-			"url":"game_assets/move_ctrl_bg.png"
 		},
 		{
 			"name":"hp_bar0_png",
@@ -1078,31 +1003,6 @@
 			"name":"hp_bar1_png",
 			"type":"image",
 			"url":"game_assets/hp_bar1.png"
-		},
-		{
-			"name":"pk_word3_fnt",
-			"type":"font",
-			"url":"game_assets/pk_word3.fnt"
-		},
-		{
-			"name":"pk_word1_fnt",
-			"type":"font",
-			"url":"game_assets/pk_word1.fnt"
-		},
-		{
-			"name":"pk_word2_fnt",
-			"type":"font",
-			"url":"game_assets/pk_word2.fnt"
-		},
-		{
-			"name":"pk_word4_fnt",
-			"type":"font",
-			"url":"game_assets/pk_word4.fnt"
-		},
-		{
-			"name":"canying_png",
-			"type":"image",
-			"url":"game_assets/canying.png"
 		},
 		{
 			"name":"common_img_locked_png",
@@ -1158,11 +1058,6 @@
 			"name":"skill_5_jpg",
 			"type":"image",
 			"url":"game_assets2/skill/skill_5.jpg"
-		},
-		{
-			"name":"pk_player_bottom_png",
-			"type":"image",
-			"url":"game_assets/pk_player_bottom.png"
 		},
 		{
 			"name":"boss_hp3_png",
@@ -1243,11 +1138,6 @@
 			"name":"enemy3_png",
 			"type":"image",
 			"url":"game_assets2/monster/enemy3.png"
-		},
-		{
-			"name":"line_png",
-			"type":"image",
-			"url":"game_assets/line.png"
 		},
 		{
 			"name":"enemy31_png",
@@ -1565,29 +1455,9 @@
 			"url":"game_assets/radio_btn2.png"
 		},
 		{
-			"name":"ctrl_type1_png",
-			"type":"image",
-			"url":"game_assets/ctrl_type1.png"
-		},
-		{
-			"name":"ctrl_type2_png",
-			"type":"image",
-			"url":"game_assets/ctrl_type2.png"
-		},
-		{
-			"name":"ctrl_type3_png",
-			"type":"image",
-			"url":"game_assets/ctrl_type3.png"
-		},
-		{
 			"name":"bg17_png",
 			"type":"image",
 			"url":"game_assets/bg17.png"
-		},
-		{
-			"name":"board_1_png",
-			"type":"image",
-			"url":"game_assets/board_1.png"
 		},
 		{
 			"name":"map_1_1_png",
@@ -1798,6 +1668,26 @@
 			"name":"tower_dis_mv_png",
 			"type":"image",
 			"url":"game_assets/tower_dis_mv.png"
+		},
+		{
+			"name":"end_mc_png",
+			"type":"image",
+			"url":"game_assets/end_mc.png"
+		},
+		{
+			"name":"start_mc_png",
+			"type":"image",
+			"url":"game_assets/start_mc.png"
+		},
+		{
+			"name":"400_json",
+			"type":"json",
+			"url":"game_assets2/monster/400.json"
+		},
+		{
+			"name":"320_json",
+			"type":"json",
+			"url":"game_assets2/monster/320.json"
 		}
 	]
 }

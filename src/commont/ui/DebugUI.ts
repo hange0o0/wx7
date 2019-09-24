@@ -85,26 +85,65 @@ class DebugUI extends game.BaseUI_wx4 {
         })
 
 
-        var dataBtn = this.addB('使用缓存数据',()=>{
-            var txt = egret.localStorage.getItem('levelData');
-            if(txt)
-            {
-                var arr = txt.split('\n')
-                arr.shift();
-                CM_wx4.initData(arr.join('\n'),'level');
-            }
-            MyWindow.ShowTips('OK')
-            dataBtn.label = '使用缓存数据OK'
-            dataBtn.touchEnabled = false
-            dataBtn.touchChildren = false
-            dataBtn.skinName = 'Btn1Skin'
-        })
-
         this.addB('插屏广告',()=>{
             MyADManager.getInstance().showInsert()
         })
+
+        //var dataBtn = this.addB('使用缓存数据',()=>{
+        //    var txt = egret.localStorage.getItem('levelData');
+        //    if(txt)
+        //    {
+        //        var arr = txt.split('\n')
+        //        arr.shift();
+        //        CM_wx4.initData(arr.join('\n'),'level');
+        //    }
+        //    MyWindow.ShowTips('OK')
+        //    dataBtn.label = '使用缓存数据OK'
+        //    dataBtn.touchEnabled = false
+        //    dataBtn.touchChildren = false
+        //    dataBtn.skinName = 'Btn1Skin'
+        //})
+
+        var dataBtn = this.addB('下载数据',()=>{
+
+            this.downLoadData((txt)=>{
+                LevelVO.clear();
+                var arr = txt.split('\n')
+                arr.shift();
+                CM_wx4.initData(arr.join('\n'),'level');
+
+                MyWindow.ShowTips('OK')
+                dataBtn.label = '下载数据OK'
+                dataBtn.touchEnabled = false
+                dataBtn.touchChildren = false
+                dataBtn.skinName = 'Btn1Skin'
+            })
+        })
+
+        this.addB('上传数据',()=>{
+            var str = egret.localStorage.getItem('levelData');
+            if(!str)
+            {
+                MyWindow.Alert('没有数据')
+                return;
+            }
+            var url = 'https://www.hangegame.com/error_wx7/log_map.php'
+            Net.getInstance().send(url,{str:str});
+            MyWindow.ShowTips('已发送服务器')
+        })
+
         this.addB('复制数据',()=>{
-            MyTool.copyStr(egret.localStorage.getItem('levelData'))
+            var str = egret.localStorage.getItem('levelData');
+            if(!str)
+            {
+                MyWindow.Alert('没有数据')
+                return;
+            }
+            MyTool.copyStr(str)
+        })
+
+        this.addB('设计地图',()=>{
+            CreateListUI.getInstance().show();
         })
     }
 
@@ -124,6 +163,21 @@ class DebugUI extends game.BaseUI_wx4 {
         arr.push('当前时间：'+DateUtil_wx4.formatDate('yyyy-MM-dd hh:mm:ss',TM_wx4.chineseDate()))
         arr.push('实际时间：' + DateUtil_wx4.formatDate('yyyy-MM-dd hh:mm:ss',new Date()))
         this.desText.text = arr.join('\n')
+    }
+
+    public downLoadData(fun){
+        var url = 'https://www.hangegame.com/error_wx7/get_map.php'
+        RES.getResByUrl(url, (data, url)=>{
+            if(data)
+            {
+                fun && fun(data)
+            }
+            else
+            {
+                MyWindow.Alert('下载数据失败')
+            }
+
+        }, this, RES.ResourceItem.TYPE_TEXT);
     }
 
 }

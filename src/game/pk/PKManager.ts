@@ -12,25 +12,29 @@ class PKManager {
 
     public energy = 1;
     public lastEnergyTime = 1;
+    public forceAdd = 0;
 
-    public lastChooseData
 
     public playerLevel = 1
     public atkAdd = 20
+
+    public gunList = [];
     public initData(data) {
         data = data || {}
         var energyData = data.energy || {};
         this.energy = energyData.v || 0;
         this.lastEnergyTime = energyData.t || 0;
-        this.lastChooseData = data.choose || [];
         this.playerLevel = data.playerLevel || 1;
+        this.gunList = data.gunList || [];
+        this.forceAdd = data.forceAdd || 0;
     }
 
     public getSave(){
         return {
             energy:{v:this.energy,t:this.lastEnergyTime},
-            choose:this.lastChooseData,
             playerLevel:this.playerLevel,
+            gunList:this.gunList,
+            forceAdd:this.forceAdd,
         }
     }
 
@@ -65,8 +69,47 @@ class PKManager {
         return this.energyCD - (TM_wx4.now() - this.lastEnergyTime)
     }
 
-    public getEnergyCost(){
-        return Math.min(Math.ceil(UM_wx4.level/5),8)
+
+    public initGunList(num){
+        if(this.gunList.length < num)
+        {
+            this.gunList = this.getGunArr(num,true);
+            UM_wx4.needUpUser = true
+        }
+    }
+
+    public addGunList(num = 5){
+        var newList = this.getGunArr(num)
+        this.gunList = this.gunList.concat(newList);
+        UM_wx4.needUpUser = true
+        return newList;
+    }
+
+    public getGunArr(num,isInit?){
+        var resultArr = []
+        var monsterList = [];
+        var level = UM_wx4.level
+        for(var s in GunVO.data)
+        {
+            var gvo = GunVO.data[s]
+            if(gvo.level <= level)
+            {
+                monsterList.push(gvo.id)
+                if(isInit && gvo.level == level)
+                {
+                    resultArr.push(gvo.id)
+                    resultArr.push(gvo.id)
+                    num -= 2;
+                }
+            }
+        }
+
+        while(num > 0)
+        {
+            num --;
+            resultArr.push(ArrayUtil_wx4.randomOne(monsterList))
+        }
+        return resultArr;
     }
 
     //public initChooseSkill(){
@@ -95,34 +138,34 @@ class PKManager {
     //    UM_wx4.needUpUser = true
     //}
     //
-    //public getWinResult(){
-    //    var skillNum = 5 + UM_wx4.level;
-    //    var skillArr = SkillManager.getInstance().getNewSkill(skillNum)
-    //    var coin = 50 + Math.floor(Math.pow(UM_wx4.level,1.5))*50
-    //    if(PKC.playerData.coinAdd)
-    //        coin = Math.ceil(coin*(1+PKC.playerData.coinAdd))
-    //    return {
-    //        skill:skillArr,
-    //        coin:coin,
-    //        skillNum:skillNum
-    //    }
-    //}
-    //
-    //public getFailResult(rate){
-    //    var skillNum = Math.ceil(UM_wx4.level*0.5*rate);
-    //    var skillArr = SkillManager.getInstance().getNewSkill(skillNum)
-    //    var coin = Math.ceil(Math.pow(UM_wx4.level,1.5)*rate*20)
-    //    if(PKC.playerData.coinAdd)
-    //        coin = Math.ceil(coin*(1+PKC.playerData.coinAdd))
-    //    return {
-    //        skill:skillArr,
-    //        coin:coin,
-    //        skillNum:skillNum
-    //    }
-    //}
+
+    public getForceRate(){
+        var force = 1 + (this.playerLevel-1)*0.2;
+        return force*(1+this.forceAdd);
+    }
+
+    public addForce(){
+        this.forceAdd += 0.2;
+        UM_wx4.needUpUser = true
+    }
+
+    public getWinCoin(level){
+        return level * 50
+    }
+
+    public getFailCoin(level,rate){
+        return Math.ceil(level * rate * 20)
+    }
+
+    public onGameEnd(isWin){
+        this.forceAdd = 0;
+        if(isWin)
+            this.gunList.length = 0;
+        UM_wx4.needUpUser = true
+    }
 
     public getUpCost(){
-        return 50 + Math.floor(Math.pow(this.playerLevel,1.8))*50
+        return 50 + Math.floor(Math.pow(this.playerLevel,1.5))*50
     }
     public upPlayerLevel(){
         var cost = this.getUpCost();

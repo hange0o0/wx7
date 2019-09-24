@@ -52,9 +52,15 @@
 		</e:layout>
 	</e:Group>
 	<e:Label id="levelText" text="第 1 关" horizontalCenter="0" size="30" y="120" bold="true" stroke="5"/>
-	<e:Image id="startBtn" source="start_game_png" horizontalCenter="0" bottom="200"/>
 	<e:Group id="needEnergyGroup" horizontalCenter="0" bottom="300">
 		<e:Image x="0" source="common_energy_png" scaleX="0.9" scaleY="0.9" y="0"/>
 		<e:Label id="needEnergyText" text="Label" x="41" size="24" textColor="0xFCD766" y="4"/>
+	</e:Group>
+	<e:Group id="btnGroup" horizontalCenter="0" bottom="200">
+		<e:Image id="startBtn" source="start_game_png" x="263" y="8"/>
+		<e:Button id="swapBtn" label="扫荡" x="0" y="0" skinName="Btn1Skin" height="78" width="100"/>
+		<e:layout>
+			<e:HorizontalLayout gap="30" verticalAlign="middle"/>
+		</e:layout>
 	</e:Group>
 			</e:Skin>

@@ -17,7 +17,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
 
 
-
+    public isTest = false;
 
     public pkMap = new PKMap();
     public scale = 1;
@@ -58,8 +58,9 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.closeBtn,()=>{
             this.hide()
         })
+
         this.addBtnEvent(this.randomBtn,()=>{
-            var list = TC.gunList.concat();
+            var list = PKManager.getInstance().gunList.concat();
             ArrayUtil_wx4.random(list,2)
             for(var s in this.towerPos)
             {
@@ -69,7 +70,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
         })
 
         this.addBtnEvent(this.addForceBtn,()=>{
-            this.hide()
+            PKManager.getInstance().addForce();
+            this.addForceBtn.label = '战力+' + PKManager.getInstance().forceAdd*100 + '%'
         })
 
         this.addBtnEvent(this.resetBtn,()=>{
@@ -112,15 +114,15 @@ class DrawMapUI extends game.BaseUI_wx4 {
         {
             if(!this.towerPos[s])
             {
-                this.towerPos[s] = 6//Math.ceil(Math.random()*50);
-                //MyWindow.ShowTips('这个位置还没放置飞刀哦！' + s)
-                //return;
+                //this.towerPos[s] = 6//Math.ceil(Math.random()*50);
+                MyWindow.ShowTips('这个位置还没放置塔器哦！' + s)
+                return;
             }
         }
 
-        if(!PKManager.getInstance().getEnergy())
+        if(!PKManager.getInstance().getEnergy() && !this.isTest)
         {
-            var share = false;
+            var share = !UM_wx4.isTest;
             if(share)
             {
                 MyWindow.Confirm('体力不足，分享到群可免去本次体力消耗。',(type)=>{
@@ -133,7 +135,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
                 },['取消', '分享到群'])
                 return;
             }
-            MyWindow.Confirm('体力不足，可观看广告可增加10点体力。',(type)=>{
+            MyWindow.Confirm('体力不足，可观看广告可增加 '+this.createHtml(5,0x00ff00)+' 点体力。',(type)=>{
                 if(type == 1)
                 {
                     ShareTool.openGDTV(()=>{
@@ -146,7 +148,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.startGame();
     }
     public startGame(){
-        PKManager.getInstance().addEnergy(-1)
+        if(!this.isTest)
+            PKManager.getInstance().addEnergy(-1)
         var road = [];
         for(var i=0;i<this.hh;i++)
         {
@@ -167,7 +170,14 @@ class DrawMapUI extends game.BaseUI_wx4 {
             tower:this.towerPos,
             road:road
         }
+        PKTowerUI.getInstance().isTest = this.isTest;
         PKTowerUI.getInstance().show(data)
+
+        if(!this.isTest)
+        {
+            this.hide();
+            PKManager.getInstance().sendGameStart(this.data.id)
+        }
     }
 
 
@@ -223,7 +233,24 @@ class DrawMapUI extends game.BaseUI_wx4 {
             var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
             if(this.touchPos.x == x && this.touchPos.y == y && this.mapData[y][x] == 2)//点了塔
             {
-                ChangeGunUI.getInstance().show(this.towerPos,x,y)
+                if(!this.towerPos[x + '_' +y])
+                {
+                    ChangeGunUI.getInstance().show(this.towerPos,x,y)
+                }
+                else
+                {
+                    var tower = this.pkMap.getTowerByPos(x,y);
+                    if(tower.isLighting)
+                    {
+                        ChangeGunUI.getInstance().show(this.towerPos,x,y)
+                    }
+                    else
+                    {
+                        tower.showLight(this.pkMap)
+                        if(UM_wx4.level < 10)
+                            MyWindow.ShowTips('再次点击底座可更换塔器')
+                    }
+                }
             }
             this.touchPos = null;
         }
@@ -238,6 +265,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     public show(data?){
         this.data = data;
+
+        PKManager.getInstance().initGunList(data.towerNum + 3);
 
         this.towerPos = {};
         this.pkMap.initMap(data.id)
@@ -293,6 +322,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.pkMap.scaleX = this.pkMap.scaleY = this.scale;
 
 
+        this.addForceBtn.label = '战力+' + PKManager.getInstance().forceAdd*100 + '%'
 
         this.renewMap();
 

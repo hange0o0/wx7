@@ -28,7 +28,7 @@
 	</e:Group>
 
 		<e:Group id="btnGroup" horizontalCenter="0" bottom="30">
-		<e:Button id="moreBtn" label="更多武器" x="0" y="0" width="200" skinName="Btn1Skin" icon="video_icon_png"/>
+		<e:Button id="moreBtn" label="更多塔器" x="0" y="0" width="200" skinName="Btn1Skin" icon="video_icon_png"/>
 		<e:Button id="okBtn" label="更换" x="10" y="10" skinName="Btn2Skin" width="200"/>
 		<e:layout>
 			<e:HorizontalLayout gap="50"/>

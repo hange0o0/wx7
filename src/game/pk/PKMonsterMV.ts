@@ -18,7 +18,6 @@ class PKMonsterMV_wx3 extends eui.Group {
     }
 
     public monsterMV:MonsterMV
-    public heroMV:HeroMVItem
     public currentMV;
 
     public id;
@@ -56,28 +55,15 @@ class PKMonsterMV_wx3 extends eui.Group {
          if(this.currentMV)
              this.currentMV.stop();
          MyTool.removeMC(this.currentMV)
-         if(vo.isHero())
-         {
-             if(!this.heroMV)
-             {
-                 this.heroMV = new HeroMVItem()
-                 this.heroMV.addEventListener('mv_die',this.fireDie,this)
-             }
-             this.currentMV = this.heroMV;
-             this.addChild(this.heroMV)
-             this.heroMV.load(id)
-             //this.heroMV.load(101)
-         }
-         else {
-             if (!this.monsterMV) {
-                 this.monsterMV = new MonsterMV()
-                 this.monsterMV.addEventListener('mv_die', this.fireDie, this)
-             }
 
-             this.currentMV = this.monsterMV;
-             this.addChild(this.monsterMV)
-             this.monsterMV.load(id)
+         if (!this.monsterMV) {
+             this.monsterMV = new MonsterMV()
+             this.monsterMV.addEventListener('mv_die', this.fireDie, this)
          }
+
+         this.currentMV = this.monsterMV;
+         this.addChild(this.monsterMV)
+         this.monsterMV.load(id)
 
 
      }

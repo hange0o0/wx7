@@ -1,39 +1,41 @@
-class SkillUnlockUI extends game.BaseWindow_wx4 {
+class ShareUnlockUI extends game.BaseWindow_wx4 {
 
-    private static _instance: SkillUnlockUI;
-    public static getInstance(): SkillUnlockUI {
+    private static _instance: ShareUnlockUI;
+    public static getInstance(): ShareUnlockUI {
         if(!this._instance)
-            this._instance = new SkillUnlockUI();
+            this._instance = new ShareUnlockUI();
         return this._instance;
     }
 
     private refreshBtn: eui.Button;
     private inviteBtn: eui.Button;
+    private desText: eui.Label;
+
 
 
 
     public index;
+    public title;
+    public des;
     public constructor() {
         super();
-        this.skinName = "SkillUnlockUISkin";
+        this.skinName = "ShareUnlockUISkin";
         this.canBGClose = false
     }
 
     public childrenCreated() {
         super.childrenCreated();
 
-
         this.addBtnEvent(this.inviteBtn,this.onInvite)
         this.addBtnEvent(this.refreshBtn,this.onRefresh)
-
     }
 
     private onInvite(){
-        var wx =  window["wx"];
+        var wx = window["wx"];
         if(wx)
             wx.aldSendEvent("点击邀请好友")
 
-        ShareTool.share('加入我们，让我们一起割草无双',Config.getShare(0),{type:1,from:UM_wx4.gameid,index:this.index},()=>{
+        ShareTool.share('搬砖修路，拯救天下!',Config.getShare(0),{type:1,from:UM_wx4.gameid,index:this.index},()=>{
             MyWindow.ShowTips('等待好友加入')
             MyWindow.ShowTips('好友加入后，数据有一定延迟，请耐心等候')
         },true)
@@ -41,21 +43,22 @@ class SkillUnlockUI extends game.BaseWindow_wx4 {
 
     private onRefresh(){
         UM_wx4.renewFriendNew(()=>{
+            EM_wx4.dispatch(GameEvent.client.INVITE_CHANGE)
             if(UM_wx4.shareUser[this.index])
             {
-                //SkillChooseUI.getInstance().chooseSkill[3+this.index] = 0;
-                //SkillChooseUI.getInstance().renew();
                 this.hide();
             }
             else
             {
-                MyWindow.ShowTips('还没有好友通过你的连接新加入游戏')
+                MyWindow.ShowTips('还没有好友通过本窗口链接新加入游戏')
             }
         })
     }
 
-    public show(index?){
+    public show(index?,title?,des?){
         this.index = index;
+        this.title = title;
+        this.des = des;
         super.show()
     }
 
@@ -64,7 +67,8 @@ class SkillUnlockUI extends game.BaseWindow_wx4 {
     }
 
     public onShow(){
-        this.setTitle('解锁技能位' + (this.index + 4))
+        this.setTitle(this.title)
+        this.setHtml(this.desText,this.des);
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
     }
 

@@ -9,13 +9,13 @@
 		<e:Image id="ad3" width="90" height="90" left="20" y="130"/>
 		<e:Group width="400" x="120" y="50">
 			<e:Group y="60" horizontalCenter="0">
-			<e:Image source="coin_mc_png" x="0" y="32"/>
+			<e:Image source="coin_mc_png" x="0" y="32" scaleX="1.2" scaleY="1.2"/>
 			<e:Label id="coinText" text="123456" x="48" y="0" size="36" textColor="0xffd834" stroke="3" strokeColor="0x4657c5"/>
 			<e:layout>
-				<e:HorizontalLayout verticalAlign="middle"/>
+				<e:HorizontalLayout verticalAlign="middle" gap="20"/>
 			</e:layout>
 			</e:Group>
-			<e:Label text="你获得了" y="0" horizontalCenter="0" size="30" textColor="0x4657c5" bold="true"/>
+			<e:Label text="获得金币" y="0" horizontalCenter="0" size="30" textColor="0x4657c5" bold="true"/>
 		</e:Group>
 	</e:Group>
 	<e:Group horizontalCenter="0" bottom="300" width="600">

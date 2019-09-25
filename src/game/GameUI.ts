@@ -283,7 +283,6 @@ class GameUI extends game.BaseUI_wx4 {
         this.renewNeedEnergy();
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renewCoin)
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
-        this.addPanelOpenEvent(GameEvent.client.GUN_CHANGE,this.renewGun)
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
         this.addPanelOpenEvent(GameEvent.client.LOAD_SERVER_DATA,this.onLoadServerData)
 
@@ -574,11 +573,6 @@ class GameUI extends game.BaseUI_wx4 {
         this.renewRed();
     }
 
-    public renewGun(){
-        //PKC.playerData.initData();
-        //PKC.playerData.relateItem.dataChanged();
-        this.renewRed();
-    }
 
     private renewRed(){
         this.equipRedMC.visible = false;//GunManager.getInstance().myGun.length < GunManager.getInstance().getUnlockNum();

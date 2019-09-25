@@ -22,7 +22,7 @@ class SkillListItem extends game.BaseItem{
         if(this.data.isMonster)
             this.renewMonster();
         else
-            this.renewSkill();
+            this.renewGun();
         this.setSelect();
     }
 
@@ -31,7 +31,7 @@ class SkillListItem extends game.BaseItem{
     }
 
     private renewMonster(){
-        this.currentState = 's2'
+        this.currentState = 's1'
         var vo = this.data
         var level = UM_wx4.level
 
@@ -49,20 +49,19 @@ class SkillListItem extends game.BaseItem{
         }
     }
 
-    private renewSkill(){
-
+    private renewGun(){
+        this.currentState = 's2'
         var level = UM_wx4.level
         var vo = this.data
+
         if(vo.level > level)
         {
-            this.currentState = 's2'
             this.mc.source = 'pk_skill_unknow_png'
             this.touchChildren = this.touchEnabled = false
             this.nameText.text = '?????'
         }
         else
         {
-            this.currentState = 's1'
             this.touchChildren = this.touchEnabled = true
             this.mc.source = vo.getThumb();
             this.nameText.text = vo.name

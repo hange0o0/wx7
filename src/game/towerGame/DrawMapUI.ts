@@ -13,7 +13,11 @@ class DrawMapUI extends game.BaseUI_wx4 {
     private addForceBtn: eui.Button;
     private resetBtn: eui.Button;
     private closeBtn: eui.Image;
+    private monsterGroup: eui.Group;
+    private monsterList: eui.List;
+    private monsterBtn: eui.Group;
     private levetText: eui.Label;
+
 
 
 
@@ -38,6 +42,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     public touchPos
 
     public isGuiding = false
+    private showMonsterListTime = 0
     public constructor() {
         super();
         this.skinName = "DrawMapUISkin";
@@ -50,6 +55,17 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.pkMap.horizontalCenter = 0
         this.pkMap.verticalCenter = -80
 
+        this.monsterList.itemRenderer = MonsterHeadItem
+        this.addBtnEvent(this.monsterBtn,()=>{
+            this.showMonsterListTime = egret.getTimer();
+            this.monsterGroup.visible = true;
+            var arr = this.data.monsterArr;
+            this.monsterList.dataProvider = new eui.ArrayCollection(arr)
+            if(arr.length <= 6)
+                this.monsterList.layout['requestedColumnCount'] = arr.length;
+            else
+                this.monsterList.layout['requestedColumnCount'] = Math.ceil(arr.length/2);
+        })
 
         this.list.itemRenderer = CreateMapItem
         this.list.selectedIndex = 0;
@@ -57,7 +73,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
         this.pkMap.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouch,this)
         this.pkMap.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onTouch,this)
-        this.addEventListener(egret.TouchEvent.TOUCH_END,this.onTouchEnd,this)
+        GameManager_wx4.stage.addEventListener(egret.TouchEvent.TOUCH_END,this.onTouchEnd,this)
 
         this.addBtnEvent(this.closeBtn,()=>{
             this.hide()
@@ -73,6 +89,18 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.resetBtn,this.onReset)
         this.addBtnEvent(this.startBtn,()=>{
             this.onStartGame();
+        })
+
+        this.addBtnEvent(this,(e)=>{
+            if(this.monsterGroup.visible)
+            {
+                if(egret.getTimer() - this.showMonsterListTime < 100)
+                    return
+                if(!this.monsterGroup.hitTestPoint(e.stageX,e.stageY))
+                {
+                    this.monsterGroup.visible = false;
+                }
+            }
         })
     }
 
@@ -274,6 +302,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
     private onTouchEnd(e){
+        if(!this.stage)
+            return;
         if(this.touchPos)
         {
             var itemSize = 64*this.scale;
@@ -383,6 +413,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
+        this.monsterGroup.visible = false;
         this.levetText.text = '第 '+this.data.id+' 关'
         this.pkMap.width = 64*this.ww
         this.pkMap.height = 64*this.hh

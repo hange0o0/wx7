@@ -87,11 +87,19 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
         this.addBtnEvent(this.pkMap,this.onMap)
         this.addBtnEvent(this.addSpeedBtn,()=>{
+            if(!UM_wx4.shareUser[0])
+            {
+                ShareUnlockUI.getInstance().show(0,'解锁加速功能','只需邀请一个好友新加入游戏，即可'+this.createHtml('永久解锁',0xFFFF00)+'加速功能！');
+                return;
+            }
+
             TC.isSpeed = !TC.isSpeed
-            this.addSpeedBtn.label = TC.isSpeed?'加速中':'加速'
+            this.renewSpeedBtn();
         })
+    }
 
-
+    private renewSpeedBtn(){
+        this.addSpeedBtn.label = TC.isSpeed?'加速中':'加速'
     }
 
     private onMap(e){
@@ -168,8 +176,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
-        this.addSpeedBtn.visible = DEBUG || DebugUI.getInstance().debugOpen;
-        this.addSpeedBtn.label = TC.isSpeed?'加速中':'加速'
+        this.renewSpeedBtn();
 
         while(this.monsterArr.length)
         {

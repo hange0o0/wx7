@@ -47,6 +47,7 @@ class RebornUI extends game.BaseWindow_wx4{
 
     public onShow(){
         GunInfoUI.getInstance().hide();
+        ShareUnlockUI.getInstance().hide();
         TC.isStop = true;
         this.isStoping = false;
         this.step = 30*10;

@@ -20,7 +20,7 @@
 
 
 	<e:Group id="tipsGroup" y="500" horizontalCenter="0" width="500" touchEnabled="false" touchChildren="false">
-		<e:Image left="0" right="0" top="0" bottom="0" source="common_bg_03_png" scale9Grid="5,5,30,30"/>
+		<e:Image left="0" right="0" top="0" bottom="0" source="window_bg_png" scale9Grid="36,27,39,53"/>
 		<e:Label id="tipTxt" size="26" lineSpacing="10" text="123456" left="20" right="20" top="40" bottom="40" bold="true" textAlign="center" textColor="0xfcfcfc"/>
 		<e:Label id="anyClick" size="20" text="点击屏幕继续" lineSpacing="5" right="20" bottom="20" textColor="0xc9bb76" visible="false"/>
 	</e:Group>

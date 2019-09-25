@@ -25,7 +25,7 @@ class SkillListUI extends game.BaseWindow_wx4 {
 
 
 
-    public data;
+    public dataIn;
     public heroItem
     public constructor() {
         super();
@@ -62,7 +62,8 @@ class SkillListUI extends game.BaseWindow_wx4 {
         this.renew();
     }
 
-    public show(){
+    public show(dataIn?){
+        this.dataIn = dataIn;
         super.show()
     }
 
@@ -71,8 +72,14 @@ class SkillListUI extends game.BaseWindow_wx4 {
     }
 
     public onShow(){
-        this.renew();
-
+        if(this.dataIn)
+        {
+            this.renewShow(this.dataIn)
+        }
+        else
+        {
+            this.renew();
+        }
         //this.inputText.text = ''
     }
 

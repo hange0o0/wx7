@@ -84,6 +84,7 @@ class ResultUI extends game.BaseUI_wx4{
 
     public onShow(){
         GunInfoUI.getInstance().hide();
+        ShareUnlockUI.getInstance().hide();
         this.renew();
     }
 

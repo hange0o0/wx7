@@ -84,8 +84,12 @@ class DebugUI extends game.BaseUI_wx4 {
         })
 
         this.addB('加好友',()=>{
-            UM_wx4.shareUser.push(1)
-            MyWindow.ShowTips(UM_wx4.shareUser[1])
+            for(var i=0;i<20;i++)
+            {
+                UM_wx4.shareUser[i] = 1
+            }
+
+            MyWindow.ShowTips('加好友')
         })
 
 

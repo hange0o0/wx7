@@ -4,6 +4,7 @@ class SkillEnemyItem extends game.BaseItem{
 
 
 
+
     public constructor() {
         super();
         this.skinName = "SkillEnemyItemSkin";
@@ -16,7 +17,7 @@ class SkillEnemyItem extends game.BaseItem{
     }
 
     private onClick(){
-        if(this.currentState == 'normal')
+        if(this.currentState != 'lock')
         {
             SkillListUI.getInstance().renewShow(this.data)
         }
@@ -32,7 +33,10 @@ class SkillEnemyItem extends game.BaseItem{
         }
         else
         {
-            this.currentState = 'normal'
+            if(this.data.isMonster)
+                this.currentState = 'normal1';
+            else
+                this.currentState = 'normal2';
             this.mc.source = this.data.getThumb()
         }
     }

@@ -52,7 +52,7 @@ class LevelVO {
 
     public reset(){
         //回合数
-        this.roundNum = Math.min(10,3 + Math.floor(this.id/10))
+        this.roundNum = Math.min(12,3 + Math.floor(this.id/10))
 
 
         //会出现的怪物

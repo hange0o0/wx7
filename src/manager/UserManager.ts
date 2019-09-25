@@ -55,7 +55,7 @@ class UserManager_wx4 {
     public isDelete = false
 
 
-    public shareUser = [];//buff玩家的数据   openid:{head,nick,time}
+    public shareUser = {};//buff玩家的数据   openid:{head,nick,time}
     public loginTime = 0
 
 

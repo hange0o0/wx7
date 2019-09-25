@@ -20,10 +20,9 @@
 
 
 	<e:Group id="tipsGroup" y="500" horizontalCenter="0" width="500" touchEnabled="false" touchChildren="false">
-		<e:Image source="loading_logo_png" y="-196" scaleX="-1" x="149"/>
-		<e:Image source="bar_bg_png" scale9Grid="11,13,187,5" left="0" right="0" top="0" bottom="0"/>
-		<e:Label id="tipTxt" size="26" lineSpacing="10" text="123456" textColor="0xccb48e" left="20" right="20" top="20" bottom="60" bold="true"/>
-		<e:Label id="anyClick" size="20" text="点击屏幕继续" lineSpacing="5" right="20" bottom="20" textColor="0xc9bb76"/>
+		<e:Image left="0" right="0" top="0" bottom="0" source="common_bg_03_png" scale9Grid="5,5,30,30"/>
+		<e:Label id="tipTxt" size="26" lineSpacing="10" text="123456" left="20" right="20" top="40" bottom="40" bold="true" textAlign="center" textColor="0xfcfcfc"/>
+		<e:Label id="anyClick" size="20" text="点击屏幕继续" lineSpacing="5" right="20" bottom="20" textColor="0xc9bb76" visible="false"/>
 	</e:Group>
 
 	<e:Image id="handMC" x="106" y="33" source="guide2_png" anchorOffsetX="70" anchorOffsetY="10"/>

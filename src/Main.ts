@@ -169,16 +169,16 @@ class Main extends eui.UILayer {
         CM_wx4.initData(RES.getRes("gun_txt"),'gun');
         //CM_wx4.initData(RES.getRes("skill_txt"),'skill');
         CM_wx4.initData(RES.getRes("level_txt"),'level');
-        if(DEBUG)//|| Config.readLocal
-        {
-            var txt = egret.localStorage.getItem('levelData');
-            if(txt)
-            {
-                var arr = txt.split('\n')
-                arr.shift();
-                CM_wx4.initData(arr.join('\n'),'level');
-            }
-        }
+        //if(DEBUG)//|| Config.readLocal
+        //{
+        //    var txt = egret.localStorage.getItem('levelData');
+        //    if(txt)
+        //    {
+        //        var arr = txt.split('\n')
+        //        arr.shift();
+        //        CM_wx4.initData(arr.join('\n'),'level');
+        //    }
+        //}
 
         CM_wx4.initFinish()
         GameManager_wx4.stage = this.stage;

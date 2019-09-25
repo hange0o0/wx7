@@ -7,6 +7,10 @@ class ResultUI extends game.BaseUI_wx4{
     }
 
     private bg: eui.Image;
+    private ad1: eui.Image;
+    private ad2: eui.Image;
+    private ad4: eui.Image;
+    private ad3: eui.Image;
     private coinText: eui.Label;
     private awardBtn: eui.Button;
     private shareBtn: eui.Button;
@@ -14,8 +18,7 @@ class ResultUI extends game.BaseUI_wx4{
     private barMC: eui.Image;
     private rateText: eui.Label;
     private titleText: eui.Label;
-    private ad1: eui.Image;
-    private ad2: eui.Image;
+
 
 
 
@@ -47,6 +50,12 @@ class ResultUI extends game.BaseUI_wx4{
         this.addBtnEvent(this.ad2,()=>{
             MyADManager.getInstance().showAD(this.ad2['adData'])
         })
+        this.addBtnEvent(this.ad3,()=>{
+            MyADManager.getInstance().showAD(this.ad3['adData'])
+        })
+        this.addBtnEvent(this.ad4,()=>{
+            MyADManager.getInstance().showAD(this.ad4['adData'])
+        })
 
         this.addBtnEvent(this.awardBtn,()=>{
             UM_wx4.addCoin(this.resultCoin)
@@ -74,18 +83,24 @@ class ResultUI extends game.BaseUI_wx4{
     }
 
     public onShow(){
+        GunInfoUI.getInstance().hide();
         this.renew();
     }
 
     public show(isWin?){
         TC.isStop = true;
         this.isWin = isWin;
-        PKManager.getInstance().sendGameEnd(isWin)
-        PKManager.getInstance().onGameEnd(this.isWin)
-        if(this.isWin && TC.currentVO.id == UM_wx4.level)
+        if(!PKTowerUI.getInstance().isTest)
         {
-            UM_wx4.level ++;
-            UM_wx4.upWXLevel();
+            PKManager.getInstance().sendGameEnd(isWin)
+            PKManager.getInstance().onGameEnd(this.isWin)
+            if(this.isWin && TC.currentVO.id == UM_wx4.level)
+            {
+                UM_wx4.level ++;
+                UM_wx4.upWXLevel();
+                if(!LevelVO.getObject(UM_wx4.level + 1))
+                    TowerManager.getInstance().getServerData();
+            }
         }
         super.show()
     }
@@ -157,6 +172,30 @@ class ResultUI extends game.BaseUI_wx4{
         else
         {
             this.ad2.visible = false;
+        }
+
+        var ad = ArrayUtil_wx4.randomOne(adArr,true);
+        if(ad)
+        {
+            this.ad3['adData'] = ad;
+            this.ad3.source = ad.logo
+            this.ad3.visible = true;
+        }
+        else
+        {
+            this.ad2.visible = false;
+        }
+
+        var ad = ArrayUtil_wx4.randomOne(adArr,true);
+        if(ad)
+        {
+            this.ad4['adData'] = ad;
+            this.ad4.source = ad.logo
+            this.ad4.visible = true;
+        }
+        else
+        {
+            this.ad4.visible = false;
         }
     }
 

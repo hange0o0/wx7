@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="ResultUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Image id="bg" source="black_bg_alpha_png" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
-	<e:Group horizontalCenter="0" bottom="300" width="600">
-		<e:Group width="400" x="0" y="0">
+	<e:Group width="640" horizontalCenter="0" y="250">
+		<e:Image source="result_bg_png" y="0" horizontalCenter="0"/>
+		<e:Image id="ad1" width="90" height="90" x="20" y="0"/>
+		<e:Image id="ad2" width="90" height="90" right="20" y="0"/>
+		<e:Image id="ad4" width="90" height="90" right="20" y="130"/>
+		<e:Image id="ad3" width="90" height="90" left="20" y="130"/>
+		<e:Group width="400" x="120" y="50">
 			<e:Group y="60" horizontalCenter="0">
 			<e:Image source="coin_mc_png" x="0" y="32"/>
-			<e:Label id="coinText" text="123456" x="48" y="0" textColor="0xfcd45d" size="36"/>
+			<e:Label id="coinText" text="123456" x="48" y="0" size="36" textColor="0xffd834" stroke="3" strokeColor="0x4657c5"/>
 			<e:layout>
 				<e:HorizontalLayout verticalAlign="middle"/>
 			</e:layout>
 			</e:Group>
-			<e:Label text="你获得了" y="0" horizontalCenter="0" size="26"/>
+			<e:Label text="你获得了" y="0" horizontalCenter="0" size="30" textColor="0x4657c5" bold="true"/>
 		</e:Group>
+	</e:Group>
+	<e:Group horizontalCenter="0" bottom="300" width="600">
 		<e:Group x="50" y="178">
 			<e:Button id="awardBtn" label="马上领取" skinName="Btn1Skin" width="300" x="0" y="0" height="80"/>
 			<e:Button id="shareBtn" label="三倍领取" width="300" x="0" y="0" skinName="Btn2Skin" height="80" icon="video_icon_png"/>
@@ -29,6 +36,4 @@
 		<e:Label id="rateText" text="剩余怪物：60%" size="20" textColor="0xfce662" verticalCenter="0" x="400"/>
 	</e:Group>
 	<e:Label id="titleText" text="大胜！" y="150" size="60" bold="true" horizontalCenter="10"/>
-	<e:Image id="ad1" width="90" height="90" x="20" bottom="300"/>
-	<e:Image id="ad2" width="90" height="90" bottom="300" right="20"/>
 </e:Skin>

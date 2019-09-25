@@ -43,6 +43,8 @@ class TowerManager extends egret.EventDispatcher {
         var wx = window['wx'];
         if(!wx)
             return;
+
+        console.log('getServerData')
         var url = MyADManager.getInstance().cloudPath + 'map.txt'
         wx.cloud.downloadFile({
             fileID: url,
@@ -50,13 +52,14 @@ class TowerManager extends egret.EventDispatcher {
                 var url =  res.tempFilePath;
                 var loader: egret.URLLoader = new egret.URLLoader();
                 loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
-                loader.once(egret.Event.COMPLETE,()=>{
+                loader.once(egret.Event.COMPLETE,(e)=>{
                     var txt = loader.data;
                     LevelVO.clear();
                     var arr = txt.split('\n')
                     arr.shift();
                     CM_wx4.initData(arr.join('\n'),'level');
                     EM_wx4.dispatch(GameEvent.client.LOAD_SERVER_DATA)
+                    console.log('getServerData OK')
                     //GameUI.getInstance().onLoadServerData();
                 },this);
                 loader.load(new egret.URLRequest(url));
@@ -68,9 +71,56 @@ class TowerManager extends egret.EventDispatcher {
 
     }
 
+    private guideLight;
+    private guideTimer;
+    public showGuideMC(p) {
+        if (!this.guideLight) {
+            var data:any = RES.getRes('guide_mv' + "_json"); //qid
+            var texture:egret.Texture = RES.getRes('guide_mv' + "_png");
+            if (data == null || texture == null) {
+                return
+            }
+            var mcFactory = new egret.MovieClipDataFactory(data, texture);
+
+            this.guideLight = new egret.MovieClip();
+            this.guideLight.movieClipData = mcFactory.generateMovieClipData('click_guide');
+            this.guideLight.addEventListener(egret.MovieClipEvent.COMPLETE, ()=>{
+                this.guideLight.stop();
+                MyTool.removeMC(this.guideLight);
+            }, this)
+            this.guideLight.frameRate = 12//技能动画变慢
+            this.guideLight.touchEnabled = false;
+        }
+
+        egret.clearTimeout(this.guideTimer);
+        this.guideTimer = egret.setTimeout(function(){
+            this.guideLight.x = p.x
+            this.guideLight.y = p.y
+            this.guideLight.gotoAndPlay(1, 2);
+            GameManager_wx4.container.addChild(this.guideLight);
+        },this,200);
+    }
+
 
 
     public save(){
-
+        var url = MyADManager.getInstance().cloudPath + 'map.txt'
+        var wx = window['wx'];
+        wx.cloud.downloadFile({
+            fileID: url,
+            success: res => {
+                var url =  res.tempFilePath;
+                var loader: egret.URLLoader = new egret.URLLoader();
+                loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
+                loader.once(egret.Event.COMPLETE,(data)=>{
+                    console.log(data);
+                    console.log(loader.data);
+                },this);
+                loader.load(new egret.URLRequest(url));
+            },
+            fail: err => {
+                console.log(err)
+            }
+        })
     }
 }

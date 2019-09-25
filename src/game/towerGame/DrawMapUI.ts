@@ -32,8 +32,12 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     public towerPos = {}
     public movePaths = []
+    public startPos = []
+    public endPos = []
     public isChange = false
     public touchPos
+
+    public isGuiding = false
     public constructor() {
         super();
         this.skinName = "DrawMapUISkin";
@@ -59,53 +63,94 @@ class DrawMapUI extends game.BaseUI_wx4 {
             this.hide()
         })
 
-        this.addBtnEvent(this.randomBtn,()=>{
-            var list = PKManager.getInstance().gunList.concat();
-            ArrayUtil_wx4.random(list,2)
-            for(var s in this.towerPos)
-            {
-                this.towerPos[s] = list.pop();
-            }
-            this.onChoosGun()
-        })
+        this.addBtnEvent(this.randomBtn,this.randomGun)
 
         this.addBtnEvent(this.addForceBtn,()=>{
             PKManager.getInstance().addForce();
             this.addForceBtn.label = '战力+' + PKManager.getInstance().forceAdd*100 + '%'
         })
 
-        this.addBtnEvent(this.resetBtn,()=>{
-            var change = false
-            for(var i=0;i<this.hh;i++)
-            {
-                for(var j=0;j<this.ww;j++)
-                {
-                    if(this.mapData[i][j] == 1)
-                    {
-                        this.mapData[i][j] = 0;
-                        change  = true;
-                    }
-                }
-            }
-            if(change)
-            {
-                this.renewMap();
-                this.movePaths = []
-                this.showArrow();
-                this.saveLocal();
-            }
-        })
+        this.addBtnEvent(this.resetBtn,this.onReset)
         this.addBtnEvent(this.startBtn,()=>{
             this.onStartGame();
         })
     }
 
+    private randomGun(){
+        var list = PKManager.getInstance().gunList.concat();
+        ArrayUtil_wx4.random(list,2)
+        for(var s in this.towerPos)
+        {
+            this.towerPos[s] = list.pop();
+        }
+        this.onChoosGun()
+    }
+
+    private onReset(){
+        var change = false
+        for(var i=0;i<this.hh;i++)
+        {
+            for(var j=0;j<this.ww;j++)
+            {
+                if(this.mapData[i][j] == 1)
+                {
+                    this.mapData[i][j] = 0;
+                    change  = true;
+                }
+            }
+        }
+        if(change)
+        {
+            this.renewMap();
+            this.movePaths = TC.findPath(this.mapData)
+            this.showArrow();
+            this.saveLocal();
+        }
+    }
+
+
+    private showGuideLightPos(x,y){
+        var xx = x*64+32
+        var yy = y*64+32
+        var p = this.pkMap.localToGlobal(xx,yy);
+        TowerManager.getInstance().showGuideMC(p)
+    }
+
+    public showHand(){
+        var startP = this.pkMap.localToGlobal(this.startPos[0].x*64+32, this.startPos[0].y*64+32)
+        var endP = this.pkMap.localToGlobal(this.endPos[0].x*64+32, this.endPos[0].y*64+32)
+        var len = Math.abs(this.startPos[0].y - this.endPos[0].y+1)*64
+        var guideData:any = {};
+        guideData.mc = new egret.Rectangle(endP.x-32,endP.y-32,
+            64*this.scale,len*this.scale);
+        console.log(guideData.mc)
+        guideData.text = '移动画出怪物行走区域';
+        guideData.toBottom = 50;
+        guideData.showFun = ()=>{
+            GuideUI.getInstance().handMovePos({x:startP.x,y:startP.y},{x:endP.x,y:endP.y})
+        };
+
+        GuideUI.getInstance().show(guideData)
+
+    }
+
+
+
     public onStartGame(){
+        if(this.isGuiding)
+        {
+            GuideUI.getInstance().hide();
+            this.isGuiding = false;
+        }
+        if(!this.movePaths)
+            return;
         for(var i=0;i<this.movePaths.length;i++)
         {
             if(!this.movePaths[i])
             {
-                MyWindow.ShowTips('有出怪点被阻档了！')
+                MyWindow.ShowTips('出怪点被阻档了！',1000)
+                var xy = this.startPos[i]
+                this.showGuideLightPos(xy.x,xy.y);
                 return;
             }
         }
@@ -115,7 +160,10 @@ class DrawMapUI extends game.BaseUI_wx4 {
             if(!this.towerPos[s])
             {
                 //this.towerPos[s] = 6//Math.ceil(Math.random()*50);
-                MyWindow.ShowTips('这个位置还没放置塔器哦！' + s)
+                MyWindow.ShowTips('还没放置塔器！',1000)
+
+                var xy2 = s.split('_')
+                this.showGuideLightPos(parseInt(xy2[0]),parseInt(xy2[1]));
                 return;
             }
         }
@@ -260,6 +308,15 @@ class DrawMapUI extends game.BaseUI_wx4 {
             this.isChange = false;
             this.movePaths = TC.findPath(this.mapData)
             this.showArrow();
+            if(this.isGuiding && this.movePaths[0])
+            {
+                this.once(egret.Event.ENTER_FRAME,()=>{
+                    var guideData:any = {};
+                    guideData.mc = this.startBtn
+                    guideData.text = '点击开始游戏';
+                    GuideUI.getInstance().show(guideData)
+                },this)
+            }
         }
     }
 
@@ -276,6 +333,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
         this.mapData = [];
 
+        this.startPos = [];
+        this.endPos = [];
         for(var i=0;i<this.hh;i++)
         {
             this.mapData.push([]);
@@ -286,6 +345,14 @@ class DrawMapUI extends game.BaseUI_wx4 {
                 if(id == 2)
                 {
                     this.towerPos[j+'_' + i] = 0;
+                }
+                if(id == 5)
+                {
+                    this.startPos.push({x:j,y:i});
+                }
+                if(id == 6)
+                {
+                    this.endPos.push({x:j,y:i});
                 }
             }
         }
@@ -312,6 +379,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     private renewMap(){
         this.pkMap.draw(this.mapData);
         this.pkMap.renewTower(this.towerPos,true);
+        this.pkMap.sortY()
     }
 
     public onShow(){
@@ -332,9 +400,21 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.isChange = false;
 
         this.showArrow();
+
+
+        this.isGuiding = this.data.id == 1 && UM_wx4.level == 1
+        if(this.isGuiding)
+        {
+            this.list.selectedIndex = 0;
+            this.randomGun();
+            this.onReset();
+            this.once(egret.Event.ENTER_FRAME,this.showHand,this)
+        }
     }
 
     public showArrow(){
+        if(!this.movePaths)
+            return
         var allRoadOK = true
         this.pkMap.clearArrow();
         for(var i=0;i<this.movePaths.length;i++)

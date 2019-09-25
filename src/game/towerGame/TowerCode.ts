@@ -19,6 +19,7 @@ class TowerCode {
     public maxRound = 1;
     public totalMonsterNum = 1;
     public appearMonsterNum = 1;
+    public maxStep = 1;
     public roundAutoMonster = []
     public totalAutoMonster = []
 
@@ -30,6 +31,7 @@ class TowerCode {
     public randomSeed = 99999999;
     public currentVO;
 
+    public isSpeed = false
     public isPKing = false
     public wudiEnd = 0
     public rebornTime = 0
@@ -150,7 +152,7 @@ class TowerCode {
         var step = 10
 
         var roadIndex = 0;
-        var maxCost = (vo.towerNum*20) * 10 * Math.pow(1.005,level)
+        var maxCost = (vo.towerNum*15) * 10 * Math.pow(1.005,level)
         var roundTimeStep = 30*15 + Math.floor(Math.pow(level,1.1))
 
         while(monsterList.length > 0)
@@ -166,6 +168,10 @@ class TowerCode {
 
             var num = Math.round(maxCost/mvo.cost);
             var stepAdd = Math.round(roundTimeStep/num);
+            var maxStepAdd = Math.round((8 - 4*(level/1000))*30)
+            if(stepAdd > maxStepAdd)
+                stepAdd = maxStepAdd;
+
             while(num > 0)
             {
                 num --;
@@ -190,6 +196,7 @@ class TowerCode {
 
         }
 
+        this.maxStep = step + 30;
         return returnArr
     }
 

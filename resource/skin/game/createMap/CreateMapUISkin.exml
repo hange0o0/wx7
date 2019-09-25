@@ -11,13 +11,15 @@
 		<e:Label text="高：" x="10.64" textColor="0x000000" size="22" y="199.68"/>
 		<e:EditableText id="widthText" width="50" height="30" text="12" x="101.64" textColor="0x000000" border="true" size="24" y="156.68" textAlign="center"/>
 		<e:EditableText id="heightText" width="50" height="30" text="120" x="98.97" textColor="0x000000" border="true" size="24" y="201.68" textAlign="center"/>
-		<e:Button id="setBtn" label="设置" x="254" y="161.01" skinName="Btn2Skin"/>
-		<e:Button id="randomBtn" label="随机" x="398" y="161.01" skinName="Btn2Skin"/>
+		<e:Button id="setBtn" label="设置" x="214" y="161.01" skinName="Btn2Skin"/>
+		<e:Button id="randomBtn" label="随机" x="424" y="163.01" skinName="Btn2Skin"/>
 		<e:Button id="saveBtn" label="保存" y="89.68" skinName="Btn2Skin" right="10"/>
 		<e:Button id="backBtn" label="退出" y="163.35" skinName="Btn2Skin" right="10"/>
 		<e:Group bottom="249" horizontalCenter="0">
-			<e:Button id="beforeBtn" label="上一关" y="53.35" skinName="Btn2Skin" x="0"/>
+			<e:Button id="upBtn" label="上移" y="63.35" x="10" skinName="Btn1Skin"/>
+			<e:Button id="downBtn" label="下移" y="63.35" x="120" skinName="Btn1Skin"/>
 			<e:Label id="levelText" text="Label" x="61.65" y="0" textColor="0x000000" width="100" textAlign="center"/>
+			<e:Button id="beforeBtn" label="上一关" y="53.35" skinName="Btn2Skin" x="0"/>
 			<e:Button id="nextBtn" label="下一关" y="53.35" skinName="Btn2Skin" x="110"/>
 			<e:layout>
 				<e:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="30"/>

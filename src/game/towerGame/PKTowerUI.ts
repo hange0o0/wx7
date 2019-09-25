@@ -8,6 +8,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     public list: eui.List;
+    private barMC: eui.Image;
     private levetText: eui.Label;
     private closeBtn: eui.Image;
     private skillInfoGroup: eui.Group;
@@ -15,6 +16,9 @@ class PKTowerUI extends game.BaseUI_wx4 {
     private desText: eui.Label;
     private skillNameText: eui.Label;
     private skillCDText: eui.Label;
+    private addSpeedBtn: eui.Button;
+
+
 
 
 
@@ -52,6 +56,8 @@ class PKTowerUI extends game.BaseUI_wx4 {
     public childrenCreated() {
         super.childrenCreated();
 
+
+
         this.addChildAt(this.pkMap,1);
         this.pkMap.horizontalCenter = 0
         this.pkMap.verticalCenter = -80
@@ -80,6 +86,10 @@ class PKTowerUI extends game.BaseUI_wx4 {
         })
 
         this.addBtnEvent(this.pkMap,this.onMap)
+        this.addBtnEvent(this.addSpeedBtn,()=>{
+            TC.isSpeed = !TC.isSpeed
+            this.addSpeedBtn.label = TC.isSpeed?'加速中':'加速'
+        })
 
 
     }
@@ -158,6 +168,9 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
+        this.addSpeedBtn.visible = DEBUG || DebugUI.getInstance().debugOpen;
+        this.addSpeedBtn.label = TC.isSpeed?'加速中':'加速'
+
         while(this.monsterArr.length)
         {
             PKMonsterItem.freeItem(this.monsterArr.pop())
@@ -188,6 +201,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         MyTool.renewList(this.list);
 
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
+        this.barMC.width = 640-2
     }
 
     public onFail(){
@@ -213,6 +227,29 @@ class PKTowerUI extends game.BaseUI_wx4 {
     private onE(){
         if(TC.isStop)
             return;
+        this.onStep();
+        if(TC.isSpeed)
+        {
+            if(TC.isStop)
+                return;
+            this.onStep();
+        }
+
+        MyTool.runListFun(this.list,'onE');
+        this.pkMap.sortY();
+        if(TC.wudiEnd &&  TC.wudiEnd < TC.actionStep)//移除无敌显示
+        {
+            TC.wudiEnd = 0;
+            this.pkMap.hideWUDI();
+        }
+        if(this.monsterArr.length == 0 && TC.roundAutoMonster.length == 0 && TC.totalAutoMonster.length == 0)//过关了
+        {
+            ResultUI.getInstance().show(true);
+        }
+        this.barMC.width = (640-2)*(TC.actionStep/TC.maxStep);
+    }
+
+    private onStep(){
 
         TC.onStep();
         var len = this.monsterArr.length;
@@ -254,19 +291,8 @@ class PKTowerUI extends game.BaseUI_wx4 {
         }
 
 
-        MyTool.runListFun(this.list,'onE')
-        this.pkMap.sortY();
 
-        if(TC.wudiEnd &&  TC.wudiEnd < TC.actionStep)//移除无敌显示
-        {
-            TC.wudiEnd = 0;
-            this.pkMap.hideWUDI();
-        }
 
-        if(this.monsterArr.length == 0 && TC.roundAutoMonster.length == 0 && TC.totalAutoMonster.length == 0)//过关了
-        {
-            ResultUI.getInstance().show(true);
-        }
     }
 
     public addMonster(mid,roadIndex = 0){

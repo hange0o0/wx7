@@ -104,7 +104,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     }
 
     public onShow(){
-        if(UM_wx4.level < 8)
+        if(UM_wx4.level < 5)
             MyTool.removeMC(this.moreBtn)
         else
             this.btnGroup.addChildAt(this.moreBtn,0)

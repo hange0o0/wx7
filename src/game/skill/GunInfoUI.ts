@@ -33,7 +33,10 @@ class GunInfoUI extends game.BaseWindow_wx4 {
     public childrenCreated() {
         super.childrenCreated();
         this.setTitle('塔器详情')
-        this.addBtnEvent(this.closeBtn,this.hide)
+        this.addBtnEvent(this.closeBtn,()=>{
+            PKTowerUI.getInstance().pkMap.showTowerLight(this.posX,this.posY);
+            this.hide();
+        })
 
         this.enemyList.itemRenderer = SkillEnemyItem
 
@@ -52,7 +55,7 @@ class GunInfoUI extends game.BaseWindow_wx4 {
 
     public hide() {
         super.hide();
-        PKTowerUI.getInstance().pkMap.showTowerLight(this.posX,this.posY);
+
     }
 
     public onShow(){

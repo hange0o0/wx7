@@ -15,6 +15,17 @@ class LevelVO {
         return this._list;
     }
 
+    public static swap(id1,id2){
+        var vo1 = this.getObject(id1)
+        var vo2 = this.getObject(id2)
+        vo2.id = id1
+        vo1.id = id2
+        this.data[vo1.id] = vo1
+        this.data[vo2.id] = vo2
+        ArrayUtil_wx4.sortByField(LevelVO.list,['id'],[0])
+    }
+
+
     public static clear(){
         this._list = null;
         delete CM_wx4.table[this.dataKey]
@@ -84,8 +95,12 @@ class LevelVO {
 
 
 
-    public getRoadData(){
-        var arr = this.data.split('');
+    public getRoadData(showPath = false){
+        if(showPath)
+            var str = this.data
+        else
+            var str = this.data.replace(/1/g,'0')
+        var arr = str.split('');
         var resultData = [];
         for(var i=0;i<this.height;i++)
         {

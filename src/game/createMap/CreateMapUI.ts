@@ -14,14 +14,18 @@ class CreateMapUI extends game.BaseUI_wx4 {
     private randomBtn: eui.Button;
     private saveBtn: eui.Button;
     private backBtn: eui.Button;
-    private beforeBtn: eui.Button;
+    private upBtn: eui.Button;
+    private downBtn: eui.Button;
     private levelText: eui.Label;
+    private beforeBtn: eui.Button;
     private nextBtn: eui.Button;
     private testBtn: eui.Button;
     private wDecBtn: eui.Button;
     private wAddBtn: eui.Button;
     private hDecBtn: eui.Button;
     private hAddBtn: eui.Button;
+
+
 
 
 
@@ -56,6 +60,34 @@ class CreateMapUI extends game.BaseUI_wx4 {
         this.list.itemRenderer = CreateMapItem
         this.list.selectedIndex = 0;
         this.list.dataProvider = new eui.ArrayCollection([0,1,2,3,4,5,6])//1,
+
+        this.addBtnEvent(this.upBtn,()=>{
+            if(this.isChange || !LevelVO.getObject(this.level))
+            {
+                MyWindow.Alert('还没保存，请先保存');
+                return;
+            }
+            if(this.level <= 1)
+                return;
+            LevelVO.swap(this.level-1,this.level)
+            this.level --;
+            this.levelText.text = this.level + '';
+        })
+
+        this.addBtnEvent(this.downBtn,()=>{
+            if(this.isChange || !LevelVO.getObject(this.level))
+            {
+                MyWindow.Alert('还没保存，请先保存');
+                return;
+            }
+            if(!LevelVO.getObject(this.level+1))
+                return;
+            LevelVO.swap(this.level+1,this.level)
+            this.level ++;
+            this.levelText.text = this.level + '';
+        })
+
+
 
         this.addBtnEvent(this.wDecBtn,()=>{
             this.ww --;
@@ -169,11 +201,11 @@ class CreateMapUI extends game.BaseUI_wx4 {
         for(var i=0;i<this.mapData.length;i++)
         {
             var temp = this.mapData[i].concat();
-            for(var j=0;j<temp.length;j++)
-            {
-                if(temp[j] == 1)
-                    temp[j] = 0;
-            }
+            //for(var j=0;j<temp.length;j++)
+            //{
+            //    if(temp[j] == 1)
+            //        temp[j] = 0;
+            //}
             arr.push(temp.join(''))
         }
         return arr.join('')
@@ -407,7 +439,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
             this.ww = data.width
             this.hh = data.height
-            var arr1 = data.getRoadData();
+            var arr1 = data.getRoadData(true);
             for(var i=0;i<this.hh;i++)
             {
                 this.mapData.push([]);

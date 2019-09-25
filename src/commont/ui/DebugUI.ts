@@ -14,6 +14,10 @@ class DebugUI extends game.BaseUI_wx4 {
 
     public debugTimer = 0;
     public debugOpen = false;
+
+
+    public downLoadBtn
+    public upLoadBtn
     public constructor() {
         super();
         this.skinName = "DebugUISkin";
@@ -104,7 +108,7 @@ class DebugUI extends game.BaseUI_wx4 {
         //    dataBtn.skinName = 'Btn1Skin'
         //})
 
-        var dataBtn = this.addB('下载数据',()=>{
+        this.downLoadBtn = this.addB('下载数据',()=>{
 
             this.downLoadData((txt)=>{
                 LevelVO.clear();
@@ -113,14 +117,17 @@ class DebugUI extends game.BaseUI_wx4 {
                 CM_wx4.initData(arr.join('\n'),'level');
 
                 MyWindow.ShowTips('OK')
-                dataBtn.label = '下载数据OK'
-                dataBtn.touchEnabled = false
-                dataBtn.touchChildren = false
-                dataBtn.skinName = 'Btn1Skin'
+                this.downLoadBtn.label = '下载数据OK'
+                this.downLoadBtn.touchEnabled = false
+                this.downLoadBtn.touchChildren = false
+                this.downLoadBtn.skinName = 'Btn1Skin'
+
+                this.upLoadBtn.touchEnabled = true
+                this.upLoadBtn.skinName = 'Btn2Skin'
             })
         })
 
-        this.addB('上传数据',()=>{
+        this.upLoadBtn = this.addB('上传数据',()=>{
             var str = egret.localStorage.getItem('levelData');
             if(!str)
             {
@@ -131,6 +138,9 @@ class DebugUI extends game.BaseUI_wx4 {
             Net.getInstance().send(url,{str:str});
             MyWindow.ShowTips('已发送服务器')
         })
+        this.upLoadBtn.touchEnabled = false
+        this.upLoadBtn.touchChildren = false
+        this.upLoadBtn.skinName = 'Btn1Skin'
 
         this.addB('复制数据',()=>{
             var str = egret.localStorage.getItem('levelData');
@@ -142,8 +152,12 @@ class DebugUI extends game.BaseUI_wx4 {
             MyTool.copyStr(str)
         })
 
-        this.addB('设计地图',()=>{
+        this.addB('地图列表',()=>{
             CreateListUI.getInstance().show();
+        })
+
+        this.addB('设计地图',()=>{
+            CreateMapUI.getInstance().show();
         })
     }
 

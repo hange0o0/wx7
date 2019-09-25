@@ -69,6 +69,7 @@ class GuideUI extends game.BaseContainer_wx4{
     }
 
     private testAnyClickShow(){
+        return;
         if(this.clickFun != null)
         {
             this.anyClick.visible = true;
@@ -78,25 +79,8 @@ class GuideUI extends game.BaseContainer_wx4{
         }
     }
 
-    public handMovePos(formMC,toMC){
+    public handMovePos(fromP,toP){
          this.handStop();
-        var rect = formMC.getBounds();
-        var p1 = formMC.localToGlobal(rect.x, rect.y);
-        var p2 = formMC.localToGlobal(rect.x + rect.width, rect.y + rect.height);
-        var fromP = {
-            x: p1.x + (p2.x - p1.x) / 2,
-            y: p1.y + (p2.y - p1.y) / 2,
-        }
-
-        var rect = toMC.getBounds();
-        var p1 = toMC.localToGlobal(rect.x, rect.y);
-        var p2 = toMC.localToGlobal(rect.x + rect.width, rect.y + rect.height);
-        var toP = {
-            x: p1.x + (p2.x - p1.x) / 2,
-            y: p1.y + (p2.y - p1.y) / 2,
-        }
-
-
         var tw:egret.Tween = egret.Tween.get(this.handMC,{loop:true});
         this.handMC.x = fromP.x
         this.handMC.y = fromP.y

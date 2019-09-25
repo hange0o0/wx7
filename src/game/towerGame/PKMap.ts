@@ -9,6 +9,8 @@ class PKMap extends game.BaseContainer_wx4 {
 
 
 
+    public pos2Array = [];
+
     public arrowPool = [];
     public arrowItem = [];
     private arrowPos = {}//已放了箭头的位置
@@ -53,6 +55,8 @@ class PKMap extends game.BaseContainer_wx4 {
         this.renewTree(data);
         if(!noPos)
             this.renewPos(data);
+        else
+            this.renewPos2(data);
     }
 
 
@@ -93,6 +97,47 @@ class PKMap extends game.BaseContainer_wx4 {
             mv.dispose();
         }
         this.wudiArr.length = 0;
+    }
+
+    private renewPos2(data){
+        for(var i=0;i<this.pos2Array.length;i++)
+        {
+            MyTool.removeMC(this.pos2Array[i])
+        }
+        var index = 0;
+        for(var i=0;i<data.length;i++)
+        {
+            for(var j=0;j<data[i].length;j++)
+            {
+                var type = data[i][j]
+                if(type == 5 || type == 6)
+                {
+                    var mc = this.pos2Array[index];
+                    index ++;
+                    if(!mc)
+                    {
+                        mc = new eui.Image();
+                        this.pos2Array.push(mc);
+                    }
+                    this.roleCon.addChild(mc);
+                    if(type == 5)
+                    {
+                        mc.source = 'start_mc_png'
+                        mc.anchorOffsetX = 39/2
+                        mc.anchorOffsetY = 37/2 + 5
+                    }
+                    else
+                    {
+                        mc.source = 'end_mc_png'
+                        mc.anchorOffsetX = 48/2
+                        mc.anchorOffsetY = 68*0.8
+                    }
+                    mc.x =  j*64 + 32
+                    mc.y =  i*64 + 32 + 10
+                }
+
+            }
+        }
     }
 
     private renewPos(data){

@@ -211,12 +211,12 @@ class GameUI extends game.BaseUI_wx4 {
             return
         this.dragPos = null;
         egret.Tween.removeTweens(this.pkMap)
-        if(this.pkMap.horizontalCenter > 200 && this.currentLevel > 1)
+        if(this.pkMap.horizontalCenter > 120 && this.currentLevel > 1)
         {
             egret.Tween.get(this.pkMap,{onChange:this.onScroll,onChangeObj:this}).
                 to({horizontalCenter:640},(640-Math.abs(this.pkMap.horizontalCenter))*0.5).call(this.onScrollEnd,this)
         }
-        else if(this.pkMap.horizontalCenter < -200  && this.currentLevel < UM_wx4.level)
+        else if(this.pkMap.horizontalCenter < -120  && this.currentLevel < UM_wx4.level)
         {
             egret.Tween.get(this.pkMap,{onChange:this.onScroll,onChangeObj:this}).
                 to({horizontalCenter:-640},(640-Math.abs(this.pkMap.horizontalCenter))*0.5).call(this.onScrollEnd,this)
@@ -268,7 +268,7 @@ class GameUI extends game.BaseUI_wx4 {
         SoundManager.getInstance().playSound('bg')
 
         this.currentLevel = UM_wx4.level;
-        if(!LevelVO.getObject(UM_wx4.level))
+        if(!LevelVO.getObject(UM_wx4.level + 1))
             TowerManager.getInstance().getServerData();
 
 

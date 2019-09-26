@@ -107,7 +107,7 @@ class SoundManager {
             this.stopBgSound();
         }
         else {
-            this.playSound('bg');
+            this.playSound('main_bg');
         }
     }
 

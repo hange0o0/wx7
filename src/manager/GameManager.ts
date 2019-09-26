@@ -324,7 +324,7 @@ if(window["wx"])
         console.log(res)
         if(!GameManager_wx4.stage)
             return;
-        SoundManager.getInstance().testBGPlay();
+        SoundManager.getInstance().resumeSound();
         //GameManager.stage.dispatchEventWith(egret.Event.ACTIVATE);
         EM_wx4.dispatch(egret.Event.ACTIVATE)
         GameManager_wx4.getInstance().onShowFun && GameManager_wx4.getInstance().onShowFun();

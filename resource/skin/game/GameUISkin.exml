@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="GameUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="bg_1_jpg" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
+	<e:Image id="bg" source="bg_1_jpg" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
 	<e:Group left="0" right="0" top="150" bottom="360" touchChildren="true" touchEnabled="true" touchThrough="false">
 		<e:Group id="mapCon" left="0" right="0" top="0" bottom="0"/>
 		<e:Group id="leftBtn" width="80" height="160" left="0" verticalCenter="0">

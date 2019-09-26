@@ -132,7 +132,7 @@ class ResultUI extends game.BaseUI_wx4{
         //    list[i].currentLevel = SkillManager.getInstance().getSkillLevel(list[i].id)
         //}
         //this.skillList.dataProvider = new eui.ArrayCollection(list);
-        this.coinText.text = '金币 +' + NumberUtil_wx4.addNumSeparator(this.resultCoin);
+        this.coinText.text = '+' + NumberUtil_wx4.addNumSeparator(this.resultCoin);
 
         this.failGroup.visible = !this.isWin;
         if(this.failGroup.visible)

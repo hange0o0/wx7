@@ -128,7 +128,7 @@ class TowerCode {
         this.lastSkillTime = {}
         this.roundAutoMonster.length = 0;
         this.totalAutoMonster = this.getLevelMonster(levelVO);
-        this.monsterHPRate = 1 + (levelVO.id-1)/4
+        this.monsterHPRate = (1 + (levelVO.id-1)/4) * levelVO.forceRate
         this.appearMonsterNum = 0
         this.forceRate = PKManager.getInstance().getForceRate();
 
@@ -167,10 +167,13 @@ class TowerCode {
             returnArr.push(list);
 
             var num = Math.round(maxCost/mvo.cost);
-            var stepAdd = Math.round(roundTimeStep/num);
+            var stepAdd = Math.ceil(roundTimeStep/num);
             var maxStepAdd = Math.round((8 - 4*(level/1000))*30)
             if(stepAdd > maxStepAdd)
                 stepAdd = maxStepAdd;
+
+            if(level == 1 && stepAdd < 10)
+                stepAdd = 10
 
             while(num > 0)
             {

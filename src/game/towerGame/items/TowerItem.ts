@@ -344,6 +344,7 @@ class TowerItem extends game.BaseItem{
 
         ArrayUtil_wx4.sortByField(atkList,['totalDis'],[0])
 
+        var isShoot = false
         var shootNum = this.shootNum;
         var skillType = this.gvo.skilltype
         if(skillType)//优先加状态
@@ -364,7 +365,8 @@ class TowerItem extends game.BaseItem{
                         continue;
 
                     PKTowerUI.getInstance().createBullet(this,mItem)
-                    this.lastHurtTime = TC.actionStep;
+
+                    isShoot = true;
 
                     atkList.splice(i,1);
                     i--;
@@ -380,8 +382,14 @@ class TowerItem extends game.BaseItem{
             if(atkList[i])
             {
                 PKTowerUI.getInstance().createBullet(this,atkList[i])
-                this.lastHurtTime = TC.actionStep;
+                isShoot = true;
             }
+        }
+
+        if(isShoot)
+        {
+            this.lastHurtTime = TC.actionStep;
+            SoundManager.getInstance().playEffect('arc')
         }
     }
 

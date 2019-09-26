@@ -15,6 +15,7 @@ class GameUI extends game.BaseUI_wx4 {
     private energyText: eui.Label;
     private soundBtn: eui.Image;
     private rankBtn: eui.Image;
+    private bg: eui.Image;
     private feedBackBtn: eui.Image;
     private ad1: eui.Image;
     private ad2: eui.Image;
@@ -265,7 +266,7 @@ class GameUI extends game.BaseUI_wx4 {
     public onShow(){
         if(_get['level'])
             UM_wx4.level = parseInt(_get['level']);
-        SoundManager.getInstance().playSound('bg')
+        SoundManager.getInstance().playSound('main_bg')
 
         this.currentLevel = UM_wx4.level;
         if(!LevelVO.getObject(UM_wx4.level + 1))
@@ -380,6 +381,7 @@ class GameUI extends game.BaseUI_wx4 {
     }
 
     private showTips(){
+        this.bg.source = UM_wx4.getBG()
 
         var adArr = MyADManager.getInstance().getListByNum(10);
         var ad = ArrayUtil_wx4.randomOne(adArr,true);

@@ -71,9 +71,18 @@ class PKManager {
 
 
     public initGunList(num){
+
         if(this.gunList.length < num)
         {
-            this.gunList = this.getGunArr(num,true);
+            if(UM_wx4.level == 1)
+            {
+                this.gunList = [2,1,1,3,3,3,3,3];
+            }
+            else
+            {
+                this.gunList = this.getGunArr(num,true);
+            }
+
             UM_wx4.needUpUser = true
         }
     }

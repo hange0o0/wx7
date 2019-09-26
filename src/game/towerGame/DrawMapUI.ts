@@ -7,16 +7,22 @@ class DrawMapUI extends game.BaseUI_wx4 {
         return this._instance;
     }
 
+    private bg: eui.Image;
     private list: eui.List;
     private startBtn: eui.Button;
     private randomBtn: eui.Button;
     private addForceBtn: eui.Button;
     private resetBtn: eui.Button;
-    private closeBtn: eui.Image;
+    private closeBtn: eui.Group;
     private monsterGroup: eui.Group;
     private monsterList: eui.List;
     private monsterBtn: eui.Group;
+    private arrowMC: eui.Image;
     private levetText: eui.Label;
+    private leftBtn: eui.Image;
+    private rightBtn: eui.Image;
+
+
 
 
 
@@ -39,10 +45,10 @@ class DrawMapUI extends game.BaseUI_wx4 {
     public startPos = []
     public endPos = []
     public isChange = false
+    public showPath = false
     public touchPos
 
     public isGuiding = false
-    private showMonsterListTime = 0
     public constructor() {
         super();
         this.skinName = "DrawMapUISkin";
@@ -57,14 +63,22 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
         this.monsterList.itemRenderer = MonsterHeadItem
         this.addBtnEvent(this.monsterBtn,()=>{
-            this.showMonsterListTime = egret.getTimer();
-            this.monsterGroup.visible = true;
-            var arr = this.data.monsterArr;
-            this.monsterList.dataProvider = new eui.ArrayCollection(arr)
-            if(arr.length <= 6)
-                this.monsterList.layout['requestedColumnCount'] = arr.length;
+            this.monsterGroup.visible = !this.monsterGroup.visible;
+            if(this.monsterGroup.visible)
+            {
+                this.arrowMC.scaleY = -1
+                var arr = this.data.monsterArr;
+                this.monsterList.dataProvider = new eui.ArrayCollection(arr)
+                if(arr.length <= 6)
+                    this.monsterList.layout['requestedColumnCount'] = arr.length;
+                else
+                    this.monsterList.layout['requestedColumnCount'] = Math.ceil(arr.length/2);
+            }
             else
-                this.monsterList.layout['requestedColumnCount'] = Math.ceil(arr.length/2);
+            {
+                this.arrowMC.scaleY = 1
+            }
+
         })
 
         this.list.itemRenderer = CreateMapItem
@@ -91,18 +105,25 @@ class DrawMapUI extends game.BaseUI_wx4 {
             this.onStartGame();
         })
 
-        this.addBtnEvent(this,(e)=>{
-            if(this.monsterGroup.visible)
-            {
-                if(egret.getTimer() - this.showMonsterListTime < 100)
-                    return
-                if(!this.monsterGroup.hitTestPoint(e.stageX,e.stageY))
-                {
-                    this.monsterGroup.visible = false;
-                }
-            }
+        this.addBtnEvent(this.leftBtn,()=>{
+            this.gotoLevel(-1);
         })
+        this.addBtnEvent(this.rightBtn,()=>{
+            this.gotoLevel(1);
+        })
+
     }
+
+    private gotoLevel(add){
+        var lv = this.data.id
+        lv += add;
+        var vo = LevelVO.getObject(lv)
+        if(!vo)
+            return;
+        this.show(vo,this.showPath);
+    }
+
+
 
     private randomGun(){
         var list = PKManager.getInstance().gunList.concat();
@@ -350,16 +371,17 @@ class DrawMapUI extends game.BaseUI_wx4 {
         }
     }
 
-    public show(data?){
+    public show(data?,showPath?){
         this.data = data;
 
         PKManager.getInstance().initGunList(data.towerNum + 3);
 
+        this.showPath = showPath
         this.towerPos = {};
         this.pkMap.initMap(data.id)
         this.ww = data.width
         this.hh = data.height
-        var arr1 = data.getRoadData();
+        var arr1 = data.getRoadData(this.showPath);
 
         this.mapData = [];
 
@@ -413,7 +435,10 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
+        this.bg.source = UM_wx4.getBG()
+        this.leftBtn.visible = this.rightBtn.visible = DEBUG || DebugUI.getInstance().debugOpen
         this.monsterGroup.visible = false;
+        this.arrowMC.scaleY = 1
         this.levetText.text = '第 '+this.data.id+' 关'
         this.pkMap.width = 64*this.ww
         this.pkMap.height = 64*this.hh

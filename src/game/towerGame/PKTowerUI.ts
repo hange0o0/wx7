@@ -7,6 +7,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         return this._instance;
     }
 
+    private bg: eui.Image;
     public list: eui.List;
     private barMC: eui.Image;
     private levetText: eui.Label;
@@ -16,7 +17,8 @@ class PKTowerUI extends game.BaseUI_wx4 {
     private desText: eui.Label;
     private skillNameText: eui.Label;
     private skillCDText: eui.Label;
-    private addSpeedBtn: eui.Button;
+    private addSpeedBtn: eui.Image;
+
 
 
 
@@ -99,7 +101,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     private renewSpeedBtn(){
-        this.addSpeedBtn.label = TC.isSpeed?'加速中':'加速'
+        this.addSpeedBtn.source = TC.isSpeed?'add_speed_btn2_png':'add_speed_btn_png'
     }
 
     private onMap(e){
@@ -168,6 +170,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
     public hide() {
         super.hide();
+        SoundManager.getInstance().playSound('main_bg')
     }
 
     private renewMap(){
@@ -176,6 +179,8 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
+        this.bg.source = UM_wx4.getBG()
+        SoundManager.getInstance().playSound('pk_bg')
         this.renewSpeedBtn();
 
         while(this.monsterArr.length)
@@ -229,6 +234,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         TC.isStop = false;
         //显示无敌
         this.pkMap.showWUDI();
+        SoundManager.getInstance().playEffect('reborn')
     }
 
     private onE(){
@@ -449,11 +455,13 @@ class PKTowerUI extends game.BaseUI_wx4 {
         var monsterArr = this.monsterArr;
         var len = monsterArr.length;
         var hurt = -Math.ceil(svo.value1*TC.forceRate)
+        var b = false
         for(var i=0;i<len;i++)
         {
             var mItem = monsterArr[i];
             if(mItem.isDie)
                 continue;
+            b = true;
             mItem.addHp(hurt);
             var mv = PKTool.playMV({
                 mvType:1,
@@ -467,6 +475,9 @@ class PKTowerUI extends game.BaseUI_wx4 {
                 xy:{x:50-10,y:300}
             })
         }
+
+        if(b)
+            SoundManager.getInstance().playEffect('thurder')
     }
 
 }

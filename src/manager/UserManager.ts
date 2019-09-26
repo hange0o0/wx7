@@ -405,8 +405,7 @@ class UserManager_wx4 {
 
     public getBG(lv?){
         lv = lv || UM_wx4.level;
-        var add = Math.ceil(lv/15)
-        var index = (lv * add)%15 || 1;
+        var index = lv%15 || 1;
         return 'bg_'+index+'_jpg'
     }
 

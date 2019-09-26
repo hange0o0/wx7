@@ -97,20 +97,20 @@ class DebugUI extends game.BaseUI_wx4 {
             MyADManager.getInstance().showInsert()
         })
 
-        //var dataBtn = this.addB('使用缓存数据',()=>{
-        //    var txt = egret.localStorage.getItem('levelData');
-        //    if(txt)
-        //    {
-        //        var arr = txt.split('\n')
-        //        arr.shift();
-        //        CM_wx4.initData(arr.join('\n'),'level');
-        //    }
-        //    MyWindow.ShowTips('OK')
-        //    dataBtn.label = '使用缓存数据OK'
-        //    dataBtn.touchEnabled = false
-        //    dataBtn.touchChildren = false
-        //    dataBtn.skinName = 'Btn1Skin'
-        //})
+        var dataBtn = this.addB('加载本地数据',()=>{
+            var txt = egret.localStorage.getItem('levelData');
+            if(txt)
+            {
+                var arr = txt.split('\n')
+                arr.shift();
+                CM_wx4.initData(arr.join('\n'),'level');
+            }
+            MyWindow.ShowTips('OK')
+            dataBtn.label = '加载缓存数据OK'
+            dataBtn.touchEnabled = false
+            dataBtn.touchChildren = false
+            dataBtn.skinName = 'Btn1Skin'
+        })
 
         this.downLoadBtn = this.addB('下载数据',()=>{
 

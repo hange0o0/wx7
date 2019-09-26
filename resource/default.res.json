@@ -1708,6 +1708,16 @@
 			"name":"result_bg_png",
 			"type":"image",
 			"url":"game_assets/result_bg.png"
+		},
+		{
+			"name":"add_speed_btn2_png",
+			"type":"image",
+			"url":"game_assets/add_speed_btn2.png"
+		},
+		{
+			"name":"add_speed_btn_png",
+			"type":"image",
+			"url":"game_assets/add_speed_btn.png"
 		}
 	]
 }

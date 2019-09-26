@@ -41,6 +41,8 @@ class LevelVO {
     public roadNum = 0
     public roundNum = 0
     public towerNum = 0
+    public pathNum = 0
+    public forceRate = 1
     public monsterArr
     public constructor() {
 
@@ -60,15 +62,21 @@ class LevelVO {
         var lastRandomSeed  = TC.randomSeed
         TC.randomSeed = this.id*12345678901;
         var monsterList = [];
+        var lastID = 0;
         for(var s in MonsterVO.data)
         {
-            if(MonsterVO.data[s].level <= this.id)
+            var mvo = MonsterVO.data[s]
+            if(mvo.level <= this.id)
             {
-                monsterList.push(MonsterVO.data[s])
+                monsterList.push(mvo)
+                if(mvo.level == this.id)
+                {
+                    lastID = mvo.id;
+                    this.monsterArr.push(mvo.id)
+                }
             }
         }
         var roundNum = this.roundNum;
-        var lastID = 0;
         while(this.monsterArr.length < roundNum)
         {
             var mvo = monsterList[Math.floor(TC.random()*monsterList.length)]
@@ -83,6 +91,7 @@ class LevelVO {
 
         this.roadNum = 0//有多少条路
         this.towerNum = 0//有多少座塔
+        var myDrawPath = 0
         var arr1 = this.data.split('');
         for(var i=0;i<arr1.length;i++)
         {
@@ -90,7 +99,20 @@ class LevelVO {
                 this.roadNum ++;
             if(arr1[i] == '2')
                 this.towerNum ++;
+            if(arr1[i] == '1')
+                myDrawPath ++;
+            if(arr1[i] == '1' || arr1[i] == '4')
+                this.pathNum ++;
         }
+        if(this.id == 1)
+        {
+            this.forceRate = 0.6;
+        }
+        else if(myDrawPath >= 5 && this.towerNum > 0)
+        {
+            this.forceRate = this.pathNum/this.towerNum/8
+        }
+
     }
 
 

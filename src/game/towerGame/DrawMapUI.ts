@@ -235,7 +235,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
                 if(type == 1)
                 {
                     ShareTool.openGDTV(()=>{
-                        PKManager.getInstance().addEnergy(10);
+                        PKManager.getInstance().addEnergy(5);
                     })
                 }
             },['取消', '观看广告'])

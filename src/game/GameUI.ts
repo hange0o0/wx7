@@ -559,7 +559,7 @@ class GameUI extends game.BaseUI_wx4 {
         if(this.visible)
         {
             this.showTips();
-
+            this.renewEnergy();
             if(this.currentLevel == UM_wx4.level - 1)
             {
                 this.currentLevel = UM_wx4.level;

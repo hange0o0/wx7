@@ -62,6 +62,8 @@ class PKManager {
     public addEnergy(v){
         this.resetEnergy();
         this.energy += v;
+        if(this.energy < 0)
+            this.energy = 0;
         UM_wx4.needUpUser = true
     }
 

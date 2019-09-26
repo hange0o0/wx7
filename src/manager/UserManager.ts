@@ -29,7 +29,7 @@ class UserManager_wx4 {
     public gender
 
 
-    public isTest;
+    public isTest = true;
     public testVersion = 1//与服务器相同则为测试版本
     public shareFail;
 

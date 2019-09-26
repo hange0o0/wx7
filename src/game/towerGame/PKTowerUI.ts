@@ -201,12 +201,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.pkMap.scaleX = this.pkMap.scaleY = this.scale;
 
         this.renewMap();
-        TC.initData(this.data);
-        if(this.isTest)//测试关卡固定属性
-        {
-            TC.monsterHPRate = 1;
-            TC.forceRate = 1;
-        }
+
 
 
         this.hideSkillInfo();
@@ -217,6 +212,8 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     public onFail(){
+        if(UM_wx4.level == 1)
+            return;
         if(TC.wudiEnd > TC.actionStep)
             return;
         if(TC.rebornTime)//复活过

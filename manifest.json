@@ -66,6 +66,7 @@
 		"bin-debug/game/skill/SkillEnemyItem.js",
 		"bin-debug/game/skill/SkillListItem.js",
 		"bin-debug/game/skill/SkillListUI.js",
+		"bin-debug/game/towerGame/AddForceUI.js",
 		"bin-debug/game/towerGame/ChangeGunItem.js",
 		"bin-debug/game/towerGame/ChangeGunUI.js",
 		"bin-debug/game/towerGame/DrawMapUI.js",

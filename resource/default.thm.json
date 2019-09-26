@@ -52,6 +52,7 @@
 		"resource/skin/game/skill/SkillEnemyItemSkin.exml",
 		"resource/skin/game/skill/SkillListItemSkin.exml",
 		"resource/skin/game/skill/SkillListUISkin.exml",
+		"resource/skin/game/towerGame/AddForceUISkin.exml",
 		"resource/skin/game/towerGame/ChangeGunItemSkin.exml",
 		"resource/skin/game/towerGame/ChangeGunUISkin.exml",
 		"resource/skin/game/towerGame/DrawMapUISkin.exml",

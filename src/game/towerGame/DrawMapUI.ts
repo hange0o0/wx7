@@ -96,8 +96,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.randomBtn,this.randomGun)
 
         this.addBtnEvent(this.addForceBtn,()=>{
-            PKManager.getInstance().addForce();
-            this.addForceBtn.label = '战力+' + PKManager.getInstance().forceAdd*100 + '%'
+            AddForceUI.getInstance().show()
         })
 
         this.addBtnEvent(this.resetBtn,this.onReset)
@@ -225,7 +224,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
                 MyWindow.Confirm('体力不足，分享到群可免去本次体力消耗。',(type)=>{
                     if(type == 1)
                     {
-                        ShareTool.share('加入我们，让我们一起割草无双',Config.getShare(0),{},()=>{
+                        ShareTool.share('这个游戏掏空了我的体力！！！',Config.getShare(0),{},()=>{
                             this.startGame();
                         })
                     }
@@ -245,8 +244,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.startGame();
     }
     public startGame(){
-        if(!this.isTest)
-            PKManager.getInstance().addEnergy(-1)
+
         var road = [];
         for(var i=0;i<this.hh;i++)
         {
@@ -267,13 +265,22 @@ class DrawMapUI extends game.BaseUI_wx4 {
             tower:this.towerPos,
             road:road
         }
+
+        TC.initData(this.data);
         PKTowerUI.getInstance().isTest = this.isTest;
         PKTowerUI.getInstance().show(data)
 
         if(!this.isTest)
         {
+            PKManager.getInstance().forceAdd = 0;
+            PKManager.getInstance().addEnergy(-1)
             this.hide();
             PKManager.getInstance().sendGameStart(this.data.id)
+        }
+        else
+        {
+            TC.monsterHPRate = this.data.forceRate
+            TC.forceRate = 1;
         }
     }
 
@@ -434,6 +441,13 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.pkMap.sortY()
     }
 
+    public renewForceAdd(){
+        if(PKManager.getInstance().forceAdd)
+            this.addForceBtn.label = '战力+' + Math.round(PKManager.getInstance().forceAdd*100) + '%';
+        else
+            this.addForceBtn.label = '增加战力'
+    }
+
     public onShow(){
         this.bg.source = UM_wx4.getBG()
         this.leftBtn.visible = this.rightBtn.visible = DEBUG || DebugUI.getInstance().debugOpen
@@ -446,7 +460,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.pkMap.scaleX = this.pkMap.scaleY = this.scale;
 
 
-        this.addForceBtn.label = '战力+' + PKManager.getInstance().forceAdd*100 + '%'
+        this.renewForceAdd();
 
         this.renewMap();
 

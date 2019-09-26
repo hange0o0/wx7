@@ -132,6 +132,7 @@ class TowerCode {
         this.appearMonsterNum = 0
         this.forceRate = PKManager.getInstance().getForceRate();
 
+
     }
 
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="AddForceUISkin" width="560" height="560" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+		<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" width="460" height="190" horizontalCenter="0" bottom="150"/>
+	<e:Group horizontalCenter="0" bottom="50">
+		<e:Button id="closeBtn" label="关闭" width="180" x="0" y="0" skinName="Btn1Skin"/>
+		<e:Button id="sendBtn" label="观看广告" width="180" skinName="Btn2Skin" x="0" y="0"/>
+		<e:layout>
+			<e:HorizontalLayout gap="50"/>
+		</e:layout>
+	</e:Group>
+	<e:Group bottom="180" horizontalCenter="0.5">
+		<e:Group x="0" y="0" width="400">
+			<e:Image source="icon_force_png" x="0" y="2"/>
+			<e:Label id="atk1" text="当前战力：+1000%" x="60" y="12" size="24" textAlign="left" textColor="0xd8fc74"/>
+		</e:Group>
+		<e:Group x="10" y="10" width="400">
+			<e:Image source="icon_force_png" x="0" y="2"/>
+			<e:Label id="atk2" text="下一级战力：+100000%" x="60" y="12" size="24" textColor="0xD8FC74" textAlign="left"/>
+		</e:Group>
+		<e:layout>
+			<e:VerticalLayout gap="30" verticalAlign="middle" horizontalAlign="center"/>
+		</e:layout>
+	</e:Group>
+	<e:Label text="每观看一次广告，可获得20%战力加成" size="24" bottom="430" horizontalCenter="0.5" lineSpacing="10" bold="true"/>
+	<e:Label text="注：增加战力只在本次挑战中有效" size="24" bottom="374" horizontalCenter="0.5" lineSpacing="10" textColor="0xccc9c9"/>
+
+</e:Skin>

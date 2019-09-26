@@ -414,6 +414,8 @@ class GameUI extends game.BaseUI_wx4 {
     private onE(){
         if(!this.visible)
             return
+
+
         //if(PKC.isStop)
         //    return;
         //var ui = PKCodeUI.getInstance();
@@ -557,6 +559,13 @@ class GameUI extends game.BaseUI_wx4 {
         if(this.visible)
         {
             this.showTips();
+
+            if(this.currentLevel == UM_wx4.level - 1)
+            {
+                this.currentLevel = UM_wx4.level;
+                this.renewLevel();
+                this.renewBtn();
+            }
             //this.renewNeedEnergy();
             //if(UM_wx4.pastDayCoin.coin)
             //{

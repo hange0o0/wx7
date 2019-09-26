@@ -23,7 +23,7 @@ class RankItem extends game.BaseItem{
         this.indexText.text = this.data.index;
         this.nickText.text = StringUtil.getStringByLength(this.data.nick,8)
         this.headMC.source = this.data.head
-        this.valueText.text = '第 ' +this.data.value + ' 天'
+        this.valueText.text = '第 ' +this.data.value + ' 关'
     }
 
 

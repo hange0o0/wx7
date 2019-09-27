@@ -306,6 +306,10 @@ class TowerItem extends game.BaseItem{
         this.tw.setPaused(true)
         this.mv.stop();
     }
+    public play(){
+        this.tw.setPaused(false)
+        this.mv.play();
+    }
 
     public getHurt(mid){
         var add =  this.gvo.isAtkAdd(mid);

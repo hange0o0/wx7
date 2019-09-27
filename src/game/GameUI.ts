@@ -341,7 +341,7 @@ class GameUI extends game.BaseUI_wx4 {
         //this.addChild(map)
         //map.x = (640 - 64*7)/2
         //map.y = (GameManager_wx4.uiHeight - 64*9)/2
-        this.onLevelChange();
+        this.onLevelChange(false);
 
     }
 
@@ -351,16 +351,21 @@ class GameUI extends game.BaseUI_wx4 {
         this.renewLevel2()
     }
 
-    public onLevelChange(){
+    public onLevelChange(newLevel){
         if(UM_wx4.level > 10)
             this.btnGroup.addChild(this.swapBtn)
         else
             MyTool.removeMC(this.swapBtn)
 
-        if(this.currentLevel == UM_wx4.level - 1)
+        if(newLevel)
         {
+            this.currentLevel = UM_wx4.level;
             this.renewLevel()
             this.renewLevel2()
+            this.renewBtn();
+            UnlockUI.getInstance().show(UM_wx4.level)
+
+
         }
     }
 
@@ -566,12 +571,12 @@ class GameUI extends game.BaseUI_wx4 {
         {
             this.showTips();
             this.renewEnergy();
-            if(this.currentLevel == UM_wx4.level - 1)
-            {
-                this.currentLevel = UM_wx4.level;
-                this.renewLevel();
-                this.renewBtn();
-            }
+            //if(this.currentLevel == UM_wx4.level - 1)
+            //{
+            //    this.currentLevel = UM_wx4.level;
+            //    this.renewLevel();
+            //    this.renewBtn();
+            //}
             //this.renewNeedEnergy();
             //if(UM_wx4.pastDayCoin.coin)
             //{

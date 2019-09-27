@@ -44,7 +44,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     public childrenCreated() {
         super.childrenCreated();
 
-        this.setTitle('配备塔器')
+        this.setTitle('配备武器')
 
         this.scroller.viewport = this.list;
         this.list.itemRenderer = ChangeGunItem
@@ -142,8 +142,8 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         this.lastSelectGun = this.towerPos[this.key];
         if(this.lastSelectGun)
         {
-            this.setTitle('更换塔器')
-            this.okBtn.label="更换塔器"
+            this.setTitle('更换武器')
+            this.okBtn.label="更换武器"
             this.currentState = 's2'
 
             var index = -1;
@@ -159,8 +159,8 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         }
         else
         {
-            this.setTitle('装备塔器')
-            this.okBtn.label="装备塔器"
+            this.setTitle('装备武器')
+            this.okBtn.label="装备武器"
             this.currentState = 's1'
             this.list.selectedIndex = -1;
         }

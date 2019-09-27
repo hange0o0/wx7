@@ -32,7 +32,7 @@ class GunInfoUI extends game.BaseWindow_wx4 {
 
     public childrenCreated() {
         super.childrenCreated();
-        this.setTitle('塔器详情')
+        this.setTitle('武器详情')
         this.addBtnEvent(this.closeBtn,()=>{
             PKTowerUI.getInstance().pkMap.showTowerLight(this.posX,this.posY);
             this.hide();

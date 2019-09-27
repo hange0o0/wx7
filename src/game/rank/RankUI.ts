@@ -183,11 +183,11 @@ class RankUI extends game.BaseWindow_wx4{
             var key = 'level'
             var value = UM_wx4.level
         }
-        else if(this.tab.selectedIndex == 1)
-        {
-            var key = 'endless'
-            //var value = UM_wx4.endLess
-        }
+        //else if(this.tab.selectedIndex == 1)
+        //{
+        //    var key = 'endless'
+        //    //var value = UM_wx4.endLess
+        //}
         let param:any = {
             me: UM_wx4.gameid,
             command: 'open',

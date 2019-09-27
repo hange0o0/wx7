@@ -16,6 +16,8 @@ class SkillListItem extends game.BaseItem{
         super.childrenCreated();
         this.touchChildren = false
 
+
+
     }
 
     public dataChanged():void {

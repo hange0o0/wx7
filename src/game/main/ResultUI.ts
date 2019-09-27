@@ -31,6 +31,7 @@ class ResultUI extends game.BaseUI_wx4{
     public isWin;
     public resultCoin;
     public rate = 3;
+    public newLevel = false
     public constructor() {
         super();
         this.skinName = "ResultUISkin";
@@ -79,24 +80,30 @@ class ResultUI extends game.BaseUI_wx4{
     public close(){
         this.hide();
         PKTowerUI.getInstance().hide();
-        GameUI.getInstance().onLevelChange()
+        GameUI.getInstance().onLevelChange(this.newLevel)
+
     }
 
     public onShow(){
-        GunInfoUI.getInstance().hide();
-        ShareUnlockUI.getInstance().hide();
+        if(GunInfoUI.getInstance().stage)
+            GunInfoUI.getInstance().hide();
+        if(ShareUnlockUI.getInstance().stage)
+            ShareUnlockUI.getInstance().hide();
+        TC.isStop = true;
         this.renew();
     }
 
     public show(isWin?){
-        TC.isStop = true;
+
         this.isWin = isWin;
+        this.newLevel = false
         if(!PKTowerUI.getInstance().isTest)
         {
             PKManager.getInstance().sendGameEnd(isWin)
             PKManager.getInstance().onGameEnd(this.isWin)
             if(this.isWin && TC.currentVO.id == UM_wx4.level)
             {
+                this.newLevel = true;
                 UM_wx4.level ++;
                 UM_wx4.upWXLevel();
                 if(!LevelVO.getObject(UM_wx4.level + 1))

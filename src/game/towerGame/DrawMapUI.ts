@@ -49,6 +49,10 @@ class DrawMapUI extends game.BaseUI_wx4 {
     public touchPos
 
     public isGuiding = false
+
+
+    public drogTowerItem = new TowerItem()
+    public drogTowerKey = ''
     public constructor() {
         super();
         this.skinName = "DrawMapUISkin";
@@ -56,6 +60,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     public childrenCreated() {
         super.childrenCreated();
+
+        this.drogTowerItem.scaleX = this.drogTowerItem.scaleY = 1.5
 
         this.addChildAt(this.pkMap,1);
         this.pkMap.horizontalCenter = 0
@@ -65,20 +71,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.monsterList.itemRenderer = MonsterHeadItem
         this.addBtnEvent(this.monsterBtn,()=>{
             this.monsterGroup.visible = !this.monsterGroup.visible;
-            if(this.monsterGroup.visible)
-            {
-                this.arrowMC.scaleY = -1
-                var arr = this.data.monsterArr;
-                this.monsterList.dataProvider = new eui.ArrayCollection(arr)
-                if(arr.length <= 6)
-                    this.monsterList.layout['requestedColumnCount'] = arr.length;
-                else
-                    this.monsterList.layout['requestedColumnCount'] = Math.ceil(arr.length/2);
-            }
-            else
-            {
-                this.arrowMC.scaleY = 1
-            }
+            this.renewMonsterList();
 
         })
 
@@ -86,8 +79,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.list.selectedIndex = 0;
         this.list.dataProvider = new eui.ArrayCollection([1,0])//1,
 
-        this.pkMap.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouch,this)
-        this.pkMap.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onTouch,this)
+        this.pkMap.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouchBegin,this)
+        this.pkMap.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onTouchMove,this)
         GameManager_wx4.stage.addEventListener(egret.TouchEvent.TOUCH_END,this.onTouchEnd,this)
 
         this.addBtnEvent(this.closeBtn,()=>{
@@ -112,6 +105,23 @@ class DrawMapUI extends game.BaseUI_wx4 {
             this.gotoLevel(1);
         })
 
+    }
+
+    private renewMonsterList(){
+        if(this.monsterGroup.visible)
+        {
+            this.arrowMC.scaleY = -1
+            var arr = this.data.monsterArr;
+            this.monsterList.dataProvider = new eui.ArrayCollection(arr)
+            if(arr.length <= 6)
+                this.monsterList.layout['requestedColumnCount'] = arr.length;
+            else
+                this.monsterList.layout['requestedColumnCount'] = Math.ceil(arr.length/2);
+        }
+        else
+        {
+            this.arrowMC.scaleY = 1
+        }
     }
 
     private gotoLevel(add){
@@ -209,7 +219,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
             if(!this.towerPos[s])
             {
                 //this.towerPos[s] = 6//Math.ceil(Math.random()*50);
-                MyWindow.ShowTips('还没放置塔器！',1000)
+                MyWindow.ShowTips('还没放置武器！',1000)
 
                 var xy2 = s.split('_')
                 this.showGuideLightPos(parseInt(xy2[0]),parseInt(xy2[1]));
@@ -286,8 +296,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
 
-    private onTouch(e){
-
+    private onTouchBegin(e){
         var itemSize = 64*this.scale;
         var x = Math.floor((e.stageX - this.pkMap.x)/itemSize)
         var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
@@ -296,6 +305,46 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.touchPos = {
             x:x,
             y:y,
+            id:this.mapData[y][x],
+            towerID:this.towerPos[x+'_' + y]
+        }
+
+        this.onTouchMove(e);
+    }
+
+    private onTouchMove(e){
+
+        if(this.drogTowerItem.stage)
+        {
+            this.drogTowerItem.x = e.stageX
+            this.drogTowerItem.y = e.stageY  - this.y  - 100
+        }
+
+        var itemSize = 64*this.scale;
+        var x = Math.floor((e.stageX - this.pkMap.x)/itemSize)
+        var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
+        if(y >= this.hh || y < 0 || x >= this.ww || x < 0)
+            return;
+
+        if(this.touchPos && this.touchPos.id == 2 && this.touchPos.towerID && !this.drogTowerItem.stage && !(this.touchPos.x == x && this.touchPos.y == y))
+        {
+            this.addChild(this.drogTowerItem)
+            this.drogTowerItem.data = this.touchPos.towerID
+            this.drogTowerItem.x = e.stageX
+            this.drogTowerItem.y = e.stageY  - this.y  - 100
+        }
+
+        if(this.drogTowerItem.stage)
+        {
+            if((this.touchPos.x == x && this.touchPos.y == y) || this.mapData[y][x] != 2)
+            {
+                this.drogTowerItem.stop()
+            }
+            else
+            {
+                this.drogTowerItem.play()
+            }
+            return
         }
 
         if(this.mapData[y][x] != 0 && this.mapData[y][x]!= 1)
@@ -307,6 +356,73 @@ class DrawMapUI extends game.BaseUI_wx4 {
             this.mapData[y][x] = type;
             this.renewMap();
             this.saveLocal();
+        }
+    }
+
+
+
+    private onTouchEnd(e){
+        if(!this.stage)
+            return;
+
+        if(this.drogTowerItem.stage && this.touchPos && this.touchPos.towerID)
+        {
+            var itemSize = 64*this.scale;
+            var x = Math.floor((e.stageX - this.pkMap.x)/itemSize)
+            var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
+            var isXYError = y >= this.hh || y < 0 || x >= this.ww || x < 0
+            if(!isXYError && this.mapData[y][x] == 2 && !(this.touchPos.x == x && this.touchPos.y == y))//换
+            {
+                var temp = this.towerPos[x + '_' + y];
+                this.towerPos[x + '_' + y] = this.touchPos.towerID
+                this.towerPos[this.touchPos.x + '_' + this.touchPos.y] = temp;
+                this.onChoosGun();
+            }
+        }
+        else if(this.touchPos)
+        {
+            var itemSize = 64*this.scale;
+            var x = Math.floor((e.stageX - this.pkMap.x)/itemSize)
+            var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
+            if(this.touchPos.x == x && this.touchPos.y == y && this.mapData[y][x] == 2)//点了塔
+            {
+                if(!this.towerPos[x + '_' +y])
+                {
+                    ChangeGunUI.getInstance().show(this.towerPos,x,y)
+                }
+                else
+                {
+                    var tower = this.pkMap.getTowerByPos(x,y);
+                    if(tower.isLighting)
+                    {
+                        ChangeGunUI.getInstance().show(this.towerPos,x,y)
+                    }
+                    else
+                    {
+                        tower.showLight(this.pkMap)
+                        if(UM_wx4.level < 10)
+                            MyWindow.ShowTips('再次点击底座可更换武器')
+                    }
+                }
+            }
+        }
+        this.touchPos = null;
+        MyTool.removeMC(this.drogTowerItem)
+
+        if(this.isChange)
+        {
+            this.isChange = false;
+            this.movePaths = TC.findPath(this.mapData)
+            this.showArrow();
+            if(this.isGuiding && this.movePaths[0])
+            {
+                this.once(egret.Event.ENTER_FRAME,()=>{
+                    var guideData:any = {};
+                    guideData.mc = this.startBtn
+                    guideData.text = '点击开始游戏';
+                    GuideUI.getInstance().show(guideData)
+                },this)
+            }
         }
     }
 
@@ -329,55 +445,6 @@ class DrawMapUI extends game.BaseUI_wx4 {
             data:arr,
             towerData:this.towerPos
         })
-    }
-
-    private onTouchEnd(e){
-        if(!this.stage)
-            return;
-        if(this.touchPos)
-        {
-            var itemSize = 64*this.scale;
-            var x = Math.floor((e.stageX - this.pkMap.x)/itemSize)
-            var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
-            if(this.touchPos.x == x && this.touchPos.y == y && this.mapData[y][x] == 2)//点了塔
-            {
-                if(!this.towerPos[x + '_' +y])
-                {
-                    ChangeGunUI.getInstance().show(this.towerPos,x,y)
-                }
-                else
-                {
-                    var tower = this.pkMap.getTowerByPos(x,y);
-                    if(tower.isLighting)
-                    {
-                        ChangeGunUI.getInstance().show(this.towerPos,x,y)
-                    }
-                    else
-                    {
-                        tower.showLight(this.pkMap)
-                        if(UM_wx4.level < 10)
-                            MyWindow.ShowTips('再次点击底座可更换塔器')
-                    }
-                }
-            }
-            this.touchPos = null;
-        }
-
-        if(this.isChange)
-        {
-            this.isChange = false;
-            this.movePaths = TC.findPath(this.mapData)
-            this.showArrow();
-            if(this.isGuiding && this.movePaths[0])
-            {
-                this.once(egret.Event.ENTER_FRAME,()=>{
-                    var guideData:any = {};
-                    guideData.mc = this.startBtn
-                    guideData.text = '点击开始游戏';
-                    GuideUI.getInstance().show(guideData)
-                },this)
-            }
-        }
     }
 
     public show(data?,showPath?){
@@ -461,8 +528,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
     public onShow(){
         this.bg.source = UM_wx4.getBG()
         this.leftBtn.visible = this.rightBtn.visible = DEBUG || DebugUI.getInstance().debugOpen
-        this.monsterGroup.visible = false;
-        this.arrowMC.scaleY = 1
+        this.renewMonsterList();
+
         this.levetText.text = '第 '+this.data.id+' 关'
         this.pkMap.width = 64*this.ww
         this.pkMap.height = 64*this.hh

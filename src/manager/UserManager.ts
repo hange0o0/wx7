@@ -393,7 +393,7 @@ class UserManager_wx4 {
         if(!wx)
             return;
         var score = JSON.stringify({"wxgame":{"score":UM_wx4.level,"update_time": TM_wx4.now()}})
-        var upList = [{ key: 'endless', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
+        var upList = [{ key: 'level', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
         wx.setUserCloudStorage({
             KVDataList: upList,
             success: res => {

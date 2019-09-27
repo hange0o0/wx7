@@ -54,6 +54,7 @@
 		"bin-debug/game/main/RebornUI.js",
 		"bin-debug/game/main/ResultUI.js",
 		"bin-debug/game/main/StopUI.js",
+		"bin-debug/game/main/UnlockUI.js",
 		"bin-debug/game/monster/MonsterItem.js",
 		"bin-debug/game/monster/MonsterUI.js",
 		"bin-debug/game/pk/HeroMVItem.js",

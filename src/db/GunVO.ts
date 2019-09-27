@@ -72,11 +72,11 @@ class GunVO {
                 return '有 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的机率使目标陷入晕眩，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒'
 
             case 'atk':
-                return '增加' + MyTool.createHtml(this.sv1 + '格',0xFFFF00) + '范围内所有塔器 ' + MyTool.createHtml(this.sv2 + '%',0xFFFF00) + ' 的攻击力,可以叠加'
+                return '增加' + MyTool.createHtml(this.sv1 + '格',0xFFFF00) + '范围内所有武器 ' + MyTool.createHtml(this.sv2 + '%',0xFFFF00) + ' 的攻击力,可以叠加'
             case 'speed':
-                return '增加' + MyTool.createHtml(this.sv1 + '格',0xFFFF00) + '范围内所有塔器 ' + MyTool.createHtml(this.sv2 + '%',0xFFFF00) + ' 的攻击速度,可以叠加'
+                return '增加' + MyTool.createHtml(this.sv1 + '格',0xFFFF00) + '范围内所有武器 ' + MyTool.createHtml(this.sv2 + '%',0xFFFF00) + ' 的攻击速度,可以叠加'
             case 'dis':
-                return '增加' + MyTool.createHtml(this.sv1 + '格',0xFFFF00) + '范围内所有塔器 ' + MyTool.createHtml('1格',0xFFFF00) + ' 的攻击距离,不可叠加'
+                return '增加' + MyTool.createHtml(this.sv1 + '格',0xFFFF00) + '范围内所有武器 ' + MyTool.createHtml('1格',0xFFFF00) + ' 的攻击距离,不可叠加'
         }
         return ''
     }

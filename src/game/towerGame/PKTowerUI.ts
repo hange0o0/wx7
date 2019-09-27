@@ -1,6 +1,6 @@
 class PKTowerUI extends game.BaseUI_wx4 {
 
-    private static _instance: PKTowerUI;
+    public static _instance: PKTowerUI;
     public static getInstance(): PKTowerUI {
         if(!this._instance)
             this._instance = new PKTowerUI();
@@ -28,6 +28,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
 
 
+    public heroItem = new HeroItem();
 
 
 
@@ -49,6 +50,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
     public monsterArr = []
     public bulletArr = []
 
+
     public chooseSkill = null;
     public constructor() {
         super();
@@ -63,6 +65,8 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.addChildAt(this.pkMap,1);
         this.pkMap.horizontalCenter = 0
         this.pkMap.verticalCenter = -80
+
+        this.pkMap.roleCon.addChild(this.heroItem);
 
 
         this.list.itemRenderer = PKSkillItem
@@ -102,6 +106,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
     private renewSpeedBtn(){
         this.addSpeedBtn.source = TC.isSpeed?'add_speed_btn2_png':'add_speed_btn_png'
+        this.heroItem.setSpeed(TC.isSpeed?2:1)
     }
 
     private onMap(e){
@@ -110,9 +115,8 @@ class PKTowerUI extends game.BaseUI_wx4 {
         var y = Math.floor((e.stageY - this.y - this.pkMap.y)/itemSize)
         if(y >= this.hh || y < 0 || x >= this.ww || x < 0)
             return;
-        if(this.mapData[y][x] != 2)
-            return;
-        if(this.towerPos[x+'_'+y])
+
+        if(this.mapData[y][x] == 2 && this.towerPos[x+'_'+y])
         {
             var tower = this.pkMap.getTowerByPos(x,y);
             if(tower.isLighting)
@@ -124,6 +128,19 @@ class PKTowerUI extends game.BaseUI_wx4 {
                 tower.showLight(this.pkMap)
                 if(UM_wx4.level < 10)
                     MyWindow.ShowTips('再次点击底座可查看详情')
+            }
+            return;1
+        }
+
+        if(this.mapData[y][x] == 1 || this.mapData[y][x] == 4  || this.mapData[y][x] == 7)
+        {
+            var x2 = Math.floor(this.heroItem.x/64)
+            var y2 = Math.floor(this.heroItem.y/64)
+            var path = TC.astar.find(x2, y2, x, y)
+            if(path)
+            {
+                path.shift();
+                this.heroItem.setPath(path);
             }
         }
     }
@@ -202,6 +219,10 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
         this.renewMap();
 
+        this.heroItem.data = _get['hero'] || PKManager.getInstance().heroid
+        this.heroItem.x = this.data.heroPos.x*64+32
+        this.heroItem.y = this.data.heroPos.y*64+32  + 20
+        this.heroItem.standMV()
 
 
         this.hideSkillInfo();
@@ -209,6 +230,13 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
         this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
         this.barMC.width = 640-2
+
+        if(this.data.id == 1 && UM_wx4.level == 1)
+        {
+            HelpUI.getInstance().show(2)
+        }
+
+
     }
 
     public onFail(){
@@ -301,7 +329,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         }
 
 
-
+        this.heroItem.onE()
 
     }
 

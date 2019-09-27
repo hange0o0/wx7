@@ -13,6 +13,8 @@ class PKManager {
     public energy = 1;
     public lastEnergyTime = 1;
     public forceAdd = 0;
+    public heroid = 101;
+    public heroList = [101];
 
 
     public playerLevel = 1
@@ -27,6 +29,7 @@ class PKManager {
         this.playerLevel = data.playerLevel || 1;
         this.gunList = data.gunList || [];
         this.forceAdd = data.forceAdd || 0;
+        this.heroid = data.heroid || 101;
     }
 
     public getSave(){
@@ -35,6 +38,23 @@ class PKManager {
             playerLevel:this.playerLevel,
             gunList:this.gunList,
             forceAdd:this.forceAdd,
+            heroid:this.heroid,
+        }
+    }
+
+    public setHeroID(id){
+        this.heroid = id;
+        UM_wx4.needUpUser = true;
+        EM_wx4.dispatch(GameEvent.client.HERO_CHANGE)
+    }
+
+    public resetSkin(){
+        this.heroList = [101];
+        for(var s in UM_wx4.shareUser)
+        {
+            var id = parseInt(s) || 0;
+            if(id > 100)
+                this.heroList.push(id)
         }
     }
 
@@ -161,11 +181,13 @@ class PKManager {
     }
 
     public getWinCoin(level){
-        return level * 50
+        var rate = 1 + Math.max(0,this.heroList.length-1)/100
+        return Math.ceil(level * 50 * rate)
     }
 
     public getFailCoin(level,rate){
-        return Math.ceil(level * rate * 20)
+        var rate2 = 1 + Math.max(0,this.heroList.length-1)/100
+        return Math.ceil(level * rate * 20 * rate2)
     }
 
     public onGameEnd(isWin){

@@ -44,6 +44,7 @@ class LevelVO {
     public pathNum = 0
     public forceRate = 1
     public monsterArr
+    public heroPos
     public constructor() {
 
     }
@@ -97,6 +98,8 @@ class LevelVO {
         {
             if(arr1[i] == '5')
                 this.roadNum ++;
+            if(arr1[i] == '7')
+                this.heroPos = {x:i%this.width,y:Math.floor(i/this.width)};
             if(arr1[i] == '2')
                 this.towerNum ++;
             if(arr1[i] == '1')
@@ -110,7 +113,12 @@ class LevelVO {
         }
         else if(myDrawPath >= 5 && this.towerNum > 0)
         {
-            this.forceRate = this.pathNum/this.towerNum/8
+            this.forceRate = this.pathNum/(this.width*this.height)*2
+        }
+
+        if(!this.heroPos)
+        {
+            this.heroPos = {x:0,y:0}
         }
 
     }
@@ -122,6 +130,7 @@ class LevelVO {
             var str = this.data
         else
             var str = this.data.replace(/1/g,'0')
+
         var arr = str.split('');
         var resultData = [];
         for(var i=0;i<this.height;i++)

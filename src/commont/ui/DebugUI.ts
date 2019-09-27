@@ -84,10 +84,16 @@ class DebugUI extends game.BaseUI_wx4 {
         })
 
         this.addB('加好友',()=>{
-            for(var i=0;i<20;i++)
-            {
-                UM_wx4.shareUser[i] = 1
-            }
+            UM_wx4.shareUser[0] = 1
+            //UM_wx4.shareUser[101] = 1
+            UM_wx4.shareUser[102] = 1
+            UM_wx4.shareUser[103] = 1
+            UM_wx4.shareUser[104] = 1
+            UM_wx4.shareUser[105] = 1
+            UM_wx4.shareUser[113] = 1
+            UM_wx4.shareUser[114] = 1
+            UM_wx4.shareUser[115] = 1
+            PKManager.getInstance().resetSkin();
 
             MyWindow.ShowTips('加好友')
         })
@@ -97,64 +103,80 @@ class DebugUI extends game.BaseUI_wx4 {
             MyADManager.getInstance().showInsert()
         })
 
-        var dataBtn = this.addB('加载本地数据',()=>{
-            var txt = egret.localStorage.getItem('levelData');
-            if(txt)
-            {
-                var arr = txt.split('\n')
-                arr.shift();
-                CM_wx4.initData(arr.join('\n'),'level');
-            }
-            MyWindow.ShowTips('OK')
-            dataBtn.label = '加载缓存数据OK'
-            dataBtn.touchEnabled = false
-            dataBtn.touchChildren = false
-            dataBtn.skinName = 'Btn1Skin'
+        var dataBtn = this.addB('本地数据',()=>{
+            MyWindow.Confirm('确定使用 本地数据？',(b)=>{
+                if(b == 1)
+                {
+                    var txt = egret.localStorage.getItem('levelData');
+                    if(txt)
+                    {
+                        LevelVO.clear();
+                        var arr = txt.split('\n')
+                        arr.shift();
+                        CM_wx4.initData(arr.join('\n'),'level');
+                    }
+                    MyWindow.ShowTips('OK')
+                    dataBtn.label = '加载缓存数据OK'
+                    dataBtn.touchEnabled = false
+                    dataBtn.touchChildren = false
+                    dataBtn.skinName = 'Btn1Skin'
+                }
+            })
+
         })
 
         this.downLoadBtn = this.addB('下载数据',()=>{
 
-            this.downLoadData((txt)=>{
-                LevelVO.clear();
-                var arr = txt.split('\n')
-                arr.shift();
-                CM_wx4.initData(arr.join('\n'),'level');
+            MyWindow.Confirm('确定使用 公网数据？',(b)=>{
+                if(b == 1)
+                {
+                    this.downLoadData((txt)=>{
+                        LevelVO.clear();
+                        var arr = txt.split('\n')
+                        arr.shift();
+                        CM_wx4.initData(arr.join('\n'),'level');
 
-                MyWindow.ShowTips('OK')
-                this.downLoadBtn.label = '下载数据OK'
-                this.downLoadBtn.touchEnabled = false
-                this.downLoadBtn.touchChildren = false
-                this.downLoadBtn.skinName = 'Btn1Skin'
+                        MyWindow.ShowTips('OK')
+                        this.downLoadBtn.label = '下载数据OK'
+                        this.downLoadBtn.touchEnabled = false
+                        this.downLoadBtn.touchChildren = false
+                        this.downLoadBtn.skinName = 'Btn1Skin'
 
-                this.upLoadBtn.touchEnabled = true
-                this.upLoadBtn.skinName = 'Btn2Skin'
+                        //this.upLoadBtn.touchEnabled = true
+                        //this.upLoadBtn.skinName = 'Btn2Skin'
+                    })
+                }
             })
+
         })
 
         this.upLoadBtn = this.addB('上传数据',()=>{
-            var str = egret.localStorage.getItem('levelData');
-            if(!str)
-            {
-                MyWindow.Alert('没有数据')
-                return;
-            }
-            var url = 'https://www.hangegame.com/error_wx7/log_map.php'
-            Net.getInstance().send(url,{str:str});
-            MyWindow.ShowTips('已发送服务器')
-        })
-        this.upLoadBtn.touchEnabled = false
-        this.upLoadBtn.touchChildren = false
-        this.upLoadBtn.skinName = 'Btn1Skin'
+            MyWindow.Confirm('确定 上传数据？',(b)=>{
+                if(b == 1)
+                {
+                    var str = egret.localStorage.getItem('levelData');
+                    if(!str)
+                    {
+                        MyWindow.Alert('没有数据')
+                        return;
+                    }
+                    var url = 'https://www.hangegame.com/error_wx7/log_map.php'
+                    Net.getInstance().send(url,{str:str});
+                    MyWindow.ShowTips('已发送服务器')
+                }
+            })
 
-        this.addB('复制数据',()=>{
-            var str = egret.localStorage.getItem('levelData');
-            if(!str)
-            {
-                MyWindow.Alert('没有数据')
-                return;
-            }
-            MyTool.copyStr(str)
         })
+
+        //this.addB('复制数据',()=>{
+        //    var str = egret.localStorage.getItem('levelData');
+        //    if(!str)
+        //    {
+        //        MyWindow.Alert('没有数据')
+        //        return;
+        //    }
+        //    MyTool.copyStr(str)
+        //})
 
         this.addB('地图列表',()=>{
             CreateListUI.getInstance().show();

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HeroSkinItemSkin" width="140" height="180" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="window_bg_png" scale9Grid="13,13,84,84" left="0" right="0" top="0" bottom="0"/>
+	<e:Image id="mc" width="120" height="150" horizontalCenter="0" verticalCenter="0"/>
+	<e:Image id="selectMC" source="common_select_01_png" left="0" right="0" top="0" bottom="2" scale9Grid="19,17,25,24"/>
+</e:Skin>

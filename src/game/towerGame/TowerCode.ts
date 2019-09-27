@@ -37,7 +37,7 @@ class TowerCode {
     public rebornTime = 0
 
     private dataArr
-    private astar
+    public astar
 
 
 
@@ -153,7 +153,7 @@ class TowerCode {
         var step = 10
 
         var roadIndex = 0;
-        var maxCost = (vo.towerNum*15) * 10 * Math.pow(1.005,level)
+        var maxCost = (vo.towerNum*15 + 5) * 10 * Math.pow(1.005,level)
         var roundTimeStep = 30*15 + Math.floor(Math.pow(level,1.1))
 
         while(monsterList.length > 0)
@@ -220,7 +220,7 @@ class TowerCode {
                     startPos.push({x:j,y:i});
                 if(type == 6)
                     endPos.push({x:j,y:i});
-                if(type == 1 || type == 4 || type == 5 || type == 6)
+                if(type == 1 || type == 4 || type == 5 || type == 6 || type == 7)
                     this.dataArr.setOK(i,j)
             }
         }

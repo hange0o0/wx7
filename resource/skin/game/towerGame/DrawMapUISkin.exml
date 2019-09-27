@@ -18,7 +18,7 @@
 		</e:layout>
 	</e:Group>
 	<e:Group id="closeBtn" x="0" y="0" width="80" height="80">
-		<e:Image source="close_btn_png" verticalCenter="0" horizontalCenter="0"/>
+		<e:Image verticalCenter="0" horizontalCenter="0" source="common_close_01_png"/>
 	</e:Group>
 	<e:Group id="monsterGroup" y="80" horizontalCenter="0">
 		<e:Image source="window_bg_png" scale9Grid="37,34,40,38" anchorOffsetX="0" left="0" right="0" top="0" bottom="0"/>
@@ -28,7 +28,7 @@
 			</e:layout>
 		</e:List>
 	</e:Group>
-	<e:Group id="monsterBtn" x="211" y="20">
+	<e:Group id="monsterBtn" y="20" horizontalCenter="0">
 		<e:Image source="border_png" x="0" y="0" scale9Grid="31,6,37,42" width="220"/>
 		<e:Image id="arrowMC" source="arrow3_png" verticalCenter="0" right="20"/>
 		<e:Label id="levetText" text="第 1000 关" stroke="3" size="24" bold="true" horizontalCenter="0" verticalCenter="0"/>

@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="HelpUISkin" width="560" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
-		<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0" locked="true"/>
-	<e:Group id="ctrlGroup" y="90" scaleX="0.6" scaleY="0.6" x="51.52">
-		<e:Image source="move_ctrl_bg_png" horizontalCenter="0" verticalCenter="0"/>
-		<e:Image source="move_ctrl_item_png" anchorOffsetX="44" anchorOffsetY="44" horizontalCenter="0" verticalCenter="0"/>
-	</e:Group>
-	<e:Label text="拖动摇杆控制角色移动，角色会自动攻击靠近的敌人" x="257.11" y="111.1" width="250" size="24" lineSpacing="10"/>
-	<e:Label text="当玩家停止移动时，会自动释放一个可用技能，玩家也可手动选择下一个要释放的技能" x="253.46" y="300" width="250" size="24" lineSpacing="10"/>
-	<e:Label text="必须在时间结束前消灭地图上所有敌人，否则游戏失败，角色死亡需花费时间复活" x="30" y="511.36" width="500" size="24" lineSpacing="10" anchorOffsetX="0"/>
-	<e:Image id="rateBar" source="yellor_bg_png" height="5" width="500" x="30" y="490"/>
-	<ns1:PKSkillItem id="skillItem" x="83.12" y="302.74" skinName="PKSkillItemSkin"/>
+<e:Skin class="HelpUISkin" width="560" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" states="s1,s2" >
+		<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
 	<e:Button id="skillBtn" label="开始游戏" skinName="Btn2Skin" width="200" horizontalCenter="0" bottom="50"/>
+	<e:Group id="page1" left="0" right="0" top="80" bottom="120" visible.s1="false">
+		<e:Label text="玩家通过点击路面控制英雄移动，当英雄不在移动状态时，会自动攻击身边的敌人，英雄只能在可连通的路上行走" x="257.11" y="31.1" width="250" size="24" lineSpacing="10" scaleX="1" scaleY="1"/>
+		<e:Label text=" 玩家可点下方技能图标查看技能信息，在选中状态下，再次点击图标则会释放技能" x="253.46" y="280" width="250" size="24" lineSpacing="10" scaleX="1" scaleY="1"/>
+		<ns1:PKSkillItem id="skillItem" x="83.12" y="289.41" skinName="PKSkillItemSkin" scaleX="1" scaleY="1"/>
+	</e:Group>
+	<e:Group id="page2" left="0" right="0" top="80" bottom="120" visible.s2="false">
+		<e:Group x="58" y="0">
+			<e:Group x="0" y="0">
+				<e:Image source="map_0_1_png" x="0" y="0" scaleX="0.5" scaleY="0.5"/>
+				<e:Label text="普通土地，玩家能在上面挖路" x="50" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:Group x="10" y="10">
+				<e:Image x="0" y="0" scaleX="0.5" scaleY="0.5" source="map_1_1_png"/>
+				<e:Label text="玩家挖出来的路，怪物会在上面行走" x="50" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:Group x="20" y="20">
+				<e:Image x="0" y="0" scaleX="0.5" scaleY="0.5" source="map_2_1_png"/>
+				<e:Label text="放置防御塔的位置" x="50" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:Group x="30" y="30">
+				<e:Image x="0" y="0" scaleX="0.5" scaleY="0.5" source="map_3_1_png"/>
+				<e:Label text="上面长有树，玩家不能在上面挖路" x="50" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:Group x="40" y="40">
+				<e:Image x="0" y="0" scaleX="0.5" scaleY="0.5" source="map_4_1_png"/>
+				<e:Label text="系统挖出来的路，怪物会在上面行走" x="50" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:Group x="60" y="60" height="56">
+				<e:Image x="-4" source="start_mc_png" verticalCenter="0.5"/>
+				<e:Label text="怪物出生点，最少要与一个终点相连" x="50" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:Group x="60" y="60" height="56">
+				<e:Image x="-8" verticalCenter="0" source="end_mc_png"/>
+				<e:Label text="终点，怪物到达后游戏失败" x="50" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:Group x="70" y="70" height="56">
+				<e:Image x="-16" verticalCenter="0.5" source="hero_star_png"/>
+				<e:Label text="英雄出生点" x="50" size="24" verticalCenter="0"/>
+			</e:Group>
+			<e:layout>
+				<e:VerticalLayout gap="10"/>
+			</e:layout>
+		</e:Group>
+	</e:Group>
 
 </e:Skin>

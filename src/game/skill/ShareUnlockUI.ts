@@ -64,9 +64,11 @@ class ShareUnlockUI extends game.BaseWindow_wx4 {
 
     public hide() {
         super.hide();
+        TC.isStop = false;
     }
 
     public onShow(){
+        TC.isStop = true;
         this.setTitle(this.title)
         this.setHtml(this.desText,this.des);
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)

@@ -7,12 +7,19 @@ class PlayerUpUI extends game.BaseWindow_wx4 {
         return this._instance;
     }
 
+    private tab: eui.TabBar;
+    private forceGroup: eui.Group;
     private closeBtn: eui.Button;
     private sendBtn: eui.Button;
     private atk1: eui.Label;
     private atk2: eui.Label;
     private coinText: eui.Label;
     private levelText: eui.Label;
+    private skinGroup: eui.Group;
+    private scroller: eui.Scroller;
+    private list: eui.List;
+    private desText: eui.Label;
+
 
 
 
@@ -31,6 +38,13 @@ class PlayerUpUI extends game.BaseWindow_wx4 {
     public childrenCreated() {
         super.childrenCreated();
         this.setTitle('提升实力')
+
+        this.scroller.viewport = this.list;
+        this.list.itemRenderer = HeroSkinItem
+
+        this.tab.addEventListener(egret.Event.CHANGE,this.onTab,this)
+        this.tab.selectedIndex = 0;
+
         this.addBtnEvent(this.sendBtn,()=>{
             if(!UM_wx4.checkCoin(this.cost))
                 return;
@@ -47,6 +61,10 @@ class PlayerUpUI extends game.BaseWindow_wx4 {
         //},this)
     }
 
+    private onTab(){
+        this.renew();
+    }
+
     public show(){
         super.show()
     }
@@ -59,7 +77,8 @@ class PlayerUpUI extends game.BaseWindow_wx4 {
         this.actionStep = 5 + Math.random()*5;
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.COIN_CHANGE,this.renew)
-        this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
+        this.addPanelOpenEvent(GameEvent.client.HERO_CHANGE,this.renewSkin)
+        this.addPanelOpenEvent(GameEvent.client.INVITE_CHANGE,this.renewSkin)
     }
 
     private onTimer(){
@@ -67,6 +86,17 @@ class PlayerUpUI extends game.BaseWindow_wx4 {
     }
 
     public renew(){
+       if(this.tab.selectedIndex == 0)
+        this.renewPlayer()
+        else
+            this.renewSkin()
+    }
+
+    private renewPlayer(){
+        this.forceGroup.visible = true
+        this.skinGroup.visible = false
+
+
         var PKM = PKManager.getInstance();
         this.cost = PKM.getUpCost()
         this.coinText.text = NumberUtil_wx4.addNumSeparator(this.cost)
@@ -79,6 +109,13 @@ class PlayerUpUI extends game.BaseWindow_wx4 {
 
         this.levelText.text = '当前等级：'+PKM.playerLevel+'级'
         this.coinText.textColor = this.cost > UM_wx4.coin?0xFF0000:0xFCD766
+    }
+
+    private renewSkin(){
+        this.forceGroup.visible = false
+        this.skinGroup.visible = true
+        this.list.dataProvider = new eui.ArrayCollection([101,102,103,104,105,113,114,115])
+        this.desText.text = '每拥有一个皮肤，结算金币加成 10%'
     }
 
 }

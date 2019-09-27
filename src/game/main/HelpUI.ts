@@ -7,14 +7,19 @@ class HelpUI extends game.BaseWindow_wx4 {
         return this._instance;
     }
 
-    private ctrlGroup: eui.Group;
-    private rateBar: eui.Image;
     private skillBtn: eui.Button;
+    private page1: eui.Group;
+    private skillItem: PKSkillItem;
+    private page2: eui.Group;
 
 
 
 
-    public data;
+    public monsterMV:HeroMVItem = new HeroMVItem();
+
+    public pageIn;
+    public page;
+    public closeFun;
     public constructor() {
         super();
         this.skinName = "HelpUISkin";
@@ -24,26 +29,73 @@ class HelpUI extends game.BaseWindow_wx4 {
     public childrenCreated() {
         super.childrenCreated();
         this.setTitle('游戏说明')
-        this.addBtnEvent(this.skillBtn,this.hide)
+        this.addBtnEvent(this.skillBtn,()=>{
+            if(this.pageIn)
+            {
+                this.hide();
+                return;
+            }
+
+            if(this.page == 1)
+                this.page = 2;
+            else
+                this.page = 1;
+            this.renewPage()
+
+
+        })
+
+        this.page1.addChild(this.monsterMV)
+        this.monsterMV.x = 125;
+        this.monsterMV.y = 170;
+        this.monsterMV.scaleX = this.monsterMV.scaleY = 1.2
+        this.monsterMV.load(101)
+        this.skillItem.data = 1
     }
 
-    public show(){
+    public show(page?,closeFun?){
+        TC.isStop = true
+        this.pageIn = page;
+        this.closeFun = closeFun;
+        this.page = this.pageIn || 1
         super.show()
     }
 
     public hide() {
+        TC.isStop = false
         super.hide();
+        this.monsterMV.stop()
+        this.closeFun && this.closeFun();
     }
 
     public onShow(){
-        this.addPanelOpenEvent(GameEvent.client.timerE,this.onE)
-        //this.skillItem.data = SBase.getItem(1)
+        this.renewPage();
+        if(this.pageIn == 1)
+        {
+            this.skillBtn.label = '知道了'
+        }
+        else if(this.pageIn == 2)
+        {
+            this.skillBtn.label = '开始游戏'
+        }
     }
 
-    public onE(){
-        this.rateBar.width -=2;
-        if(this.rateBar.width <=0)
-            this.rateBar.width = 500
+    private renewPage(){
+        if(this.page == 1)
+        {
+            this.currentState = 's1'
+            if(!this.pageIn)
+                this.skillBtn.label = '下一页'
+        }
+        else if(this.page == 2)
+        {
+            this.currentState = 's2'
+            this.monsterMV.stand()
+            if(!this.pageIn)
+                this.skillBtn.label = '上一页'
+        }
     }
+
+
 
 }

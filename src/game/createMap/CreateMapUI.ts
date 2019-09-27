@@ -59,7 +59,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
         this.list.itemRenderer = CreateMapItem
         this.list.selectedIndex = 0;
-        this.list.dataProvider = new eui.ArrayCollection([0,1,2,3,4,5,6])//1,
+        this.list.dataProvider = new eui.ArrayCollection([0,1,2,3,4,5,6,7])//1,
 
         this.addBtnEvent(this.upBtn,()=>{
             if(this.isChange || !LevelVO.getObject(this.level))

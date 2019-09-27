@@ -140,12 +140,12 @@ class ResultUI extends game.BaseUI_wx4{
             this.barMC.width = 360*rate;
             this.rateText.text = '完成进度：'+MyTool.toFixed(rate*100,1) + '%'
 
-            this.titleText.text = '惜败！'
+            this.titleText.text = '惜败'
             this.titleText.textColor = 0xFF0000
         }
         else
         {
-            this.titleText.text = '大胜！'
+            this.titleText.text = '大胜'
             this.titleText.textColor = 0xFFFF00
         }
 

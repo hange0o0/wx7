@@ -317,6 +317,9 @@ if(window["wx"])
         //GameManager.stage.dispatchEventWith(egret.Event.DEACTIVATE);
         EM_wx4.dispatch(egret.Event.DEACTIVATE)
         console.log('hide')
+
+        if(!TC.isStop && PKTowerUI._instance && PKTowerUI._instance.stage)
+            StopUI.getInstance().show();
         //GameUI.getInstance().cleanTouch();
     });
 
@@ -324,7 +327,7 @@ if(window["wx"])
         console.log(res)
         if(!GameManager_wx4.stage)
             return;
-        SoundManager.getInstance().resumeSound();
+
         //GameManager.stage.dispatchEventWith(egret.Event.ACTIVATE);
         EM_wx4.dispatch(egret.Event.ACTIVATE)
         GameManager_wx4.getInstance().onShowFun && GameManager_wx4.getInstance().onShowFun();
@@ -335,6 +338,8 @@ if(window["wx"])
         MyADManager.getInstance().onShow(res);
         //UM_wx4.resetCDCoin();
 
+
+        SoundManager.getInstance().resumeSound();
 
         //if(GameManager_wx4.getInstance().changeUserTime)
         //{

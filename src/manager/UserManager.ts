@@ -129,6 +129,7 @@ class UserManager_wx4 {
             }
         }
         PKManager.getInstance().initData(data.pkData);
+        PKManager.getInstance().resetSkin()
         this.testAddInvite();
         this.localSave();
 
@@ -252,6 +253,7 @@ class UserManager_wx4 {
             success: (res)=>{
                 var data = res.data[0];
                 this.shareUser = data.shareUser;
+                PKManager.getInstance().resetSkin()
                 fun && fun();
             }
         })

@@ -32,7 +32,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     public pkMap = new PKMap();
     public scale = 1;
 
-
+    public heroItem = new HeroItem();
     public data;
 
 
@@ -60,6 +60,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.addChildAt(this.pkMap,1);
         this.pkMap.horizontalCenter = 0
         this.pkMap.verticalCenter = -80
+        this.pkMap.roleCon.addChild(this.heroItem);
 
         this.monsterList.itemRenderer = MonsterHeadItem
         this.addBtnEvent(this.monsterBtn,()=>{
@@ -325,7 +326,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
         }
         SharedObjectManager_wx4.getInstance().setValue('roundData',{
             id:this.data.id,
-            data:arr
+            data:arr,
+            towerData:this.towerPos
         })
     }
 
@@ -426,6 +428,14 @@ class DrawMapUI extends game.BaseUI_wx4 {
                 if(this.mapData[oo.y] && this.mapData[oo.y][oo.x] === 0)
                     this.mapData[oo.y][oo.x] = 1;
             }
+            var towerData = roundData.towerData;
+            for(var s in this.towerPos)
+            {
+                if(towerData[s])
+                {
+                    this.towerPos[s] = towerData[s];
+                }
+            }
         }
 
         super.show()
@@ -460,6 +470,11 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.pkMap.scaleX = this.pkMap.scaleY = this.scale;
 
 
+        this.heroItem.data = _get['hero'] || PKManager.getInstance().heroid
+        this.heroItem.x = this.data.heroPos.x*64+32
+        this.heroItem.y = this.data.heroPos.y*64+32 + 20
+        this.heroItem.standMV()
+
         this.renewForceAdd();
 
         this.renewMap();
@@ -478,8 +493,13 @@ class DrawMapUI extends game.BaseUI_wx4 {
             this.list.selectedIndex = 0;
             this.randomGun();
             this.onReset();
-            this.once(egret.Event.ENTER_FRAME,this.showHand,this)
+
+            HelpUI.getInstance().show(1,()=>{
+                this.showHand();
+            })
+
         }
+
     }
 
     public showArrow(){
@@ -511,6 +531,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     public onChoosGun(){
         this.pkMap.renewTower(this.towerPos,true);
+        this.saveLocal();
     }
 
 

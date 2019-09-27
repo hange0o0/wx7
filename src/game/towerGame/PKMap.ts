@@ -110,7 +110,7 @@ class PKMap extends game.BaseContainer_wx4 {
             for(var j=0;j<data[i].length;j++)
             {
                 var type = data[i][j]
-                if(type == 5 || type == 6)
+                if(type == 5 || type == 6 || type == 7)
                 {
                     var mc = this.pos2Array[index];
                     index ++;
@@ -126,11 +126,17 @@ class PKMap extends game.BaseContainer_wx4 {
                         mc.anchorOffsetX = 39/2
                         mc.anchorOffsetY = 37/2 + 5
                     }
-                    else
+                    else if(type == 6)
                     {
                         mc.source = 'end_mc_png'
                         mc.anchorOffsetX = 48/2
                         mc.anchorOffsetY = 68*0.8
+                    }
+                    else
+                    {
+                        mc.source = 'hero_star_png'
+                        mc.anchorOffsetX = 65/2
+                        mc.anchorOffsetY = 57/2 + 5
                     }
                     mc.x =  j*64 + 32
                     mc.y =  i*64 + 32 + 10

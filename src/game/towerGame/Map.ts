@@ -48,7 +48,7 @@ class Map extends eui.Group {
 
     public addItem(x,y,type){
         var id = Math.ceil(this.random(x*1000 + y*10000000 + this.randomSeed)*3)
-        if(type == 5 || type == 6)
+        if(type == 5 || type == 6 || type == 7)
         {
             if(this.isGame)
             {

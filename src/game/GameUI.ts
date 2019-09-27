@@ -8,6 +8,8 @@ class GameUI extends game.BaseUI_wx4 {
     }
 
 
+    private bg: eui.Image;
+    private helpBtn: eui.Group;
     private mapCon: eui.Group;
     private leftBtn: eui.Group;
     private rightBtn: eui.Group;
@@ -15,7 +17,6 @@ class GameUI extends game.BaseUI_wx4 {
     private energyText: eui.Label;
     private soundBtn: eui.Image;
     private rankBtn: eui.Image;
-    private bg: eui.Image;
     private feedBackBtn: eui.Image;
     private ad1: eui.Image;
     private ad2: eui.Image;
@@ -31,6 +32,7 @@ class GameUI extends game.BaseUI_wx4 {
     private btnGroup: eui.Group;
     private startBtn: eui.Image;
     private swapBtn: eui.Button;
+
 
 
 
@@ -76,6 +78,10 @@ class GameUI extends game.BaseUI_wx4 {
         })
         this.addBtnEvent(this.ad2,()=>{
            MyADManager.getInstance().showAD(this.ad2['adData'])
+        })
+
+        this.addBtnEvent(this.helpBtn,()=>{
+            HelpUI.getInstance().show()
         })
 
 
@@ -159,7 +165,7 @@ class GameUI extends game.BaseUI_wx4 {
         },this)
 
         MyTool.addLongTouch(this.coinText,()=>{
-            if(egret.getTimer() - DebugUI.getInstance().debugTimer < 3000)
+            if(egret.getTimer() - DebugUI.getInstance().debugTimer < 1500)
             {
                 MyWindow.ShowTips('你作弊！')
                 DebugUI.getInstance().debugOpen = true

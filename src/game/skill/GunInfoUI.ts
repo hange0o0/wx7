@@ -39,6 +39,7 @@ class GunInfoUI extends game.BaseWindow_wx4 {
         })
 
         this.enemyList.itemRenderer = SkillEnemyItem
+        this.enemyList.touchEnabled = this.enemyList.touchChildren = false;
 
         this.towerItem.x += 32
         this.towerItem.y += 32

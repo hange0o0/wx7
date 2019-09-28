@@ -303,12 +303,18 @@ class TowerItem extends game.BaseItem{
     }
 
     public stop(){
-        this.tw.setPaused(true)
-        this.mv.stop();
+        if(this.tw)
+        {
+            this.tw.setPaused(true)
+            this.mv.stop();
+        }
     }
     public play(){
-        this.tw.setPaused(false)
-        this.mv.play();
+        if(this.tw)
+        {
+            this.tw.setPaused(false)
+            this.mv.play();
+        }
     }
 
     public getHurt(mid){

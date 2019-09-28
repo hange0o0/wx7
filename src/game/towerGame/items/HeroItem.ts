@@ -45,7 +45,7 @@ class HeroItem extends game.BaseItem {
 
         this.targetPos = null;
         this.speed = 7
-        this.atk = Math.ceil(TC.forceRate*100);
+        this.atk = Math.ceil(TC.forceRate*150);
         this.atkDis = 100
 
         this.lastAtkTime = 0;
@@ -95,7 +95,7 @@ class HeroItem extends game.BaseItem {
         if(enemy)
         {
             this.atkMV();
-            this.hurtStep = 10;
+            this.hurtStep = 15;
             this.stopStep = 30;
             this.enemy = enemy;
             this.lastAtkTime = TC.actionStep;

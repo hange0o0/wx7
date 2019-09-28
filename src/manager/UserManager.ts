@@ -290,7 +290,7 @@ class UserManager_wx4 {
 
              guideFinish:true,
              saveTime:0,
-             shareUser:[],
+             shareUser:{},
          };
     }
 

@@ -58,7 +58,7 @@ class HeroMVItem extends game.BaseItem {
         this.footShadow.scaleX = this.footShadow.scaleY = 0.5
         if(heroid >= 108 && heroid <= 112)
             this.mc.y = -30
-        else if(heroid >= 113 && heroid <= 115)
+        else if(heroid == 115)
             this.mc.y = 10
         else
             this.mc.y =  0

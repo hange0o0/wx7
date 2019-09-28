@@ -10,6 +10,7 @@ class HeroMVManager{
 
     private _mcFactorys:Object;
 
+
     constructor(){
         this._mcFactorys = {};
     }

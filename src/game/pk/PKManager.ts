@@ -52,6 +52,8 @@ class PKManager {
         this.heroList = [101];
         for(var s in UM_wx4.shareUser)
         {
+            if(!UM_wx4.shareUser[s])
+                continue;
             var id = parseInt(s) || 0;
             if(id > 100)
                 this.heroList.push(id)
@@ -181,7 +183,7 @@ class PKManager {
     }
 
     public getWinCoin(level){
-        var rate = 1 + Math.max(0,this.heroList.length-1)/100
+        var rate = 1 + Math.max(0,this.heroList.length-1)/10
         return Math.ceil(level * 50 * rate)
     }
 

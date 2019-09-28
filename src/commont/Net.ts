@@ -20,7 +20,7 @@ class Net extends egret.EventDispatcher{
         oo.msg = JSON.stringify(msg);
         variables.variables = oo;
         request.data = variables;
-        if(Config.isDebug )
+        if(Config.isDebug)
         {
             console.log('send===>      '+JSON.stringify(msg) +'   '+TM_wx4.now());
         }

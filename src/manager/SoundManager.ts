@@ -166,7 +166,6 @@ class SoundManager {
             if (this.currentChannel) {
                 egret.Tween.removeTweens(this.currentChannel);
                 this.currentChannel.stop();
-                console.log('stopchannel', this.currentChannel.hashCode)
             }
             this.onSoundComplete();
         } catch (e) {
@@ -192,14 +191,12 @@ class SoundManager {
             return;
         }
 
-        //console.log('call:',v)
         var url = "resource/game_assets2/sound/" + v + ".mp3"
         var loader:egret.URLLoader = new egret.URLLoader();
         loader.dataFormat = egret.URLLoaderDataFormat.SOUND;
         loader.once(egret.Event.COMPLETE, ()=> {
             var sound:egret.Sound = <egret.Sound>loader.data;
             var channel = sound.play(0, 1);
-            //console.log(v)
             if (fun)
                 channel.once(egret.Event.SOUND_COMPLETE, fun, thisObj)
         }, this);
@@ -217,7 +214,6 @@ class SoundManager {
 
         if (GuideManager.getInstance().isGuiding)
             return;
-        //console.log(key)
         if (!this.bgPlaying) return;
         if (this.bgKey == key) return;
 
@@ -282,7 +278,6 @@ class SoundManager {
             if (this.currentChannel) {
 
                 self.currentChannel.stop();
-                console.log('stopchannel', self.currentChannel.hashCode)
                 self.currentChannel = null;
 
                 if (!self._bgPlaying)return;
@@ -302,11 +297,9 @@ class SoundManager {
                 return;
             var channel:egret.SoundChannel = sound.play(0, self.tempLoop);
             if (self.currentChannel) {
-                console.log('stopchannel2', self.currentChannel.hashCode)
                 self.currentChannel.stop();
             }
             self.currentChannel = channel;
-            console.log('playchannel', channel.hashCode)
 
             channel.addEventListener(egret.Event.SOUND_COMPLETE, self.onSoundComplete, self);
         }

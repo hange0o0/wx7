@@ -18,6 +18,8 @@ class HeroItem extends game.BaseItem {
     public enemy//被攻击的目标
     public hurtStep//攻击到达倒计时
     public stopStep//不到移动的时间
+
+    public frameSpeed = 1;
     public constructor() {
         super();
     }
@@ -50,9 +52,12 @@ class HeroItem extends game.BaseItem {
         this.enemy = null;
         this.hurtStep = 0;
         this.stopStep = 0;
+
+        this.setSpeed(this.frameSpeed)
     }
 
     public setSpeed(speed){
+        this.frameSpeed = speed
         this.monsterMV && this.monsterMV.setSpeed(speed)
     }
 

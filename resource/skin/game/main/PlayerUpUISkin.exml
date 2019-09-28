@@ -54,7 +54,7 @@
 			</e:List>
 			</e:Group>
 		</e:Scroller>
-		<e:Label id="desText" text="每拥有一个皮肤，结算金币加成10%" size="24" horizontalCenter="0" bottom="20"/>
+		<e:Label id="desText" text="每拥有一个皮肤，结算金币加成10%" size="24" horizontalCenter="0" bottom="25"/>
 	</e:Group>
 
 </e:Skin>

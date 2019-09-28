@@ -65,12 +65,11 @@ class GunVO {
             case 'ice':
                 return '降低目标 ' + MyTool.createHtml('50%',0xFFFF00) + ' 的移动速度，持续 '+ MyTool.createHtml(this.sv1,0xFFFF00) + '秒'
             case 'fire':
-                return '点燃目标，每秒造成 ' + MyTool.createHtml('30',0xFFFF00) + ' 点伤害，持续 '+ MyTool.createHtml(this.sv1,0xFFFF00) + '秒'
+                return '点燃目标，每秒造成 ' + MyTool.createHtml('50',0xFFFF00) + ' 点伤害，持续 '+ MyTool.createHtml(this.sv1,0xFFFF00) + '秒'
             case 'poison':
-                return '使目标中毒，每秒造成 ' + MyTool.createHtml('10',0xFFFF00) + ' 点伤害，直至目标死亡'
+                return '使目标中毒，每秒造成 ' + MyTool.createHtml('20',0xFFFF00) + ' 点伤害，直至目标死亡'
             case 'yun':
                 return '有 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的机率使目标陷入晕眩，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒'
-
             case 'atk':
                 return '增加' + MyTool.createHtml(this.sv1 + '格',0xFFFF00) + '范围内所有武器 ' + MyTool.createHtml(this.sv2 + '%',0xFFFF00) + ' 的攻击力,可以叠加'
             case 'speed':

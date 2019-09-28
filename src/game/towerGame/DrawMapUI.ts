@@ -69,6 +69,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.pkMap.roleCon.addChild(this.heroItem);
 
         this.monsterList.itemRenderer = MonsterHeadItem
+        this.monsterGroup.visible = false;
         this.addBtnEvent(this.monsterBtn,()=>{
             this.monsterGroup.visible = !this.monsterGroup.visible;
             this.renewMonsterList();
@@ -290,7 +291,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         }
         else
         {
-            TC.monsterHPRate = this.data.forceRate
+            TC.monsterHPRate = this.data.forceRate*(1+0.05*this.data.towerNum)
             TC.forceRate = 1;
         }
     }

@@ -17,6 +17,8 @@ class HeroMVItem extends game.BaseItem {
     public runing
     public speed
 
+    public frameRate = 8
+
     public heroScale = {
         101:0.8,
         102:0.6,
@@ -44,7 +46,8 @@ class HeroMVItem extends game.BaseItem {
 
 
     public setSpeed(speed){
-        this.mc.frameRate = 8*speed;
+        this.frameRate = 8*speed
+        this.mc.frameRate = this.frameRate;
     }
 
     public load(heroid): void {
@@ -139,6 +142,7 @@ class HeroMVItem extends game.BaseItem {
                 break;
 
         }
+        this.mc.frameRate = this.frameRate;
     }
 
 }

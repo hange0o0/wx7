@@ -63,7 +63,8 @@ class LevelVO {
         var lastRandomSeed  = TC.randomSeed
         TC.randomSeed = this.id*12345678901;
         var monsterList = [];
-        var lastID = 0;
+        var monsterObj = {};//最多出2个
+        var lastID = 0//不会相邻出
         for(var s in MonsterVO.data)
         {
             var mvo = MonsterVO.data[s]
@@ -73,6 +74,7 @@ class LevelVO {
                 if(mvo.level == this.id)
                 {
                     lastID = mvo.id;
+                    monsterObj[mvo.id] = (monsterObj[mvo.id] || 0) + 1
                     this.monsterArr.push(mvo.id)
                 }
             }
@@ -83,8 +85,11 @@ class LevelVO {
             var mvo = monsterList[Math.floor(TC.random()*monsterList.length)]
             if(mvo.id == lastID)
                 continue;
+            if(monsterObj[mvo.id] && monsterObj[mvo.id] >= 2)
+                continue;
             this.monsterArr.push(mvo.id);
             lastID = mvo.id;
+            monsterObj[mvo.id] = (monsterObj[mvo.id] || 0) + 1
         }
         TC.randomSeed = lastRandomSeed;
 
@@ -109,7 +114,7 @@ class LevelVO {
         }
         if(this.id == 1)
         {
-            this.forceRate = 0.6;
+            this.forceRate = 0.5;
         }
         else if(myDrawPath >= 5 && this.towerNum > 0)
         {

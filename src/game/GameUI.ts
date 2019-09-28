@@ -44,11 +44,6 @@ class GameUI extends game.BaseUI_wx4 {
 
 
 
-
-
-    private adType
-    private adValue
-    private moveState = 0
     private dragPos
     public constructor() {
         super();
@@ -235,13 +230,6 @@ class GameUI extends game.BaseUI_wx4 {
         }
     }
 
-    public resetAD(){
-        this.adType = Math.random()>0.5?'cd':'score'
-        var level =Math.floor((0.5 + Math.random()*0.5)*Math.min(UM_wx4.adLevel,10))
-        this.adValue = 30 + level*5;
-        if(this.adType == 'score')
-            this.adValue *= 30;
-    }
 
     private renewNeedEnergy(){
         //var PKM = PKManager.getInstance();
@@ -298,8 +286,6 @@ class GameUI extends game.BaseUI_wx4 {
         //    PassDayAwardUI.getInstance().show();
         //}
         this.showTips();
-
-        this.resetAD();
 
 
 

@@ -11,8 +11,7 @@
 		<e:Label text="高：" x="10.64" textColor="0x000000" size="22" y="199.68"/>
 		<e:EditableText id="widthText" width="50" height="30" text="12" x="101.64" textColor="0x000000" border="true" size="24" y="156.68" textAlign="center"/>
 		<e:EditableText id="heightText" width="50" height="30" text="120" x="98.97" textColor="0x000000" border="true" size="24" y="201.68" textAlign="center"/>
-		<e:Button id="setBtn" label="设置" x="220" y="136.01" skinName="Btn2Skin" height="50"/>
-		<e:Button id="randomBtn" label="随机" x="220" y="190.68" skinName="Btn2Skin" height="50"/>
+		<e:Button id="randomBtn" label="随机" x="237" y="165.68" skinName="Btn2Skin" height="60"/>
 		<e:Button id="saveBtn" label="保存" y="133.68" skinName="Btn2Skin" right="10" height="50"/>
 		<e:Button id="backBtn" label="退出" y="188.35" skinName="Btn2Skin" right="10" height="50"/>
 		<e:Group bottom="249" horizontalCenter="0">
@@ -25,7 +24,7 @@
 				<e:HorizontalLayout horizontalAlign="center" verticalAlign="middle" gap="10"/>
 			</e:layout>
 		</e:Group>
-		<e:Button id="testBtn" label="测试" skinName="Btn2Skin" right="170" bottom="28"/>
+		<e:Button id="testBtn" label="测试" skinName="Btn2Skin" right="160" bottom="24" anchorOffsetY="0" height="58"/>
 		<e:Button id="wDecBtn" label="-" x="54.64" y="149.68" skinName="Btn2Skin" height="40" width="40"/>
 		<e:Button id="wAddBtn" label="+" x="157.64" y="151.68" skinName="Btn2Skin" height="40" width="40"/>
 		<e:Button id="hDecBtn" label="-" x="54.64" y="195.68" skinName="Btn2Skin" height="40" width="40"/>

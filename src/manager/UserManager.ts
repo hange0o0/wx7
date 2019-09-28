@@ -38,37 +38,17 @@ class UserManager_wx4 {
 
     public coin: number = 999;
     public level: number = 1;//要打的，1开始
-    //public gunLevel: any = {};
-    //public gunPos: any = {};
-    public pastDayCoin
-    //public gunPosNum = 3;
-    //public endLess = 0;
     public coinTimes = 0;
     public helpUser;
-    //
-    //public cdCoin = 0;
-    //public cdCoinTime = 0;
-    //public cdCoinGetTime = 0;
 
     public addForceEnd = 0
-    public adLevel
-    public isDelete = false
-
 
     public shareUser = {};//buff玩家的数据   openid:{head,nick,time}
     public loginTime = 0
 
 
     public isFirst = false
-    //public hourEarn = 0;
-    public offlineTime
     public initDataTime
-
-
-    //public nextMakeTime = 0//上次免费时间
-    //public videoMakeTimes = 0;
-    //public makeList = []  //图纸
-
 
 
     public haveGetUser = false
@@ -103,14 +83,14 @@ class UserManager_wx4 {
         //this.makeList = data.makeList || [];
         //this.gunPos = data.gunPos || {};
         //this.gunPosNum = _get['pos'] || data.gunPosNum || 3;
-        this.pastDayCoin = data.pastDayCoin
-        this.adLevel = data.adLevel || 0
+        //this.pastDayCoin = data.pastDayCoin
+        //this.adLevel = data.adLevel || 0
         this.addForceEnd = data.addForceEnd || 0
 
         this.testPassDay()
 
         DM.addTime = SharedObjectManager_wx4.getInstance().getMyValue('addTime') || 0;
-        this.offlineTime = TM_wx4.now() - saveTime;
+        //this.offlineTime = TM_wx4.now() - saveTime;
 
         //this.initDataTime = TM_wx4.now()
 
@@ -140,14 +120,14 @@ class UserManager_wx4 {
     }
 
     public testPassDay(){
-        if(!DateUtil_wx4.isSameDay(this.pastDayCoin.t))
-        {
-            this.pastDayCoin.t = TM_wx4.now();
-            //this.videoMakeTimes = 0;
-            this.coinTimes = 0;
-            this.pastDayCoin.coin = this.getPassDayCoin();
-            this.needUpUser = true
-        }
+        //if(!DateUtil_wx4.isSameDay(this.pastDayCoin.t))
+        //{
+        //    this.pastDayCoin.t = TM_wx4.now();
+        //    //this.videoMakeTimes = 0;
+        //    this.coinTimes = 0;
+        //    this.pastDayCoin.coin = this.getPassDayCoin();
+        //    this.needUpUser = true
+        //}
     }
 
     public renewInfo(userInfo){
@@ -307,15 +287,10 @@ class UserManager_wx4 {
              loginTime:TM_wx4.now(),   //$
              coin:500,   //$
              level:1,   //$
-             gunPos:{1:2,2:1,3:3},   //$
-             gunLevel:{},   //$
+
              guideFinish:true,
-             pastDayCoin:{coin:0,t:TM_wx4.now()},
              saveTime:0,
              shareUser:[],
-             cdCoin:0,
-             cdCoinTime:TM_wx4.now(),
-             cdCoinGetTime:TM_wx4.now(),
          };
     }
 
@@ -324,25 +299,10 @@ class UserManager_wx4 {
             loginTime:UM_wx4.loginTime,
             coin:UM_wx4.coin,
             level:UM_wx4.level,
-            //endLess:UM_wx4.endLess,
             helpUser:UM_wx4.helpUser,
-            //gunLevel:UM_wx4.gunLevel,
-            //gunPos:UM_wx4.gunPos,
             coinTimes:UM_wx4.coinTimes,
-            //nextMakeTime:UM_wx4.nextMakeTime,
-            //videoMakeTimes:UM_wx4.videoMakeTimes,
-            //makeList:UM_wx4.makeList,
-            //gunPosNum:UM_wx4.gunPosNum,
-            pastDayCoin:UM_wx4.pastDayCoin,
-            adLevel:UM_wx4.adLevel,
             addForceEnd:UM_wx4.addForceEnd,
-
             pkData:PKManager.getInstance().getSave(),
-
-            //cdCoin:UM_wx4.cdCoin,
-            //cdCoinTime:UM_wx4.cdCoinTime,
-            //cdCoinGetTime:UM_wx4.cdCoinGetTime,
-            //guideFinish:UM.guideFinish,
             saveTime:TM_wx4.now(),
         };
 

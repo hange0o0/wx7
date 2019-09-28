@@ -116,11 +116,11 @@ class PKBulletItem extends game.BaseItem {
                 break
             case 'fire':
                 //return '点燃目标，每秒造成 ' + MyTool.createHtml(this.sv1 + '',0xFFFF00) + ' 点伤害，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒'
-                this.target.setFire(PKTool.getStepByTime(gvo.sv1*1000),Math.ceil(30*TC.forceRate))
+                this.target.setFire(PKTool.getStepByTime(gvo.sv1*1000),Math.ceil(50*TC.forceRate))
                 break
             case 'poison':
                 //return '使目标中毒，每秒造成 ' + MyTool.createHtml(this.sv1 + '',0xFFFF00) + ' 点伤害，直至目标死亡'
-                this.target.setPoison(Number.MAX_VALUE,Math.ceil(10*TC.forceRate))
+                this.target.setPoison(Number.MAX_VALUE,Math.ceil(20*TC.forceRate))
                 break
             case 'yun':
                 //return '有 ' + MyTool.createHtml(this.sv1 + '%',0xFFFF00) + ' 的机率使目标陷入晕眩，持续 '+ MyTool.createHtml(this.sv2,0xFFFF00) + '秒

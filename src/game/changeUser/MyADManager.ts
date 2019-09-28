@@ -32,7 +32,7 @@ class MyADManager {
             this.changeUserFun = null
         }
         this.initExtra(res)
-        this.testWX5Back();
+        //this.testWX5Back();
     }
 
     public navigateToMiniProgram(data){
@@ -349,44 +349,44 @@ class MyADManager {
             this.extraData = data.referrerInfo.extraData
     }
 
-    //前往WX5
-    public openWX5(data){
-        var wx = window['wx'];
-        data.appid = Config.myAppID//我的APPID
-        data.uin = Math.floor(Math.random()*1000000000000000);//唯一Key
-        if(!wx || DebugUI.getInstance().debugOpen)
-        {
-            this.extraData = data
-            this.testWX5Back()
-            return;
-        }
-
-        wx.navigateToMiniProgram({
-            appId: 'wxe2875716299fa092',//别点小广告
-            envVersion:'trial',
-            extraData:data,
-            complete(res) {
-                if(!UM_wx4.isDelete)
-                {
-                    UM_wx4.isDelete = true;
-                    if(UM_wx4.adLevel > 0)
-                        UM_wx4.adLevel --
-                }
-            }
-        })
-    }
-
-    //WX5回调
-    public testWX5Back(){
-        if(!this.extraData)
-            return
-        this.finishExtraUin = this.extraData.uin;
-        switch(this.extraData.callBack)
-        {
-            case 'addForce':
-                UM_wx4.addForceEnd = TM_wx4.now()+60*15;
-                //GameUI.getInstance().resetAD()
-                break;
-        }
-    }
+    ////前往WX5
+    //public openWX5(data){
+    //    var wx = window['wx'];
+    //    data.appid = Config.myAppID//我的APPID
+    //    data.uin = Math.floor(Math.random()*1000000000000000);//唯一Key
+    //    if(!wx || DebugUI.getInstance().debugOpen)
+    //    {
+    //        this.extraData = data
+    //        this.testWX5Back()
+    //        return;
+    //    }
+    //
+    //    wx.navigateToMiniProgram({
+    //        appId: 'wxe2875716299fa092',//别点小广告
+    //        envVersion:'trial',
+    //        extraData:data,
+    //        complete(res) {
+    //            if(!UM_wx4.isDelete)
+    //            {
+    //                UM_wx4.isDelete = true;
+    //                if(UM_wx4.adLevel > 0)
+    //                    UM_wx4.adLevel --
+    //            }
+    //        }
+    //    })
+    //}
+    //
+    ////WX5回调
+    //public testWX5Back(){
+    //    if(!this.extraData)
+    //        return
+    //    this.finishExtraUin = this.extraData.uin;
+    //    switch(this.extraData.callBack)
+    //    {
+    //        case 'addForce':
+    //            UM_wx4.addForceEnd = TM_wx4.now()+60*15;
+    //            //GameUI.getInstance().resetAD()
+    //            break;
+    //    }
+    //}
 }

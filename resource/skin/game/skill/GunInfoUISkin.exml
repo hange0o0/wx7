@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="GunInfoUISkin" width="580" height="620" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="GunInfoUISkin" width="580" height="600" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
 	<e:Button id="closeBtn" label="关闭" skinName="Btn2Skin" horizontalCenter="0" bottom="50" width="160"/>
 
-    <e:Group id="con" y="90" left="30" right="30" height="359.09" anchorOffsetY="0">
+    <e:Group id="con" y="90" left="20" right="20" height="359.09" anchorOffsetY="0">
 		<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" left="0" right="0" top="0" bottom="0"/>
-		<e:Label id="txt1" text="攻击：1234" y="60" size="22" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F" left="165" right="10"/>
-		<e:Label id="txt2" text="攻击：1234" y="60" size="22" x="350" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F"/>
-		<e:Label id="nameText" text="Label" y="20" size="24" textColor="0x9BD2FF" x="165"/>
+		<e:Label id="txt1" text="攻击：1234" y="66" size="22" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F" left="160" right="30"/>
+		<e:Label id="txt2" text="攻击：1234" y="66" size="22" x="345" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F"/>
+		<e:Label id="nameText" text="Label" y="20" size="24" textColor="0x9BD2FF" x="160"/>
 		<ns1:TowerItem id="towerItem" x="45" y="200" skinName="TowerItemSkin"/>
-		<e:Group x="165" bottom="15">
+		<e:Group x="160" bottom="15.089999999999975">
 			<e:List id="enemyList" height="80" x="85" y="0">
 				<e:layout>
 				<e:HorizontalLayout gap="20"/>

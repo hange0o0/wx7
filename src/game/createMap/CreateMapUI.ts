@@ -10,7 +10,6 @@ class CreateMapUI extends game.BaseUI_wx4 {
     private list: eui.List;
     private widthText: eui.EditableText;
     private heightText: eui.EditableText;
-    private setBtn: eui.Button;
     private randomBtn: eui.Button;
     private saveBtn: eui.Button;
     private backBtn: eui.Button;
@@ -24,6 +23,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
     private wAddBtn: eui.Button;
     private hDecBtn: eui.Button;
     private hAddBtn: eui.Button;
+
 
 
 
@@ -93,18 +93,22 @@ class CreateMapUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.wDecBtn,()=>{
             this.ww --;
             this.widthText.text = this.ww + ''
+            this.setHeight()
         })
         this.addBtnEvent(this.wAddBtn,()=>{
             this.ww ++;
             this.widthText.text = this.ww + ''
+            this.setHeight()
         })
         this.addBtnEvent(this.hDecBtn,()=>{
             this.hh --;
             this.heightText.text = this.hh + ''
+            this.setHeight()
         })
         this.addBtnEvent(this.hAddBtn,()=>{
             this.hh ++;
             this.heightText.text = this.hh + ''
+            this.setHeight()
         })
 
 
@@ -138,9 +142,6 @@ class CreateMapUI extends game.BaseUI_wx4 {
             DrawMapUI.getInstance().isTest = true;
             DrawMapUI.getInstance().show(data);
 
-        })
-        this.addBtnEvent(this.setBtn,()=>{
-            this.setHeight()
         })
         this.addBtnEvent(this.backBtn,()=>{
             if(this.isChange)

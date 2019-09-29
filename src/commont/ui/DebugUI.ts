@@ -131,9 +131,21 @@ class DebugUI extends game.BaseUI_wx4 {
                 if(b == 1)
                 {
                     this.downLoadData((txt)=>{
-                        LevelVO.clear();
+
                         var arr = txt.split('\n')
                         arr.shift();
+                        if(arr.length && !arr[arr.length-1])
+                            arr.pop()
+
+                        //-1是因为标题行
+                        if(arr.length-1 < LevelVO.list.length)
+                        {
+                            MyWindow.ShowTips('公网数据短')
+                            console.log(arr.length,LevelVO.list.length)
+                        }
+
+                        LevelVO.clear();
+
                         CM_wx4.initData(arr.join('\n'),'level');
 
                         MyWindow.ShowTips('OK')

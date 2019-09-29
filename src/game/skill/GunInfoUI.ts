@@ -25,6 +25,7 @@ class GunInfoUI extends game.BaseWindow_wx4 {
     public gunid;
     public posX;
     public posY;
+    public tower:TowerItem;
     public constructor() {
         super();
         this.skinName = "GunInfoUISkin";
@@ -47,10 +48,11 @@ class GunInfoUI extends game.BaseWindow_wx4 {
 
     }
 
-    public show(gunid?,posX?,posY?){
-        this.gunid = gunid;
-        this.posX = posX;
-        this.posY = posY;
+    public show(tower?){
+        this.tower = tower
+        this.gunid = this.tower.gvo.id;
+        this.posX = this.tower.posX;
+        this.posY = this.tower.posY;
         super.show()
     }
 
@@ -67,12 +69,28 @@ class GunInfoUI extends game.BaseWindow_wx4 {
 
         var arr1 = [];
         var arr2 = [];
-        arr1.push('攻击：' + this.createHtml(gvo.atk,0xFFFF00))
-        arr1.push('射程：' + this.createHtml(gvo.atkdis,0xFFFF00))
+
+        if(this.tower.atk > this.tower.baseAtk)
+            arr1.push('攻击：' + this.createHtml(this.tower.baseAtk,0xFFFF00) + this.createHtml(' +' + (this.tower.atk - this.tower.baseAtk),0x00ff00))
+        else
+            arr1.push('攻击：' + this.createHtml(this.tower.baseAtk,0xFFFF00))
+
+        if(this.tower.atkDis > gvo.atkdis)
+            arr1.push('射程：' + this.createHtml(gvo.atkdis,0xFFFF00) + this.createHtml(' +' + (this.tower.atkDis - gvo.atkdis),0x00ff00))
+        else
+            arr1.push('射程：' + this.createHtml(gvo.atkdis,0xFFFF00))
+
+
         if(gvo.skilltype)
             arr1.push('技能：' + gvo.getDes())
 
-        arr2.push('攻速：' + this.createHtml(MyTool.toFixed(30/gvo.atkspeed,1),0xFFFF00))
+        if(this.tower.atkSpeed < gvo.atkspeed)
+            arr2.push('攻速：' + this.createHtml(MyTool.toFixed(30/gvo.atkspeed,1),0xFFFF00) + this.createHtml(' +' + MyTool.toFixed(30/this.tower.atkSpeed - 30/gvo.atkspeed,1),0x00ff00))
+        else
+            arr2.push('攻速：' + this.createHtml(MyTool.toFixed(30/gvo.atkspeed,1),0xFFFF00))
+
+
+
         arr2.push('数量：' + this.createHtml(gvo.shootnum,0xFFFF00))
         this.setHtml(this.txt1,arr1.join('\n'))
         this.setHtml(this.txt2,arr2.join('\n'))

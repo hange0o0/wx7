@@ -121,7 +121,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
             var tower = this.pkMap.getTowerByPos(x,y);
             if(tower.isLighting)
             {
-                GunInfoUI.getInstance().show(this.towerPos[x+'_'+y],x,y)
+                GunInfoUI.getInstance().show(tower)
             }
             else
             {

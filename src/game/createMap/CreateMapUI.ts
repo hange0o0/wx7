@@ -20,9 +20,15 @@ class CreateMapUI extends game.BaseUI_wx4 {
     private nextBtn: eui.Button;
     private testBtn: eui.Button;
     private wDecBtn: eui.Button;
+    private wDecBtn0: eui.Button;
     private wAddBtn: eui.Button;
     private hDecBtn: eui.Button;
+    private hDecBtn0: eui.Button;
     private hAddBtn: eui.Button;
+    private wAddBtn0: eui.Button;
+    private hAddBtn0: eui.Button;
+
+
 
 
 
@@ -61,6 +67,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
         this.list.selectedIndex = 0;
         this.list.dataProvider = new eui.ArrayCollection([0,1,2,3,4,5,6,7])//1,
 
+
         this.addBtnEvent(this.upBtn,()=>{
             if(this.isChange || !LevelVO.getObject(this.level))
             {
@@ -87,6 +94,54 @@ class CreateMapUI extends game.BaseUI_wx4 {
             this.level ++;
             this.renewLevelText();
         })
+
+
+        this.addBtnEvent(this.wDecBtn0,()=>{
+            this.ww --;
+            this.widthText.text = this.ww + ''
+
+            for(var i=0;i<this.hh;i++)
+            {
+                this.mapData[i].shift();
+            }
+            this.isChange = true;
+            this.renewMap();
+        })
+
+        this.addBtnEvent(this.hDecBtn0,()=>{
+            this.hh --;
+            this.heightText.text = this.hh + ''
+            this.mapData.shift();
+
+            this.isChange = true;
+            this.renewMap();
+        })
+
+
+        this.addBtnEvent(this.wAddBtn0,()=>{
+            this.ww ++;
+            this.widthText.text = this.ww + ''
+
+            for(var i=0;i<this.hh;i++)
+            {
+                this.mapData[i].unshift(0);
+            }
+            this.isChange = true;
+            this.renewMap();
+        })
+
+        this.addBtnEvent(this.hAddBtn0,()=>{
+            this.hh ++;
+            this.heightText.text = this.hh + ''
+            var arr = [];
+            for(var i=0;i<this.ww;i++)
+                arr.push(0)
+            this.mapData.unshift(arr);
+
+            this.isChange = true;
+            this.renewMap();
+        })
+
 
 
 
@@ -185,7 +240,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
         this.map.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.onTouch,this)
         this.map.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.onTouch,this)
-        this.map.addEventListener(egret.TouchEvent.TOUCH_END,this.renewLevelText,this)
+        //this.map.addEventListener(egret.TouchEvent.TOUCH_END,this.renewLevelText,this)
 
         MyTool.addLongTouch(this.testBtn,()=>{
             if(DEBUG || DebugUI.getInstance().debugOpen)
@@ -286,137 +341,98 @@ class CreateMapUI extends game.BaseUI_wx4 {
             this.hh = 15
         this.resetMapData();
 
-        //var towerNum = Math.round((this.ww*this.hh/12)*(0.8+0.4*Math.random()));
-        //var nearNum = 0//
-        //if(this.level >= 12)//靠近的位置出塔的数量
-        //{
-        //    nearNum ++;
-        //    if(Math.random() < 0.5)
-        //        nearNum ++;
-        //}
-        //if(this.level >= 50)
-        //{
-        //    nearNum ++
-        //}
-        //if(this.level >= 100 && Math.random() < 0.5)
-        //{
-        //    nearNum ++
-        //}
-        //if(this.level >= 150 && Math.random() < 0.5)
-        //{
-        //    nearNum ++
-        //}
-        //if(nearNum >= towerNum)
-        //    nearNum = towerNum-1
-        //var orginPos
-        ////放入塔
-        //while(towerNum >0)
-        //{
-        //    if(orginPos)
-        //    {
-        //        var begin = -1
-        //        var size = 3
-        //        if(nearNum > 1 && Math.random()< 0.4)
-        //        {
-        //            begin = -2;
-        //            size = 5
-        //        }
-        //
-        //        var x = begin + Math.floor(Math.random()*size)
-        //        var y = begin + Math.floor(Math.random()*size)
-        //        if(x<0)
-        //            x = 0
-        //        else if(x>= this.ww)
-        //            x = this.ww - 1
-        //
-        //        if(y<0)
-        //            y = 0
-        //        else if(y>= this.hh)
-        //            y = this.hh - 1
-        //    }
-        //    else
-        //    {
-        //        var x = Math.floor(Math.random()*this.ww)
-        //        var y = Math.floor(Math.random()*this.hh)
-        //    }
-        //
-        //    if(this.mapData[y][x])
-        //        continue;
-        //
-        //    var id = 0
-        //    if(towerNum > 0)
-        //    {
-        //        towerNum --
-        //        id = 2
-        //    }
-        //
-        //    this.mapData[y][x] = id;
-        //    if(orginPos)
-        //    {
-        //        nearNum --;
-        //        if(nearNum <= 0)
-        //            orginPos = null;
-        //    }
-        //    else if(nearNum > 0)
-        //    {
-        //        orginPos = {x:x,y:y}
-        //    }
-        //}
-        //
-        ////放入起点
-        //var startNum = 1;
-        //if(this.level > 50 && Math.random() < 0.5)
-        //    startNum ++;
-        //if(this.level > 100 && Math.random() < 0.5)
-        //    startNum ++;
-        //if(this.level > 150 && Math.random() < 0.5)
-        //    startNum ++;
-        //
-        //var endNum = 1;
-        //if(this.level > 80 && Math.random() < 0.5)
-        //    startNum ++;
-        //if(this.level > 160 && Math.random() < 0.5)
-        //    startNum ++;
-        //
-        //while(startNum >0 || endNum > 0)
-        //{
-        //    if(Math.random() < 0.1)
-        //    {
-        //        var x = Math.floor(Math.random()*this.ww)
-        //        var y = Math.floor(Math.random()*this.hh)
-        //    }
-        //    else if(Math.random() > 0.5)
-        //    {
-        //        var x = Math.random() > 0.5?0:this.ww-1
-        //        var y = Math.floor(Math.random()*this.hh)
-        //    }
-        //    else
-        //    {
-        //        var x = Math.floor(Math.random()*this.ww)
-        //        var y = Math.random() > 0.5?0:this.hh-1
-        //    }
-        //
-        //    if(this.mapData[y][x] && this.mapData[y][x] != 1)
-        //        continue;
-        //
-        //    var id = 0
-        //    if(startNum > 0)
-        //    {
-        //        startNum --
-        //        id = 5
-        //    }
-        //    else if(endNum > 0)
-        //    {
-        //        endNum --
-        //        id = 6
-        //    }
-        //
-        //    this.mapData[y][x] = id;
-        //}
+        this.randomRoad();
+
 
 
         this.isChange = true;
         this.renewMap();
+    }
+
+
+    private roadArr = []
+    private randomRoad(){
+        this.roadArr = [];
+        var x = Math.floor(this.ww*Math.random())
+        var y = Math.floor(this.hh*Math.random())
+
+
+        this.addRoad(x,y);
+
+        while(this.testAddRoad(this.roadArr[this.roadArr.length-1],this.roadArr[this.roadArr.length-2]))
+        {
+
+        }
+
+        this.roadArr.reverse();
+
+        while(this.testAddRoad(this.roadArr[this.roadArr.length-1],this.roadArr[this.roadArr.length-2]))
+        {
+
+        }
+
+    }
+
+    private testAddRoad(currentPos,lastPos){
+        var arr = [];
+        if(lastPos)
+        {
+            var addY = currentPos.y - lastPos.y;
+            var addX = currentPos.x - lastPos.x;
+            var xx = addX + currentPos.x
+            var yy = addY + currentPos.y
+            if(this.isRoadBlockOK(xx,yy))
+            {
+                arr.push({x:xx,y:yy})
+                arr.push({x:xx,y:yy})
+                arr.push({x:xx,y:yy})
+            }
+        }
+
+        if(this.isRoadBlockOK(currentPos.x,currentPos.y + 1))
+            arr.push({x:currentPos.x,y:currentPos.y + 1})
+
+        if(this.isRoadBlockOK(currentPos.x,currentPos.y - 1))
+            arr.push({x:currentPos.x,y:currentPos.y - 1})
+
+        if(this.isRoadBlockOK(currentPos.x-1,currentPos.y))
+            arr.push({x:currentPos.x-1,y:currentPos.y})
+
+        if(this.isRoadBlockOK(currentPos.x+1,currentPos.y))
+            arr.push({x:currentPos.x+1,y:currentPos.y})
+
+        if(arr.length == 0)//没有可加的路
+        {
+            return false
+        }
+
+        var road = ArrayUtil_wx4.randomOne(arr);
+        this.addRoad(road.x,road.y)
+        return true;
+
+    }
+
+    //如果这个位置OK，则放到数组里
+    private isRoadBlockOK(x,y){
+        if(!this.mapData[y] || this.mapData[y][x] !== 0)
+            return false;
+
+        var count = 0;
+        if(this.mapData[y + 1] && this.mapData[y + 1][x] == 1)
+            count ++
+        if(this.mapData[y - 1] && this.mapData[y - 1][x] == 1)
+            count ++
+        if(this.mapData[y] && this.mapData[y][x+1] == 1)
+            count ++
+        if(this.mapData[y] && this.mapData[y][x-1] == 1)
+            count ++
+        return count <= 1;
+    }
+
+    private addRoad(x,y)
+    {
+        this.roadArr.push({x:x,y:y});
+        this.mapData[y][x] = 1
     }
 
     private setHeight(){
@@ -489,7 +505,6 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
     public onShow(){
 
-        this.renewLevelText();
         this.renew()
     }
 
@@ -501,6 +516,8 @@ class CreateMapUI extends game.BaseUI_wx4 {
         this.map.horizontalCenter = 0
         this.map.verticalCenter = -150
         this.map.draw(this.mapData);
+
+        this.renewLevelText();
     }
 
     private renew(){

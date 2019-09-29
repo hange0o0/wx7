@@ -6,7 +6,7 @@
     <e:Group id="con" y="90" left="20" right="20" height="359.09" anchorOffsetY="0">
 		<e:Image source="item_png" anchorOffsetX="0" anchorOffsetY="0" scale9Grid="20,20,11,10" left="0" right="0" top="0" bottom="0"/>
 		<e:Label id="txt1" text="攻击：1234" y="66" size="22" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F" left="160" right="30"/>
-		<e:Label id="txt2" text="攻击：1234" y="66" size="22" x="345" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F"/>
+		<e:Label id="txt2" text="攻击：1234" y="66" size="22" x="380" lineSpacing="15" anchorOffsetX="0" textColor="0xFCD79F"/>
 		<e:Label id="nameText" text="Label" y="20" size="24" textColor="0x9BD2FF" x="160"/>
 		<ns1:TowerItem id="towerItem" x="45" y="200" skinName="TowerItemSkin"/>
 		<e:Group x="160" bottom="15.089999999999975">

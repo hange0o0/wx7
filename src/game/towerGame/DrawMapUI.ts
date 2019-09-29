@@ -291,7 +291,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         }
         else
         {
-            TC.monsterHPRate = this.data.forceRate*(1+0.05*this.data.towerNum)
+            TC.monsterHPRate /= (1 + (this.data.id-1)/4)
             TC.forceRate = 1;
         }
     }

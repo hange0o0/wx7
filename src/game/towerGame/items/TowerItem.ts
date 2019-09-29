@@ -48,6 +48,7 @@ class TowerItem extends game.BaseItem{
     public lastHurtTime = 0
     public atkSpeed = 0
     public atk = 0
+    public baseAtk = 0
     public atkDis = 0
     public shootNum = 0
 
@@ -105,7 +106,7 @@ class TowerItem extends game.BaseItem{
 
             this.lastHurtTime = 0
             this.atkSpeed = this.gvo.atkspeed
-            this.atk = Math.ceil(this.gvo.atk*TC.forceRate)
+            this.atk = this.baseAtk = Math.ceil(this.gvo.atk*TC.forceRate)
             this.atkDis = this.gvo.atkdis
             this.shootNum = this.gvo.shootnum
 
@@ -149,6 +150,8 @@ class TowerItem extends game.BaseItem{
             var tower:TowerItem = towerList[i];
             if(tower == this)
                 continue;
+            if(!tower.gvo)
+                continue
             var dis = this.getDis(tower);
             if(dis <= atkdis)
             {
@@ -157,7 +160,7 @@ class TowerItem extends game.BaseItem{
                 {
                     case 'atk':
                         value = Math.ceil(tower.gvo.atk*addValue)
-                        this.atk += value;
+                        tower.atk += value;
                         break;
                     case 'speed':
                         value = -(Math.floor(PKTool.getStepByTime(this.gvo.atkspeed)*addValue) || 1)
@@ -167,13 +170,13 @@ class TowerItem extends game.BaseItem{
                         //    if(value >= 0)
                         //        continue;
                         //}
-                        this.atkSpeed += value;
+                        tower.atkSpeed += value;
                         break;
                     case 'dis':
                         //if(this.atkDis > this.gvo.atkdis)
                         //    continue;
                         value =1;
-                        this.atkDis += value;
+                        tower.atkDis += value;
                         break;
                 }
                 var effectData = {type:skillType,value:value,tid:this.tid}

@@ -188,7 +188,7 @@ class PKManager {
     }
 
     public getFailCoin(level,rate){
-        var rate2 = 1 + Math.max(0,this.heroList.length-1)/100
+        var rate2 = 1 + Math.max(0,this.heroList.length-1)/10
         return Math.ceil(level * rate * 20 * rate2)
     }
 

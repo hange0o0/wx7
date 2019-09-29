@@ -54,9 +54,19 @@ class TowerManager extends egret.EventDispatcher {
                 loader.dataFormat = egret.URLLoaderDataFormat.TEXT;
                 loader.once(egret.Event.COMPLETE,(e)=>{
                     var txt = loader.data;
-                    LevelVO.clear();
                     var arr = txt.split('\n')
                     arr.shift();
+                    if(arr.length && !arr[arr.length-1])
+                        arr.pop()
+
+                    //-1是因为标题行
+                    if(arr.length-1 < LevelVO.list.length)
+                    {
+                        return;//公网数据短，不用
+                    }
+
+
+                    LevelVO.clear();
                     CM_wx4.initData(arr.join('\n'),'level');
                     EM_wx4.dispatch(GameEvent.client.LOAD_SERVER_DATA)
                     console.log('getServerData OK')

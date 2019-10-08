@@ -44,6 +44,7 @@ class HeroItem extends game.BaseItem {
         this.monsterMV.alpha = 1;
 
         this.targetPos = null;
+        this.path = null
         this.speed = 7
         this.atk = Math.ceil(TC.forceRate*150);
         this.atkDis = 100

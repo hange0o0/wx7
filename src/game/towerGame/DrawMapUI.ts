@@ -527,6 +527,15 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
+        if(UM_wx4.level <5)
+            this.currentState = 's1'
+        else if(UM_wx4.level <10)
+            this.currentState = 's2'
+        else
+            this.currentState = 's3'
+
+        this.list.selectedIndex = 0;
+        TC.currentVO = this.data;
         this.bg.source = UM_wx4.getBG()
         this.leftBtn.visible = this.rightBtn.visible = DEBUG || DebugUI.getInstance().debugOpen
         this.renewMonsterList();

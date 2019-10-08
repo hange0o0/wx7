@@ -56,7 +56,7 @@ class NotEnoughCoinUI extends game.BaseWindow_wx4 {
     }
 
     public onShow(){
-        this.coin = PKManager.getInstance().getWinCoin(Math.max(10,UM_wx4.level-1)) * 10
+        this.coin = PKManager.getInstance().getWinCoin(Math.max(10,UM_wx4.level-1)) * 6
         this.coinText.text = NumberUtil_wx4.addNumSeparator(this.coin,2);
         this.desText.text = '今日还可领取 '+(10 - UM_wx4.coinTimes)+' 次'
     }

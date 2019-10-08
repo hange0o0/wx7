@@ -128,7 +128,7 @@ class TowerCode {
         this.lastSkillTime = {}
         this.roundAutoMonster.length = 0;
         this.totalAutoMonster = this.getLevelMonster(levelVO);
-        this.monsterHPRate = (1 + (levelVO.id-1)/4) * levelVO.forceRate*(1+0.08*levelVO.towerNum)
+        this.monsterHPRate = (1 + (levelVO.id-1)/4) * levelVO.forceRate*(1+0.15*levelVO.towerNum)
         this.appearMonsterNum = 0
         this.forceRate = PKManager.getInstance().getForceRate();
 

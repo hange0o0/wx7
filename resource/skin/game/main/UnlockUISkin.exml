@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="UnlockUISkin" width="480" height="480" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="UnlockUISkin" width="480" height="520" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
 		<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
 	<e:Button id="sendBtn" label="开始挑战" width="180" horizontalCenter="0" bottom="50" skinName="Btn2Skin"/>
-	<e:Group y="182.27" horizontalCenter="0">
-		<ns1:SkillListItem id="s0" x="0" y="0" skinName="SkillListItemSkin"/>
-		<ns1:SkillListItem id="s1" x="10" y="10" skinName="SkillListItemSkin"/>
-		<e:layout>
-			<e:HorizontalLayout gap="50"/>
-		</e:layout>
-	</e:Group>
-	<e:Label text="解锁新的武器与怪物" y="110" size="24" horizontalCenter="0"/>
+	<e:Label text="解锁下面新的武器与怪物" y="80" size="22" horizontalCenter="0" textColor="0xcdfc4b"/>
+	<e:Label id="monsterNameText" text="df" y="340" size="24" horizontalCenter="100"/>
+	<e:Label id="towerNameText" text="123456" y="340" size="24" horizontalCenter="-100"/>
 
 </e:Skin>

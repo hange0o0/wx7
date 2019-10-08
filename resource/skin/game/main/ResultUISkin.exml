@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="ResultUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="ResultUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="win,fail" >
 	<e:Image id="bg" source="black_bg_alpha_png" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
 	<e:Group width="640" horizontalCenter="0" y="280">
-		<e:Image source="result_bg_png" y="0" horizontalCenter="0"/>
+		<e:Image source="result_bg_png" y="0" horizontalCenter="0" includeIn="win"/>
 		<e:Image id="ad1" width="90" height="90" x="20" y="0"/>
 		<e:Image id="ad2" width="90" height="90" right="20" y="0"/>
 		<e:Image id="ad4" width="90" height="90" right="20" y="130"/>
 		<e:Image id="ad3" width="90" height="90" left="20" y="130"/>
-		<e:Group width="400" x="120" y="46">
+		<e:Group width="400" x="120" y="46" includeIn="win">
 			<e:Group y="70" horizontalCenter="0">
 			<e:Image source="coin_mc_png" x="0" y="32" scaleX="1.2" scaleY="1.2"/>
 			<e:Label id="coinText" text="123456" x="48" y="0" size="36" stroke="3" strokeColor="0x87661b" textColor="0xffff00"/>
@@ -20,8 +20,15 @@
 	</e:Group>
 	<e:Group horizontalCenter="0" bottom="300" width="600">
 		<e:Group x="50" y="178">
-			<e:Button id="awardBtn" label="马上领取" skinName="Btn1Skin" width="300" x="0" y="0" height="80"/>
-			<e:Button id="shareBtn" label="三倍领取" width="300" x="0" y="0" skinName="Btn2Skin" height="80" icon="video_icon_png"/>
+			<e:Group y="70" horizontalCenter="0" includeIn="fail" width="300">
+				<e:Image source="coin_mc_png" x="0" y="32" scaleX="1.2" scaleY="1.2"/>
+				<e:Label id="failCoinText" text="123456" x="48" y="0" size="30" strokeColor="0x87661B" textColor="0xFFFF00"/>
+				<e:layout>
+				<e:HorizontalLayout verticalAlign="middle" gap="10" horizontalAlign="center"/>
+				</e:layout>
+			</e:Group>
+			<e:Button id="awardBtn" label="马上领取" skinName="Btn1Skin" width="300" x="0" y="0" height="80" label.fail="回到首页"/>
+			<e:Button id="shareBtn" label="三倍领取" width="300" x="0" y="0" skinName="Btn2Skin" height="80" label.fail="再试一次" icon.win="video_icon_png" icon.fail=""/>
 			<e:layout>
 			<e:VerticalLayout gap="20"/>
 			</e:layout>
@@ -36,4 +43,10 @@
 		<e:Label id="rateText" text="剩余怪物：60%" size="20" textColor="0xfce662" verticalCenter="0" x="400"/>
 	</e:Group>
 	<e:Label id="titleText" text="大胜！" y="150" size="80" bold="true" horizontalCenter="10"/>
+	<e:Group id="failTipsGroup" horizontalCenter="0" includeIn="fail" x="172" y="270" width="400">
+		<e:Image source="window_bg_png" scale9Grid="28,29,48,52" left="0" right="0" top="0" bottom="0"/>
+		<e:Label text="游戏建议" lineSpacing="20" size="28" left="25" right="25" y="25" textAlign="center" bold="true" textColor="0xddb340"/>
+		<e:Label id="failText" text="LabelLabelLabelLabel" lineSpacing="20" size="24" textColor="0xffe391" left="30" right="30" top="80" bottom="30"/>
+	</e:Group>
+
 </e:Skin>

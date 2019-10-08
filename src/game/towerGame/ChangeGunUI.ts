@@ -62,21 +62,9 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         this.towerItem.scaleX = this.towerItem.scaleY = 1.2
 
         this.addBtnEvent(this.moreBtn,()=>{
-            var arr = PKManager.getInstance().addGunList();
-
-            var listObj = this.listObj;
-            for(var i=0;i<arr.length;i++)
-            {
-                var gid = arr[i];
-                if(!listObj[gid])
-                {
-                    listObj[gid] = {id:gid,num:0}
-                }
-                listObj[gid].num ++;
-            }
-            var list = ObjectUtil_wx4.objToArray(listObj);
-            ArrayUtil_wx4.sortByField(list,['id'],[0]);
-            this.list.dataProvider = new eui.ArrayCollection(list)
+           ShareTool.openGDTV(()=>{
+               this.resetGunList();
+           })
         })
 
         this.addBtnEvent(this.okBtn,()=>{
@@ -84,6 +72,30 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
             DrawMapUI.getInstance().onChoosGun()
             this.hide()
         })
+    }
+
+    private resetGunList(){
+        PKManager.getInstance().initGunList(TC.currentVO.towerNum + 3,true);
+        var gunList = PKManager.getInstance().gunList.concat();
+
+        var lastGun = this.towerPos[this.key]
+        for(var s in this.towerPos)
+        {
+            if(!this.towerPos[s])
+                continue
+            var index = gunList.indexOf(this.towerPos[s])
+            if(index==-1)
+            {
+                this.towerPos[s] = 0;
+            }
+            gunList.splice(index,1)
+        }
+        if(lastGun && !this.towerPos[this.key])
+            this.towerPos[this.key] = gunList[0];
+
+        DrawMapUI.getInstance().onChoosGun()
+        this.renew();
+        this.renewChoose();
     }
 
 

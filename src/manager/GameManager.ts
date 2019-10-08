@@ -295,6 +295,7 @@ if(window["wx"])
     window["HPBar"] = HPBar
     window["TowerItem"] = TowerItem
     window["PKSkillItem"] = PKSkillItem
+    window["SkillListItem"] = SkillListItem
 
 
     var wx =  window["wx"];

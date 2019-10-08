@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="DrawMapUISkin" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" width="640">
+<e:Skin class="DrawMapUISkin" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" width="640" states="s1,s2,s3" >
 	<e:Image id="bg" source="bg_10_jpg" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
 	<e:List id="list" height="150" bottom="0" horizontalCenter="0">
 		<e:layout>
@@ -7,9 +7,9 @@
 		</e:layout>
 	</e:List>
 	<e:Button id="startBtn" label="开始" skinName="Btn2Skin" width="150" bottom="90" right="20"/>
-	<e:Button id="randomBtn" label="随机武器" width="150" bottom="20" right="20" skinName="Btn1Skin"/>
-	<e:Button id="addForceBtn" label="攻击+50%" skinName="Btn2Skin" width="150" bottom="90" left="20"/>
-	<e:Button id="resetBtn" label="重置" width="150" bottom="20" left="20" skinName="Btn1Skin"/>
+	<e:Button id="randomBtn" label="随机武器" width="150" bottom="20" right="20" skinName="Btn1Skin" includeIn="s2,s3"/>
+	<e:Button id="addForceBtn" label="攻击+50%" skinName="Btn2Skin" width="150" bottom="90" left="20" includeIn="s3"/>
+	<e:Button id="resetBtn" label="重置" width="150" bottom="20" left="20" skinName="Btn1Skin" bottom.s1="90" bottom.s2="90"/>
 	<e:Group horizontalCenter="0" bottom="10">
 		<e:Label text="铺路砖块" size="20" x="0" y="0"/>
 		<e:Label text="清除砖块" size="20" x="0" y="0"/>

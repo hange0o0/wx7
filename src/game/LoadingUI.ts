@@ -169,7 +169,31 @@ class LoadingUI extends game.BaseUI_wx4 {
             })
             return;
         }
+
+        if(_get['resource2'])
+        {
+            this.loadResource2();
+            return;
+        }
+
         this.callShow();
+    }
+
+    private loadResource2(){
+        RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+        RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+        RES.loadGroup("game_assests2");
+    }
+
+    private onResourceLoadComplete(){
+        RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
+        RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
+        this.callShow();
+    }
+    private onResourceProgress(event:RES.ResourceEvent):void {
+        if (event.groupName == "game_assests2") {
+            this.loadText.text = '正在加载素材..' + Math.floor(event.itemsLoaded/event.itemsTotal*100) + '%'
+        }
     }
 
     private callShow(){

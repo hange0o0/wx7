@@ -8,9 +8,12 @@ class UnlockUI extends game.BaseWindow_wx4 {
     }
 
     private sendBtn: eui.Button;
-    private s0: SkillListItem;
-    private s1: SkillListItem;
+    private monsterNameText: eui.Label;
+    private towerNameText: eui.Label;
 
+
+    public heroItem
+    public towerItem
 
 
 
@@ -38,19 +41,36 @@ class UnlockUI extends game.BaseWindow_wx4 {
         })
 
 
-        this.addBtnEvent(this.s1,()=>{
+        this.heroItem = new PKMonsterMV_wx3()
+        this.heroItem.x = 330
+        this.heroItem.y = 310
+        this.heroItem.scaleX = this.heroItem.scaleY = 1.5
+        this.addChild(this.heroItem)
+
+        this.towerItem = new TowerItem();
+        this.towerItem.x = 140
+        this.towerItem.y = 300
+        this.addChild(this.towerItem)
+        this.towerItem.scaleX = this.towerItem.scaleY = 1.2
+
+
+        this.addBtnEvent(this.towerItem,()=>{
             SkillListUI.getInstance().show(this.gvo)
             this.hide()
         })
 
-        this.addBtnEvent(this.s0,()=>{
+        this.addBtnEvent(this.heroItem,()=>{
             SkillListUI.getInstance().show(this.mvo)
             this.hide();
         })
+
+
     }
 
     public show(level?){
         this.level = level;
+        this.gvo = null
+        this.mvo = null
 
         for(var s in GunVO.data)
         {
@@ -76,12 +96,25 @@ class UnlockUI extends game.BaseWindow_wx4 {
 
     public hide() {
         super.hide();
+        this.heroItem.stop()
+        this.towerItem.stop()
     }
 
     public onShow(){
         this.setTitle('恭喜达到第 '+this.level+' 关')
-        this.s0.data = this.mvo
-        this.s1.data = this.gvo
+        this.towerItem.data = this.gvo.id;
+        this.towerNameText.text = this.gvo.name
+
+
+        this.heroItem.load(this.mvo.id)
+        this.heroItem.stand();
+        this.monsterNameText.text = this.mvo.name
+
+        //this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
     }
+
+    //private onTimer(){
+    //
+    //}
 
 }

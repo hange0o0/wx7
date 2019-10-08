@@ -94,9 +94,9 @@ class PKManager {
     }
 
 
-    public initGunList(num){
+    public initGunList(num,forceRenew?){
 
-        if(this.gunList.length < num)
+        if(this.gunList.length < num || forceRenew)
         {
             if(UM_wx4.level == 1)
             {

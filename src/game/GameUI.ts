@@ -30,6 +30,7 @@ class GameUI extends game.BaseUI_wx4 {
     private needEnergyGroup: eui.Group;
     private needEnergyText: eui.Label;
     private btnGroup: eui.Group;
+    private bottomGroup: eui.Group;
     private startBtn: eui.Image;
     private swapBtn: eui.Button;
 
@@ -343,6 +344,8 @@ class GameUI extends game.BaseUI_wx4 {
         else
             MyTool.removeMC(this.swapBtn)
 
+        this.bottomGroup.visible = UM_wx4.level > 1;
+
         if(newLevel)
         {
             this.currentLevel = UM_wx4.level;
@@ -350,8 +353,6 @@ class GameUI extends game.BaseUI_wx4 {
             this.renewLevel2()
             this.renewBtn();
             UnlockUI.getInstance().show(UM_wx4.level)
-
-
         }
     }
 

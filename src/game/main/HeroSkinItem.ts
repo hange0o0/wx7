@@ -19,7 +19,7 @@ class HeroSkinItem extends game.BaseItem{
             }
             else
             {
-                ShareUnlockUI.getInstance().show(this.data,'解锁新皮肤','只需邀请一个好友新加入游戏，即可'+this.createHtml('永久拥有',0xFFFF00)+'该皮肤！')
+                ShareUnlockUI.getInstance().show(this.data,'解锁新皮肤','只需邀请一个好友新加入游戏，即可'+this.createHtml('永久拥有',0xFFFF00)+'该皮肤！','skin')
             }
         })
     }

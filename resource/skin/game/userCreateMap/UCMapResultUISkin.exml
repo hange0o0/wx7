@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="UCMapResultUISkin" width="500" height="540" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" >
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0" locked="true"/>
+	<e:Group y="90" horizontalCenter="0">
+		<e:Group y="0" x="80">
+			<e:Label text="地图名字：" x="0" size="24" y="10" textColor="0xffffff"/>
+			<e:EditableText id="nameText" width="200" height="40" text="12" x="160" border="true" size="24" y="7" textAlign="center" textColor="0xffffff" borderColor="0xffffff" verticalAlign="middle" maxChars="10"/>
+			<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+			</e:layout>
+		</e:Group>
+		<e:Group y="10" x="90">
+			<e:Label text="奖池金额：" x="0" size="24" y="10" textColor="0xFFFFFF"/>
+			<e:Button id="wDecBtn" label="-" x="105" y="0" skinName="Btn2Skin" height="40" width="40"/>
+			<e:EditableText id="widthText" width="100" height="30" text="120000" x="160" border="true" size="24" y="7" textAlign="center" textColor="0xFFFFFF" borderColor="0xFFFFFF" restrict="0-9"/>
+			<e:Button id="wAddBtn" label="+" x="250" y="2" skinName="Btn2Skin" height="40" width="40"/>
+			<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+			</e:layout>
+		</e:Group>
+		<e:layout>
+			<e:VerticalLayout gap="30"/>
+		</e:layout>
+	</e:Group>
+	<e:Group horizontalCenter="0" bottom="50">
+		<e:Button id="cancelBtn" label="取消" x="0" y="0" skinName="Btn1Skin" width="160"/>
+		<e:Button id="okBtn" label="发布" x="10" y="10" width="160" skinName="Btn2Skin"/>
+		<e:layout>
+			<e:HorizontalLayout gap="30"/>
+		</e:layout>
+	</e:Group>
+	<e:Label text="    玩家需投入当前奖池金额的1/10进行挑战，投入金额会累计到奖池中去。如果玩家挑战成功，该玩家会取走奖池中一半的金币。地图截至时间到后（发布后48小时），剩下的金币都归发布者所有！" size="22" left="50" right="50" lineSpacing="10" bottom="140"/>
+</e:Skin>

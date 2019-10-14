@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="UCMapUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="bg" source="bg_10_jpg" left="0" right="0" top="0" bottom="0" fillMode="repeat"/>
+	<e:Group x="0" width="640" bottom="0" height="200">
+		<e:List id="list" height="120" y="10" horizontalCenter="0">
+			<e:layout>
+			<e:HorizontalLayout gap="10"/>
+			</e:layout>
+		</e:List>
+		<e:Group horizontalCenter="0" bottom="10">
+			<e:Button id="setBtn" label="设置" x="0" y="32" skinName="Btn1Skin"/>
+			<e:Button id="monsterBtn" label="怪物队列" skinName="Btn2Skin" anchorOffsetY="0" x="123" y="44.32" width="150"/>
+			<e:Button id="saveBtn" label="发布/测试" y="0" skinName="Btn2Skin" x="224" width="150"/>
+			<e:Button id="backBtn" label="退出" y="54.67" x="224" skinName="Btn1Skin"/>
+			<e:layout>
+				<e:HorizontalLayout gap="20"/>
+			</e:layout>
+		</e:Group>
+	</e:Group>
+</e:Skin>

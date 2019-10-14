@@ -194,7 +194,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
             data.height = this.hh;
             data.data = this.getSaveData();
             data.reset();
-            DrawMapUI.getInstance().isTest = true;
+            DrawMapUI.getInstance().isTest = 1;
             DrawMapUI.getInstance().show(data);
 
         })
@@ -251,7 +251,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
                 data.height = this.hh;
                 data.data = this.getSaveData();
                 data.reset();
-                DrawMapUI.getInstance().isTest = true;
+                DrawMapUI.getInstance().isTest = 1;
                 DrawMapUI.getInstance().show(data,true);
             }
         },this)
@@ -339,9 +339,29 @@ class CreateMapUI extends game.BaseUI_wx4 {
             this.ww = 10
         if(this.hh > 15)
             this.hh = 15
-        this.resetMapData();
 
-        this.randomRoad();
+
+
+        var count = 50
+        var lastMap;
+        var lastRate;
+        while(count--)
+        {
+            this.resetMapData();
+            this.randomRoad();
+            var rate = this.roadArr.length/(this.ww*this.hh)
+            if(rate > 0.6)
+                break;
+
+            if(!lastMap || rate > lastRate)
+            {
+                lastRate = rate;
+                lastMap = this.mapData
+            }
+        }
+        if(count < 0)
+            this.mapData = lastMap;
+
 
 
 
@@ -352,7 +372,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
     private roadArr = []
     private randomRoad(){
-        this.roadArr = [];
+        this.roadArr.length = 0;
         var x = Math.floor(this.ww*Math.random())
         var y = Math.floor(this.hh*Math.random())
 

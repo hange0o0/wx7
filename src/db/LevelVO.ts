@@ -53,45 +53,53 @@ class LevelVO {
         this.reset();
     }
 
-    public reset(){
+    public reset(monsterArr?){
         //回合数
         this.roundNum = Math.min(12,3 + Math.floor(this.id/10))
 
 
         //会出现的怪物
-        this.monsterArr = []
-        var lastRandomSeed  = TC.randomSeed
-        TC.randomSeed = this.id*12345678901;
-        var monsterList = [];
-        var monsterObj = {};//最多出2个
-        var lastID = 0//不会相邻出
-        for(var s in MonsterVO.data)
+        if(monsterArr)
         {
-            var mvo = MonsterVO.data[s]
-            if(mvo.level <= this.id)
+            this.monsterArr = monsterArr;
+        }
+        else
+        {
+            this.monsterArr = []
+            var lastRandomSeed  = TC.randomSeed
+            TC.randomSeed = this.id*12345678901;
+            var monsterList = [];
+            var monsterObj = {};//最多出2个
+            var lastID = 0//不会相邻出
+            for(var s in MonsterVO.data)
             {
-                monsterList.push(mvo)
-                if(mvo.level == this.id)
+                var mvo = MonsterVO.data[s]
+                if(mvo.level <= this.id)
                 {
-                    lastID = mvo.id;
-                    monsterObj[mvo.id] = (monsterObj[mvo.id] || 0) + 1
-                    this.monsterArr.push(mvo.id)
+                    monsterList.push(mvo)
+                    if(mvo.level == this.id)
+                    {
+                        lastID = mvo.id;
+                        monsterObj[mvo.id] = (monsterObj[mvo.id] || 0) + 1
+                        this.monsterArr.push(mvo.id)
+                    }
                 }
             }
+            var roundNum = this.roundNum;
+            while(this.monsterArr.length < roundNum)
+            {
+                var mvo = monsterList[Math.floor(TC.random()*monsterList.length)]
+                if(mvo.id == lastID)
+                    continue;
+                if(monsterObj[mvo.id] && monsterObj[mvo.id] >= 2)
+                    continue;
+                this.monsterArr.push(mvo.id);
+                lastID = mvo.id;
+                monsterObj[mvo.id] = (monsterObj[mvo.id] || 0) + 1
+            }
+            TC.randomSeed = lastRandomSeed;
         }
-        var roundNum = this.roundNum;
-        while(this.monsterArr.length < roundNum)
-        {
-            var mvo = monsterList[Math.floor(TC.random()*monsterList.length)]
-            if(mvo.id == lastID)
-                continue;
-            if(monsterObj[mvo.id] && monsterObj[mvo.id] >= 2)
-                continue;
-            this.monsterArr.push(mvo.id);
-            lastID = mvo.id;
-            monsterObj[mvo.id] = (monsterObj[mvo.id] || 0) + 1
-        }
-        TC.randomSeed = lastRandomSeed;
+
 
 
 

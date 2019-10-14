@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="UCMapSetUISkin" width="500" height="500" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" >
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0" locked="true"/>
+	<e:Group y="90" horizontalCenter="0">
+		<e:Group y="0" x="80">
+			<e:Label text="地图名字：" x="0" size="24" y="10" textColor="0xffffff"/>
+			<e:EditableText id="nameText" width="178" height="40" text="12" x="160" border="true" size="24" y="7" textAlign="center" textColor="0xffffff" borderColor="0xffffff" verticalAlign="middle" maxChars="10"/>
+			<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+			</e:layout>
+		</e:Group>
+		<e:Group y="10" x="90">
+			<e:Label text="地图宽度：" x="0" size="24" y="10" textColor="0xFFFFFF"/>
+			<e:Button id="wDecBtn" label="-" x="105" y="0" skinName="Btn2Skin" height="40" width="40"/>
+			<e:EditableText id="widthText" width="80" height="30" text="12" x="160" border="true" size="24" y="7" textAlign="center" textColor="0xFFFFFF" borderColor="0xFFFFFF" restrict="0-9"/>
+			<e:Button id="wAddBtn" label="+" x="250" y="2" skinName="Btn2Skin" height="40" width="40"/>
+			<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+			</e:layout>
+		</e:Group>
+		<e:Group y="60" x="80">
+			<e:Label text="地图高度：" x="0" size="24" y="4" textColor="0xffffff"/>
+			<e:Button id="hDecBtn" label="-" x="105" y="0" skinName="Btn2Skin" height="40" width="40"/>
+			<e:EditableText id="heightText" width="80" height="30" text="120" x="149.33" border="true" size="24" y="6" textAlign="center" textColor="0xffffff" borderColor="0xffffff" restrict="0-9"/>
+			<e:Button id="hAddBtn" label="+" x="210" y="0" skinName="Btn2Skin" height="40" width="40"/>
+			<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+			</e:layout>
+		</e:Group>
+		<e:Group y="60" x="0">
+			<e:Label text="游戏难度：" x="0" size="24" y="4" textColor="0xFFFFFF"/>
+			<e:Button id="hardDecBtn" label="-" x="105" y="0" skinName="Btn2Skin" height="40" width="40"/>
+			<e:EditableText id="hardText" width="80" height="30" text="120" x="149.33" border="true" size="24" y="6" textAlign="center" textColor="0xFFFFFF" borderColor="0xFFFFFF" restrict="0-9"/>
+			<e:Button id="hardAddBtn" label="+" x="210" y="0" skinName="Btn2Skin" height="40" width="40"/>
+			<e:layout>
+			<e:HorizontalLayout verticalAlign="middle" gap="10"/>
+			</e:layout>
+		</e:Group>
+		<e:layout>
+			<e:VerticalLayout gap="30"/>
+		</e:layout>
+	</e:Group>
+	<e:Group horizontalCenter="0" bottom="50">
+		<e:Button id="cancelBtn" label="取消" x="0" y="0" skinName="Btn1Skin" width="160"/>
+		<e:Button id="okBtn" label="确定" x="10" y="10" width="160" skinName="Btn2Skin"/>
+		<e:layout>
+			<e:HorizontalLayout gap="30"/>
+		</e:layout>
+	</e:Group>
+</e:Skin>

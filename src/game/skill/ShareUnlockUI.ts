@@ -9,7 +9,9 @@ class ShareUnlockUI extends game.BaseWindow_wx4 {
 
     private refreshBtn: eui.Button;
     private inviteBtn: eui.Button;
+    private mc: eui.Image;
     private desText: eui.Label;
+
 
 
 
@@ -55,10 +57,11 @@ class ShareUnlockUI extends game.BaseWindow_wx4 {
         })
     }
 
-    public show(index?,title?,des?){
+    public show(index?,title?,des?,type='skin'){
         this.index = index;
         this.title = title;
         this.des = des;
+        this.currentState = type;
         super.show()
     }
 
@@ -72,6 +75,14 @@ class ShareUnlockUI extends game.BaseWindow_wx4 {
         this.setTitle(this.title)
         this.setHtml(this.desText,this.des);
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
+        if(this.currentState == 'addSpeed')
+        {
+            this.mc.source = 'add_speed_btn2_png'
+        }
+        else if(this.currentState == 'skin')
+        {
+            this.mc.source = this.index + '_2_png'
+        }
     }
 
     private onTimer(){

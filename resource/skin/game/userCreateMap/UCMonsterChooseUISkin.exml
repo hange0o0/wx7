@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="UCMonsterChooseUISkin" width="600" height="860" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
+	<e:Image source="common_bg_03_png" y="80" width="580" scale9Grid="5,5,30,30" height="240" horizontalCenter="0" alpha="0.5"/>
+	<e:Scroller id="scrollerUp" width="560" bounces="false" anchorOffsetY="0" height="210" y="90" anchorOffsetX="0" horizontalCenter="0">
+		<e:Group>
+			<e:List id="listUp" width="200" height="200" x="200" y="24">
+				<e:layout>
+					<e:TileLayout requestedColumnCount="5" horizontalGap="10" verticalGap="10" paddingLeft="10" paddingTop="10" paddingBottom="20"/>
+				</e:layout>
+			</e:List>
+		</e:Group>
+	</e:Scroller>
+	<e:Scroller id="scrollerDown" width="560" top="330" bottom="110" bounces="false" anchorOffsetY="0" horizontalCenter="0">
+		<e:Group>
+		<e:List id="listDown" width="200" height="200" x="236" y="144">
+			<e:layout>
+			<e:TileLayout requestedColumnCount="5" horizontalGap="10" verticalGap="10" paddingLeft="10" paddingTop="20" paddingBottom="20"/>
+			</e:layout>
+		</e:List>
+		</e:Group>
+	</e:Scroller>
+	<e:Group id="btnGroup" horizontalCenter="0" bottom="30" scaleX="0.85" scaleY="0.85">
+		<e:Button id="cancelBtn" label="取消" x="10" y="10" skinName="Btn1Skin" width="150" height="60"/>
+		<e:Button id="okBtn" label="确定" x="0" y="0" skinName="Btn2Skin" width="150"/>
+		<e:layout>
+		<e:HorizontalLayout gap="40"/>
+		</e:layout>
+	</e:Group>
+</e:Skin>

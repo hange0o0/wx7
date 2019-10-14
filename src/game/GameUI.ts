@@ -100,7 +100,12 @@ class GameUI extends game.BaseUI_wx4 {
             },['取消','扫荡']);
         })
         this.addBtnEvent(this.editBtn,()=>{
-            MyWindow.Alert('自定义地图玩法即将开启！')
+            if(UM_wx4.level < 30 && !DEBUG)
+            {
+                MyWindow.Alert('自定义地图玩法 30 关开启！')
+                return;
+            }
+            UCMapListUI.getInstance().show();
         })
 
         this.addBtnEvent(this.skillBtn,()=>{
@@ -123,7 +128,7 @@ class GameUI extends game.BaseUI_wx4 {
                 MyWindow.Alert('新的关卡即将开启，请耐心等侯')
                 return;
             }
-            DrawMapUI.getInstance().isTest = false
+            DrawMapUI.getInstance().isTest = 0
             DrawMapUI.getInstance().show(vo);
 
         })

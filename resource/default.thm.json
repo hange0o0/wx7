@@ -63,6 +63,13 @@
 		"resource/skin/game/towerGame/items/PKMonsterItemSkin.exml",
 		"resource/skin/game/towerGame/PKMapSkin.exml",
 		"resource/skin/game/towerGame/PKTowerUISkin.exml",
+		"resource/skin/game/userCreateMap/UCMapListItemSkin.exml",
+		"resource/skin/game/userCreateMap/UCMapListUISkin.exml",
+		"resource/skin/game/userCreateMap/UCMapResultUISkin.exml",
+		"resource/skin/game/userCreateMap/UCMapSetUISkin.exml",
+		"resource/skin/game/userCreateMap/UCMapUISkin.exml",
+		"resource/skin/game/userCreateMap/UCMonsterChooseItemSkin.exml",
+		"resource/skin/game/userCreateMap/UCMonsterChooseUISkin.exml",
 		"resource/skin/guide/GuideSkin.exml"
 	],
 	"path": "resource/default.thm.json"

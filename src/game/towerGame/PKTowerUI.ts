@@ -37,7 +37,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
 
     public data;
-    public isTest = false;
+    public isTest = 0;
 
 
     public mapData;
@@ -95,7 +95,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.addSpeedBtn,()=>{
             if(!UM_wx4.shareUser[0] && !DEBUG)
             {
-                ShareUnlockUI.getInstance().show(0,'解锁加速功能','只需邀请一个好友新加入游戏，即可'+this.createHtml('永久解锁',0xFFFF00)+'加速功能！');
+                ShareUnlockUI.getInstance().show(0,'解锁加速功能','只需邀请一个好友新加入游戏，即可'+this.createHtml('永久解锁',0xFFFF00)+'加速功能！','addSpeed');
                 return;
             }
 

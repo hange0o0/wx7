@@ -27,7 +27,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
 
 
-    public isTest = false;
+    public isTest = 0;//1,设计，2，原创测试
 
     public pkMap = new PKMap();
     public scale = 1;

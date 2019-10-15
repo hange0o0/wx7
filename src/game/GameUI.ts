@@ -100,9 +100,9 @@ class GameUI extends game.BaseUI_wx4 {
             },['取消','扫荡']);
         })
         this.addBtnEvent(this.editBtn,()=>{
-            if(UM_wx4.level < 30 && !DEBUG)
+            if(UM_wx4.level < 20 && !DEBUG)
             {
-                MyWindow.Alert('自定义地图玩法 30 关开启！')
+                MyWindow.Alert('自定义地图玩法 20 关开启！')
                 return;
             }
             UCMapListUI.getInstance().show();

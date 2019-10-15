@@ -93,6 +93,20 @@ class PKManager {
         return this.energyCD - (TM_wx4.now() - this.lastEnergyTime)
     }
 
+    public getTestGunList(level){
+        var resultArr = []
+        for(var s in GunVO.data)
+        {
+            var gvo = GunVO.data[s]
+            if(gvo.level <= level)
+            {
+                resultArr.push(gvo.id)
+                resultArr.push(gvo.id)
+                resultArr.push(gvo.id)
+            }
+        }
+        return resultArr;
+    }
 
     public initGunList(num,forceRenew?){
 

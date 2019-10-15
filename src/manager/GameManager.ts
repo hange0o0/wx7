@@ -298,6 +298,9 @@ if(window["wx"])
     window["SkillListItem"] = SkillListItem
 
 
+    window["UCM"] = UCMapManager.getInstance();
+
+
     var wx =  window["wx"];
 
     wx.onError(function(res){

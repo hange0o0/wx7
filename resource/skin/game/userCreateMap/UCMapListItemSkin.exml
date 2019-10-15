@@ -10,7 +10,7 @@
 			<e:HorizontalLayout verticalAlign="middle" horizontalAlign="center"/>
 		</e:layout>
 	</e:Group>
-	<e:Group y="55" x="130">
+	<e:Group y="53" x="130">
 		<e:Label text="累计奖励:" x="35" size="24" verticalCenter="0" textColor="0xffffff"/>
 		<e:Image source="coin_mc_png" x="0" y="0"/>
 		<e:Label id="awardText" text="Label" x="35" size="24" verticalCenter="0" textColor="0xEFDEA5"/>
@@ -18,7 +18,13 @@
 		<e:HorizontalLayout verticalAlign="middle"/>
 		</e:layout>
 	</e:Group>
-	<e:Label id="titleText" text="Label" x="130" y="20" bold="true"/>
 	<e:Label id="desText" text="Label" x="130" size="24" bottom="20"/>
-	<e:Label id="nameText" text="累计奖励励" y="105" textColor="0x43ff00" size="22" textAlign="center" stroke="3" horizontalCenter="-200"/>
+	<e:Label id="nameText" text="累计奖励励" y="105" textColor="0x43ff00" size="22" textAlign="center" stroke="3" x="15"/>
+	<e:Group x="130" y="18">
+		<e:Label id="titleText" text="设计地图设计地" x="0" y="6" bold="true" size="28"/>
+		<e:Label id="lvText" text="lv.322" x="96" y="0" size="24" textColor="0xffdca8"/>
+		<e:layout>
+			<e:HorizontalLayout verticalAlign="bottom"/>
+		</e:layout>
+	</e:Group>
 </e:Skin>

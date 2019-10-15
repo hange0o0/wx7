@@ -42,6 +42,7 @@ class UCMapSetUI extends game.BaseWindow_wx4 {
                 parseInt(this.hardText.text),
                 this.nameText.text
             );
+            this.hide();
         })
 
         this.addBtnEvent(this.cancelBtn,this.hide)
@@ -137,6 +138,7 @@ class UCMapSetUI extends game.BaseWindow_wx4 {
 
 
         this.nameText.addEventListener(egret.Event.CHANGE,()=>{
+            this.nameText.text = StringUtil.getStringByLength(this.nameText.text,7)
             this.change = true;
         },this)
 

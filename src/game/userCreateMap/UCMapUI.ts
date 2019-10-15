@@ -56,6 +56,9 @@ class UCMapUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.monsterBtn,()=>{
             UCMonsterChooseUI.getInstance().show(this.monsterList);
         })
+        this.addBtnEvent(this.setBtn,()=>{
+            UCMapSetUI.getInstance().show();
+        })
 
 
 
@@ -73,6 +76,8 @@ class UCMapUI extends game.BaseUI_wx4 {
             this.data.id = this.level
             this.data.width = this.ww;
             this.data.height = this.hh;
+            this.data.hard = this.hard;
+            this.data.title = this.title;
             this.data.data = this.getSaveData();
             this.isChange = false;
             this.data.reset(this.monsterList);
@@ -161,31 +166,17 @@ class UCMapUI extends game.BaseUI_wx4 {
         }
     }
 
-    public show(data?){
-        this.data = data;
+    public show(){
+        this.data = null;
         this.mapData = [];
-        this.level = 'player'
-        if(!data)
-        {
-            this.ww = 7
-            this.hh = 10
-            this.resetMapData();
-        }
-        else
-        {
-            this.ww = data.width
-            this.hh = data.height
-            var arr1 = data.getRoadData(true);
-            for(var i=0;i<this.hh;i++)
-            {
-                this.mapData.push([]);
-                for(var j=0;j<this.ww;j++)
-                {
-                    var id = Math.floor(arr1[i][j]) || 0
-                    this.mapData[i].push(id);
-                }
-            }
-        }
+        this.level = UM_wx4.level
+
+        this.ww = 7
+        this.hh = 10
+        this.hard = 0
+        this.title = '' + DateUtil_wx4.formatDate('MMddhhmm', new Date())
+        this.resetMapData();
+
         super.show();
     }
 

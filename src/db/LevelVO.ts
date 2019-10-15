@@ -35,6 +35,7 @@ class LevelVO {
     public id: number;
     public width: number;
     public height: number;
+    public hard: number;
     public data: string;
 
 
@@ -49,7 +50,14 @@ class LevelVO {
 
     }
 
+    public getHpRate(isTest?){
+        if(isTest)
+            return (1 + (1-1 + this.hard)/4) * this.forceRate*(1+0.15*this.towerNum)
+        return (1 + (this.id-1 + this.hard)/4) * this.forceRate*(1+0.15*this.towerNum)
+    }
+
     public reInit(){
+        this.hard = this.hard || 0
         this.reset();
     }
 

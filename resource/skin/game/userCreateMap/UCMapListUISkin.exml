@@ -11,10 +11,10 @@
 		</e:Group>
 	</e:Scroller>
 	<e:Group id="btnGroup" horizontalCenter="0" bottom="30" scaleX="0.85" scaleY="0.85">
-		<e:Button id="cancelBtn" label="关闭" x="10" y="10" skinName="Btn1Skin" width="150" height="60"/>
-		<e:Button id="okBtn" label="我要发布" x="0" y="0" skinName="Btn2Skin" width="150"/>
+		<e:Button id="cancelBtn" label="关闭" x="10" y="10" skinName="Btn1Skin" width="200" height="60"/>
+		<e:Button id="okBtn" label="我要发布" x="0" y="0" skinName="Btn2Skin" width="200"/>
 		<e:layout>
-		<e:HorizontalLayout gap="40"/>
+		<e:HorizontalLayout gap="60"/>
 		</e:layout>
 	</e:Group>
 	<e:Label text="挑战成功后，将获得地图奖池中一半的奖金" size="20" horizontalCenter="0" bottom="100"/>

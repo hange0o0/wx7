@@ -105,22 +105,42 @@ class ResultUI extends game.BaseUI_wx4{
     }
 
     public show(isWin?){
+        var isTest = PKTowerUI.getInstance().isTest;
+        if(isTest)
+        {
+            if(isTest == 1)
+                MyWindow.Alert(isWin?'win':'fail')
+            else if(isTest == 2)
+            {
+                if(isWin)
+                {
+                    UCMapResultUI.getInstance().show()
+                }
+                else
+                {
+                    MyWindow.Alert('挑战失败，无法发布！');
+                }
+            }
+            PKTowerUI.getInstance().hide();
+            return;
+        }
+
 
         this.isWin = isWin;
         this.newLevel = false
-        if(!PKTowerUI.getInstance().isTest)
+
+        PKManager.getInstance().sendGameEnd(isWin)
+        PKManager.getInstance().onGameEnd(this.isWin)
+        if(this.isWin && TC.currentVO.id == UM_wx4.level)
         {
-            PKManager.getInstance().sendGameEnd(isWin)
-            PKManager.getInstance().onGameEnd(this.isWin)
-            if(this.isWin && TC.currentVO.id == UM_wx4.level)
-            {
-                this.newLevel = true;
-                UM_wx4.level ++;
-                UM_wx4.upWXLevel();
-                if(!LevelVO.getObject(UM_wx4.level + 1))
-                    TowerManager.getInstance().getServerData();
-            }
+            this.newLevel = true;
+            UM_wx4.level ++;
+            UM_wx4.upWXLevel();
+            if(!LevelVO.getObject(UM_wx4.level + 1))
+                TowerManager.getInstance().getServerData();
         }
+
+
         super.show()
     }
 

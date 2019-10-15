@@ -32,11 +32,11 @@ class Net extends egret.EventDispatcher{
         location.reload();
     }
 
-    private addLoading(){
+    public addLoading(){
         MsgingUI.getInstance().show();
     }
 
-    private removeLoading(){
+    public removeLoading(){
         MsgingUI.getInstance().hide();
     }
 }

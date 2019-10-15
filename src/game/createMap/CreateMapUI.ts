@@ -22,6 +22,9 @@ class CreateMapUI extends game.BaseUI_wx4 {
     private wDecBtn: eui.Button;
     private wDecBtn0: eui.Button;
     private wAddBtn: eui.Button;
+    private hardText: eui.EditableText;
+    private hardDecBtn: eui.Button;
+    private hardAddBtn: eui.Button;
     private hDecBtn: eui.Button;
     private hDecBtn0: eui.Button;
     private hAddBtn: eui.Button;
@@ -40,11 +43,13 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
 
 
+
     public map = new Map();
 
 
     public ww;
     public hh;
+    public hard;
     public mapData;
 
     public data;
@@ -167,6 +172,16 @@ class CreateMapUI extends game.BaseUI_wx4 {
         })
 
 
+        this.addBtnEvent(this.hardDecBtn,()=>{
+            this.hard --;
+            this.hardText.text = this.hard + ''
+        })
+        this.addBtnEvent(this.hardAddBtn,()=>{
+            this.hard ++;
+            this.hardText.text = this.hard + ''
+        })
+
+
 
 
         this.addBtnEvent(this.saveBtn,()=>{
@@ -179,6 +194,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
             }
             this.data.width = this.ww;
             this.data.height = this.hh;
+            this.data.hard = this.hard;
             this.data.data = this.getSaveData();
             this.isChange = false;
             this.data.reset();
@@ -192,6 +208,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
             data.id = this.level
             data.width = this.ww;
             data.height = this.hh;
+            data.hard = this.hard;
             data.data = this.getSaveData();
             data.reset();
             DrawMapUI.getInstance().isTest = 1;
@@ -249,6 +266,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
                 data.id = this.level
                 data.width = this.ww;
                 data.height = this.hh;
+                data.hard = this.hard;
                 data.data = this.getSaveData();
                 data.reset();
                 DrawMapUI.getInstance().isTest = 1;
@@ -495,6 +513,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
             var level = this.level = LevelVO.list.length + 1;
             this.ww = Math.min(10,6 + Math.floor(level/5))
             this.hh = Math.min(15,8 + Math.floor(level/5))
+            this.hard = 0;
 
             this.resetMapData();
 
@@ -505,6 +524,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
             this.ww = data.width
             this.hh = data.height
+            this.hard = data.hard
             var arr1 = data.getRoadData(true);
             for(var i=0;i<this.hh;i++)
             {
@@ -545,6 +565,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
         this.renewMap();
         this.widthText.text = this.ww + ''
         this.heightText.text = this.hh + ''
+        this.hardText.text = this.hard + ''
     }
 
 }

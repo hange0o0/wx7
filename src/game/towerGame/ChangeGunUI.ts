@@ -76,7 +76,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
 
     private resetGunList(){
         PKManager.getInstance().initGunList(TC.currentVO.towerNum + 3,true);
-        var gunList = PKManager.getInstance().gunList.concat();
+        var gunList = this.getGunList().concat();
 
         var lastGun = this.towerPos[this.key]
         for(var s in this.towerPos)
@@ -127,8 +127,16 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         //this.inputText.text = ''
     }
 
+    public getGunList(){
+        if(DrawMapUI.getInstance().isTest)
+        {
+            return PKManager.getInstance().getTestGunList(DrawMapUI.getInstance().data.id);
+        }
+        return PKManager.getInstance().gunList
+    }
+
     public renew(){
-        var arr = PKManager.getInstance().gunList;
+        var arr = this.getGunList();
         var listObj = this.listObj = {};
         var gid:any;
         for(var i=0;i<arr.length;i++)

@@ -29,9 +29,39 @@ class UCMapResultUI extends game.BaseWindow_wx4 {
         super.childrenCreated();
         this.setTitle('开始发布')
         this.addBtnEvent(this.okBtn,()=>{
-            UCMapManager.getInstance().saveData(this.data,()=>{
-                UCMapSetUI.getInstance().hide();
+            if(!this.nameText.text)
+            {
+                MyWindow.Alert('请输入地图名字！');
+                return;
+            }
+            var needCoin = parseInt(this.widthText.text)
+            if(!UM_wx4.checkCoin(needCoin))
+                return;
+            //this.data.coin = needCoin
+
+            UM_wx4.addCoin(-needCoin);
+            var oo = {
+                coin:needCoin,
+                id:this.data.id,
+                data:this.data.data,
+                height:this.data.height,
+                width:this.data.width,
+                monsterArr:this.data.monsterArr,
+                hard:this.data.hard,
+                title:this.nameText.text,
+                nick:UM_wx4.nick,
+                head:UM_wx4.head,
+                gameid:UM_wx4.gameid,
+                gameid2:UM_wx4.gameid2,
+                pkNum:0,
+                winNum:0,
+                getAward:false,
+                time:TM_wx4.now()
+            };
+
+            UCMapManager.getInstance().saveData(oo,()=>{
                 PKTowerUI.getInstance().hide();
+                DrawMapUI.getInstance().hide();
                 this.hide();
             })
         })
@@ -65,11 +95,14 @@ class UCMapResultUI extends game.BaseWindow_wx4 {
             }
             this.widthText.text = '' + coin
         },this)
+
+        this.nameText.addEventListener(egret.Event.CHANGE,()=>{
+            this.nameText.text = StringUtil.getStringByLength(this.nameText.text,7)
+        },this)
     }
 
-    public show(data?){
-        this.data = data;
-        this.data.testOK = true;
+    public show(){
+        this.data = TC.currentVO;
         super.show()
     }
 

@@ -42,6 +42,7 @@ class UCMonsterChooseUI extends game.BaseWindow_wx4 {
             {
                 this.monsterList.push(this.chooseList[i].id)
             }
+            this.hide();
         })
 
         this.addBtnEvent(this.cancelBtn,this.hide)
@@ -97,9 +98,9 @@ class UCMonsterChooseUI extends game.BaseWindow_wx4 {
     }
 
     public addItem(item){
-        if(this.chooseList.length >= 15)
+        if(this.chooseList.length >= 10)
         {
-            MyWindow.ShowTips('最多只能上阵15个怪物')
+            MyWindow.ShowTips('最多只能上阵10波怪物')
             return;
         }
         this.chooseList.push(item)

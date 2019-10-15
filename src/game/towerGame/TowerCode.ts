@@ -40,6 +40,7 @@ class TowerCode {
     public astar
 
 
+    public speedNum = 2//加速倍数
 
     public skillBase = {
         1:{name:'攻击提升',des:'提升场上所有武器 #1% 的攻击力，持续 #2 秒',cd:30,value1:50,value2:10},
@@ -128,7 +129,7 @@ class TowerCode {
         this.lastSkillTime = {}
         this.roundAutoMonster.length = 0;
         this.totalAutoMonster = this.getLevelMonster(levelVO);
-        this.monsterHPRate = (1 + (levelVO.id-1)/4) * levelVO.forceRate*(1+0.16*levelVO.towerNum)
+        this.monsterHPRate = levelVO.getHpRate();
         this.appearMonsterNum = 0
         this.forceRate = PKManager.getInstance().getForceRate();
     }

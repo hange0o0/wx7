@@ -34,6 +34,7 @@ class UserManager_wx4 {
     public shareFail;
 
     public gameid: string;
+    public gameid2: string = '';
     public dbid: string;
 
     public coin: number = 999;

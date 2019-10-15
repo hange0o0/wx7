@@ -138,10 +138,39 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     private randomGun(){
         var list = PKManager.getInstance().gunList.concat();
+        if(this.isTest)
+        {
+            list =  PKManager.getInstance().getTestGunList(this.data.id);
+        }
+        ArrayUtil_wx4.random(list,3);
+        var okGun = [];
+        var monsterList = this.data.monsterArr;
+        for(var i=0;i<monsterList.length;i++)
+        {
+            var mid = monsterList[i] + ''
+            for(var j=0;j<list.length;j++)
+            {
+                var gvo = GunVO.getObject(list[j])
+                if(gvo.enemys.indexOf(mid) != -1)
+                {
+                    okGun.push(list[j]);
+                    list.splice(j,1);
+                    break;
+                }
+            }
+        }
+
+        ArrayUtil_wx4.random(okGun,2)
         ArrayUtil_wx4.random(list,2)
+        var useGun = []
         for(var s in this.towerPos)
         {
-            this.towerPos[s] = list.pop();
+            useGun.push(okGun.pop() || list.pop());
+        }
+        ArrayUtil_wx4.random(useGun,2)
+        for(var s in this.towerPos)
+        {
+            this.towerPos[s] = useGun.pop() || list.pop();
         }
         this.onChoosGun()
     }
@@ -291,7 +320,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         }
         else
         {
-            TC.monsterHPRate /= (1 + (this.data.id-1)/4)
+            TC.monsterHPRate = this.data.getHpRate(true);
             TC.forceRate = 1;
         }
     }
@@ -540,7 +569,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.leftBtn.visible = this.rightBtn.visible = DEBUG || DebugUI.getInstance().debugOpen
         this.renewMonsterList();
 
-        this.levetText.text = '第 '+this.data.id+' 关'
+        this.levetText.text = this.data.title || '第 '+this.data.id+' 关'
+
         this.pkMap.width = 64*this.ww
         this.pkMap.height = 64*this.hh
         this.scale = TowerManager.getInstance().getScale(this.ww,this.hh)

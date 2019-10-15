@@ -10,11 +10,11 @@ class CreateMapManager extends egret.EventDispatcher {
     }
 
     public save(){
-        var arr = [DateUtil_wx4.formatDate('MM-dd hh:mm:ss',new Date()),'id\twidth\theight\tdata'];
+        var arr = [DateUtil_wx4.formatDate('MM-dd hh:mm:ss',new Date()),'id\twidth\theight\tdata\thard'];
         for(var i=0;i<LevelVO.list.length;i++)
         {
             var vo = LevelVO.list[i]
-            arr.push(vo.id + '\t' + vo.width + '\t' + vo.height + '\t' + vo.data)
+            arr.push(vo.id + '\t' + vo.width + '\t' + vo.height + '\t' + vo.data + '\t' + vo.hard)
         }
         egret.localStorage.setItem('levelData', arr.join('\n'));
         MyWindow.ShowTips('保存成功')

@@ -93,7 +93,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
         this.addBtnEvent(this.pkMap,this.onMap)
         this.addBtnEvent(this.addSpeedBtn,()=>{
-            if(!UM_wx4.shareUser[0] && !DEBUG)
+            if(!UM_wx4.shareUser[0] && !DEBUG && !this.isTest)
             {
                 ShareUnlockUI.getInstance().show(0,'解锁加速功能','只需邀请一个好友新加入游戏，即可'+this.createHtml('永久解锁',0xFFFF00)+'加速功能！','addSpeed');
                 return;
@@ -209,7 +209,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
             PKBulletItem.freeItem(this.bulletArr.pop())
         }
 
-        this.levetText.text = '第 '+this.data.id+' 关'
+        this.levetText.text = this.data.title || '第 '+this.data.id+' 关'
         this.chooseSkill = null;
         this.pkMap.width = 64*this.ww
         this.pkMap.height = 64*this.hh
@@ -244,7 +244,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
             return;
         if(TC.wudiEnd > TC.actionStep)
             return;
-        if(TC.rebornTime)//复活过
+        if(TC.rebornTime || this.isTest == 2)//复活过
         {
             ResultUI.getInstance().show(false);
         }
@@ -263,14 +263,13 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     private onE(){
-        if(TC.isStop)
-            return;
-        this.onStep();
-        if(TC.isSpeed)
+        var runTime = TC.isSpeed?TC.speedNum:1
+        while(runTime >0)
         {
             if(TC.isStop)
                 return;
             this.onStep();
+            runTime --;
         }
 
         MyTool.runListFun(this.list,'onE');

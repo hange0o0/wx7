@@ -197,6 +197,16 @@ class DebugUI extends game.BaseUI_wx4 {
         this.addB('设计地图',()=>{
             CreateMapUI.getInstance().show();
         })
+
+
+        this.addB('加速++',()=>{
+            TC.speedNum ++;
+            MyWindow.ShowTips(TC.speedNum)
+        })
+        this.addB('加速--',()=>{
+            TC.speedNum --;
+            MyWindow.ShowTips(TC.speedNum)
+        })
     }
 
     private addB(label,fun){

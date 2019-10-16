@@ -240,11 +240,14 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     public onFail(){
+        if(TC.isStop)
+            return;
         if(UM_wx4.level == 1)
             return;
         if(TC.wudiEnd > TC.actionStep)
             return;
-        if(TC.rebornTime || this.isTest == 2)//复活过
+        TC.isStop = true;
+        if(TC.rebornTime || this.isTest)//复活过
         {
             ResultUI.getInstance().show(false);
         }

@@ -4,13 +4,12 @@
 	<e:Group horizontalCenter="0" bottom="30">
 		<e:Button id="renewBtn" label="刷新" x="190" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="10" width="180"/>
 		<e:Button id="newBtn" label="new" x="180" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="0" width="180"/>
-		<e:Button id="closeBtn" label="close" x="0" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="0" width="180"/>
 		<e:layout>
 			<e:HorizontalLayout gap="30"/>
 		</e:layout>
 	</e:Group>
-	<e:Scroller id="scroller" left="0" right="0" top="0" bottom="100">
-		<e:Group>
+	<e:Scroller id="scroller" left="0" right="0" top="70" bottom="100" anchorOffsetY="0">
+		<e:Group anchorOffsetY="0" height="1045.09" x="0" y="-9.09">
 			<e:List id="list" width="200" height="200" x="106" y="104">
 				<e:layout>
 					<e:TileLayout horizontalGap="8" verticalGap="8" paddingLeft="8" paddingTop="20"/>
@@ -18,4 +17,5 @@
 			</e:List>
 		</e:Group>
 	</e:Scroller>
+	<e:Button id="closeBtn" label="close" x="10" skinName="Btn2Skin" scaleX="0.8" scaleY="0.8" y="10" width="180"/>
 </e:Skin>

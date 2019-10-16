@@ -175,10 +175,12 @@ class CreateMapUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.hardDecBtn,()=>{
             this.hard --;
             this.hardText.text = this.hard + ''
+            this.isChange = true;
         })
         this.addBtnEvent(this.hardAddBtn,()=>{
             this.hard ++;
             this.hardText.text = this.hard + ''
+            this.isChange = true;
         })
 
 
@@ -272,6 +274,11 @@ class CreateMapUI extends game.BaseUI_wx4 {
                 DrawMapUI.getInstance().isTest = 1;
                 DrawMapUI.getInstance().show(data,true);
             }
+        },this)
+
+        this.hardText.addEventListener(egret.Event.CHANGE,()=>{
+            this.isChange = true;
+            this.hard = parseInt(this.hardText.text)
         },this)
     }
 
@@ -549,7 +556,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
     }
 
     private renewMap(){
-        this.scale = TowerManager.getInstance().getScale(this.ww,this.hh,350)
+        this.scale = TowerManager.getInstance().getScale(this.ww,this.hh,400)
         this.map.scaleX = this.map.scaleY = this.scale;
 
 

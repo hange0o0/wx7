@@ -109,7 +109,11 @@ class ResultUI extends game.BaseUI_wx4{
         if(isTest)
         {
             if(isTest == 1)
+            {
                 MyWindow.Alert(isWin?'win':'fail')
+                if(isWin)
+                    DrawMapUI.getInstance().hide();
+            }
             else if(isTest == 2)
             {
                 if(isWin)
@@ -120,6 +124,7 @@ class ResultUI extends game.BaseUI_wx4{
                 {
                     MyWindow.Alert('挑战失败，无法发布！');
                 }
+                DrawMapUI.getInstance().hide();
             }
             PKTowerUI.getInstance().hide();
             return;

@@ -200,12 +200,12 @@ class DebugUI extends game.BaseUI_wx4 {
 
 
         this.addB('加速++',()=>{
-            TC.speedNum ++;
-            MyWindow.ShowTips(TC.speedNum)
+            TC.speedNum +=5;
+            MyWindow.ShowTips(TC.speedNum + '')
         })
         this.addB('加速--',()=>{
             TC.speedNum --;
-            MyWindow.ShowTips(TC.speedNum)
+            MyWindow.ShowTips(TC.speedNum + '')
         })
     }
 

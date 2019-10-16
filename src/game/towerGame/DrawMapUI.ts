@@ -311,6 +311,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         PKTowerUI.getInstance().isTest = this.isTest;
         PKTowerUI.getInstance().show(data)
 
+
         if(!this.isTest)
         {
             PKManager.getInstance().forceAdd = 0;
@@ -320,8 +321,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
         }
         else
         {
-            TC.monsterHPRate = this.data.getHpRate(true);
-            TC.forceRate = 1;
+            TC.monsterHPRate = this.data.getHpRate();
+            TC.forceRate = 1 + (this.data.id-1)*0.25;
         }
     }
 

@@ -50,10 +50,8 @@ class LevelVO {
 
     }
 
-    public getHpRate(isTest?){
-        if(isTest)
-            return (1 + (1-1 + this.hard)/4) * this.forceRate*(1+0.15*this.towerNum)
-        return (1 + (this.id-1 + this.hard)/4) * this.forceRate*(1+0.15*this.towerNum)
+    public getHpRate(){
+        return (1 + (this.id-1 + this.hard)/4)// * this.forceRate*(1+0.15*this.towerNum)
     }
 
     public reInit(){

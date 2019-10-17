@@ -82,7 +82,7 @@ class UCMapUI extends game.BaseUI_wx4 {
             this.isChange = false;
             this.data.reset(this.monsterList);
 
-            DrawMapUI.getInstance().isTest = 2;
+            TC.isTest = 2;
             DrawMapUI.getInstance().show(this.data);
             MyWindow.ShowTips('测试通关后，即可发布地图')
         })

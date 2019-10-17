@@ -37,7 +37,6 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
 
     public data;
-    public isTest = 0;
 
 
     public mapData;
@@ -75,7 +74,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.skillInfoGroup.touchChildren = this.skillInfoGroup.touchEnabled = false;
 
         this.addBtnEvent(this.closeBtn,()=>{
-            if(this.isTest)
+            if(TC.isTest)
                 this.hide();
             else
             {
@@ -93,7 +92,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
         this.addBtnEvent(this.pkMap,this.onMap)
         this.addBtnEvent(this.addSpeedBtn,()=>{
-            if(!UM_wx4.shareUser[0] && !DEBUG && !this.isTest)
+            if(!UM_wx4.shareUser[0] && !DEBUG && !TC.isTest)
             {
                 ShareUnlockUI.getInstance().show(0,'解锁加速功能','只需邀请一个好友新加入游戏，即可'+this.createHtml('永久解锁',0xFFFF00)+'加速功能！','addSpeed');
                 return;
@@ -247,7 +246,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         if(TC.wudiEnd > TC.actionStep)
             return;
         TC.isStop = true;
-        if(TC.rebornTime || this.isTest)//复活过
+        if(TC.rebornTime || TC.isTest)//复活过
         {
             ResultUI.getInstance().show(false);
         }

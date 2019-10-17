@@ -115,8 +115,8 @@ class PlayerUpUI extends game.BaseWindow_wx4 {
         this.forceGroup.visible = false
         this.skinGroup.visible = true
         this.list.dataProvider = new eui.ArrayCollection([101,102,103,104,105,113,114,115])
-        this.setHtml(this.desText,'每多一个皮肤，获得金币+10%，当前：' +
-            this.createHtml('+' + Math.floor((PKManager.getInstance().heroList.length-1)*10) + '%',0xFFFF00))
+        this.setHtml(this.desText,'每增加一个皮肤，金币收益+20%，当前：' +
+            this.createHtml('+' + Math.floor((PKManager.getInstance().getCoinRate()-1)*100) + '%',0xFFFF00))
     }
 
 }

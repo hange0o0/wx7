@@ -18,6 +18,8 @@ class DebugUI extends game.BaseUI_wx4 {
 
     public downLoadBtn
     public upLoadBtn
+
+    public getOtherData = false
     public constructor() {
         super();
         this.skinName = "DebugUISkin";
@@ -120,6 +122,7 @@ class DebugUI extends game.BaseUI_wx4 {
                     dataBtn.touchEnabled = false
                     dataBtn.touchChildren = false
                     dataBtn.skinName = 'Btn1Skin'
+                    this.getOtherData = true;
                 }
             })
 
@@ -154,6 +157,7 @@ class DebugUI extends game.BaseUI_wx4 {
                         this.downLoadBtn.touchChildren = false
                         this.downLoadBtn.skinName = 'Btn1Skin'
 
+                        this.getOtherData = true;
                         //this.upLoadBtn.touchEnabled = true
                         //this.upLoadBtn.skinName = 'Btn2Skin'
                     })

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="ChangeGunUISkin" width="600" height="900" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing"   states="s1,s2" >
+<e:Skin class="ChangeGunUISkin" width="600" height="920" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing"   states="s1,s2" >
 	<w:Config id="16d5cc0717f"/>
 	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
-	<e:Scroller id="scroller" top="380" bottom="120" bounces="false" anchorOffsetY="0" left="20" right="20" top.s1="80">
+	<e:Scroller id="scroller" top="380" bottom="110" bounces="false" anchorOffsetY="0" left="0" right="0" top.s1="80">
 		<e:Group>
 			<e:List id="list" width="200" height="200" x="65" y="56">
 				<e:layout>
-					<e:TileLayout horizontalGap="15" verticalGap="20" requestedColumnCount="5" paddingTop="10"/>
+					<e:TileLayout horizontalGap="15" verticalGap="20" requestedColumnCount="5" paddingTop="10" paddingLeft="20"/>
 				</e:layout>
 			</e:List>
 		</e:Group>

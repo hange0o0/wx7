@@ -20,7 +20,8 @@ class PKManager {
     public playerLevel = 1
     public atkAdd = 20
 
-    public gunList = [];
+    public gunList = [];//过关用的
+    public createGunList = []//原创地图用的
     public initData(data) {
         data = data || {}
         var energyData = data.energy || {};
@@ -109,6 +110,11 @@ class PKManager {
     }
 
     public initGunList(num,forceRenew?){
+        if(TC.isTest == 3)
+        {
+            this.createGunList = this.getGunArr(num*2+3);
+            return;
+        }
 
         if(this.gunList.length < num || forceRenew)
         {
@@ -125,12 +131,12 @@ class PKManager {
         }
     }
 
-    public addGunList(num = 5){
-        var newList = this.getGunArr(num)
-        this.gunList = this.gunList.concat(newList);
-        UM_wx4.needUpUser = true
-        return newList;
-    }
+    //public addGunList(num = 5){
+    //    var newList = this.getGunArr(num)
+    //    this.gunList = this.gunList.concat(newList);
+    //    UM_wx4.needUpUser = true
+    //    return newList;
+    //}
 
     public getGunArr(num,isInit?){
         var resultArr = []
@@ -186,6 +192,10 @@ class PKManager {
     //}
     //
 
+    public getGunNum(level,towerNum){
+        return towerNum + Math.min(15,3 + Math.floor(level/10))
+    }
+
     public getForceRate(){
         var force = 1 + (this.playerLevel-1)*0.2;
         return force*(1+this.forceAdd);
@@ -196,13 +206,17 @@ class PKManager {
         UM_wx4.needUpUser = true
     }
 
+    public getCoinRate(){
+        return 1 + Math.max(0,this.heroList.length-1)/5;
+    }
+
     public getWinCoin(level){
-        var rate = 1 + Math.max(0,this.heroList.length-1)/10
+        var rate = this.getCoinRate();
         return Math.ceil(level * 50 * rate)
     }
 
     public getFailCoin(level,rate){
-        var rate2 = 1 + Math.max(0,this.heroList.length-1)/10
+        var rate2 = this.getCoinRate();
         return Math.ceil(level * rate * 20 * rate2)
     }
 

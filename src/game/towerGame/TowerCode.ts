@@ -42,6 +42,11 @@ class TowerCode {
 
     public speedNum = 2//加速倍数
 
+    public findTower = false;
+    public findTowerTimes = 0;
+
+    public isTest = 0;//1,设计，2，原创测试,3原创过关
+
     public skillBase = {
         1:{name:'攻击提升',des:'提升场上所有武器 #1% 的攻击力，持续 #2 秒',cd:30,value1:50,value2:10},
         2:{name:'攻速提升',des:'提升场上所有武器 #1% 的攻击速度，持续 #2 秒',cd:30,value1:50,value2:10},
@@ -54,6 +59,16 @@ class TowerCode {
     public constructor(){
         this.dataArr = new GardenAStarModel()
         this.astar = new AStar(this.dataArr)
+    }
+
+    //开始找可以过关的塔
+    public startFind(){
+        this.findTower = true;
+        this.findTowerTimes = 0;
+        this.speedNum = 20;
+        this.isSpeed = true;
+        console.log('start find,hard:' + this.currentVO.hard)
+        DrawMapUI.getInstance().findTower();
     }
 
 
@@ -172,8 +187,11 @@ class TowerCode {
             if(stepAdd > maxStepAdd)
                 stepAdd = maxStepAdd;
 
+
             if(level == 1 && stepAdd < 10)
                 stepAdd = 10
+            else  if(stepAdd < 5)
+                stepAdd = 5
 
             while(num > 0)
             {

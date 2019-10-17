@@ -6,11 +6,43 @@ class UCMapManager extends egret.EventDispatcher {
         return this._instance;
     }
 
-    public getMapTime
+    public getMapTime = 0
     public mapList
+    public pkMapData
+
+    public getMapByID(id,fromList?){
+        if(!fromList && this.pkMapData && this.pkMapData._id == id)
+            return this.pkMapData
+        if(!this.mapList)
+            return null;
+        for(var i=0;i<this.mapList.length;i++)
+        {
+            if(this.mapList[i]._id == id)
+                return this.mapList[i]
+        }
+        return null;
+    }
+
+    public deleteMapByID(id){
+        if(!this.mapList)
+            return null;
+        for(var i=0;i<this.mapList.length;i++)
+        {
+            if(this.mapList[i]._id == id)
+            {
+                this.mapList.splice(i,1);
+                return true;
+            }
+        }
+    }
 
     //取地图列表
     public getMapData(id=0,fun?){
+        if(!id && this.mapList)
+        {
+            fun && fun();
+            return;
+        }
         var wx = window['wx'];
         if(!wx)
             return;
@@ -22,6 +54,15 @@ class UCMapManager extends egret.EventDispatcher {
             },
             complete: (res) => {
                 Net.getInstance().removeLoading();
+                if(id)
+                {
+                    this.pkMapData = res.search.data[0];
+                }
+                else
+                {
+                    this.getMapTime = TM_wx4.now();
+                    this.pkMapData = res.self.data.concat(res.other.data)
+                }
                 console.log(res)
                 fun && fun();
             },
@@ -37,14 +78,19 @@ class UCMapManager extends egret.EventDispatcher {
         var wx = window['wx'];
         if(!wx)
             return;
-        wx.cloud.callFunction({      //取玩家openID,
+        wx.cloud.callFunction({//取玩家openID,
             name: 'pkMap',
             data:{
                 id:id,
                 coin:coin,
             },
             complete: (res) => {
-
+                var map = this.getMapByID(id);
+                if(map)
+                {
+                    map.coin += coin;
+                    EM_wx4.dispatchEventWith(GameEvent.client.UCMAP_RENEW);
+                }
             }
         })
     }
@@ -62,6 +108,9 @@ class UCMapManager extends egret.EventDispatcher {
             },
             complete: (res) => {
                 Net.getInstance().removeLoading();
+                obj._id = res._id
+                this.mapList.unshift(obj);
+                EM_wx4.dispatchEventWith(GameEvent.client.UCMAP_CHANGE);
                 fun && fun();
             },
             fail:()=>{
@@ -89,8 +138,11 @@ class UCMapManager extends egret.EventDispatcher {
                     return;
                 }
                 var coin = res.result.data[0].coin;
+                coin = Math.floor(coin*PKManager.getInstance().getCoinRate())
                 UM_wx4.addCoin(coin);
                 MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(coin,2),0xFFFF00),1000)
+                this.deleteMapByID(id);
+                EM_wx4.dispatchEventWith(GameEvent.client.UCMAP_CHANGE);
                 fun && fun();
             },
             fail:()=>{

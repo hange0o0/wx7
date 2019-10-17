@@ -128,7 +128,7 @@ class GameUI extends game.BaseUI_wx4 {
                 MyWindow.Alert('新的关卡即将开启，请耐心等侯')
                 return;
             }
-            DrawMapUI.getInstance().isTest = 0
+            TC.isTest = 0
             DrawMapUI.getInstance().show(vo);
 
         })

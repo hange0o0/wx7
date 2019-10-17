@@ -23,15 +23,31 @@ class UCMapListItem extends game.BaseItem{
     private onClick(){
         if(this.btn.label == '领取')
         {
+            UCMapManager.getInstance().getAward(this.data._id,()=>{
 
+            });
         }
         else if(this.btn.label == '分享')
         {
+            ShareTool.share('我设计了一个新地图，要来挑战一下吗？',Config.getShare(0),{type:2,nick:UM_wx4.nick,id:this.data._id},()=>{
 
+            },true)
         }
         else if(this.btn.label == '挑战')
         {
-
+            var needCoin = Math.ceil(this.data.coin/10);
+            if(!UM_wx4.checkCoin(needCoin))
+                return;
+            UM_wx4.addCoin(-needCoin);
+            TC.isTest = 3
+            var vo = new LevelVO();
+            for(var s in this.data)
+            {
+                vo[s] = this.data[s];
+            }
+            vo.reset(this.data.monsterArr)
+            DrawMapUI.getInstance().show(vo);
+            UCMapManager.getInstance().pkMap(this.data._id,needCoin);
         }
     }
 
@@ -41,7 +57,7 @@ class UCMapListItem extends game.BaseItem{
         this.awardText.text = '' + this.data.coin
         this.nameText.text = StringUtil.getStringByLength(this.data.nick,5)
         this.titleText.text = this.data.title
-        this.desText.text = '挑战人数：' + (this.data.time || 0)
+        this.desText.text = '挑战人数：' + (this.data.pkNum || 0)
 
         if(this.data.gameid == UM_wx4.gameid)
         {

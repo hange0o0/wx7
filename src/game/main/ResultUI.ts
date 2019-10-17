@@ -105,14 +105,29 @@ class ResultUI extends game.BaseUI_wx4{
     }
 
     public show(isWin?){
-        var isTest = PKTowerUI.getInstance().isTest;
+        var isTest = TC.isTest;
         if(isTest)
         {
             if(isTest == 1)
             {
-                MyWindow.Alert(isWin?'win':'fail')
+                if(!TC.findTower)
+                    MyWindow.Alert(isWin?'win':'fail')
+
                 if(isWin)
-                    DrawMapUI.getInstance().hide();
+                {
+                    //DrawMapUI.getInstance().hide();
+                    if(TC.findTower)
+                    {
+                        TC.currentVO.hard += 5;//向上5个难度找
+                        TC.findTowerTimes = 0;
+                        console.log('find finish!,hard to ' + TC.currentVO.hard)
+                        egret.callLater(DrawMapUI.getInstance().startGame,DrawMapUI.getInstance())
+                    }
+                }
+                else if(TC.findTower)
+                {
+                    egret.callLater(DrawMapUI.getInstance().findTower,DrawMapUI.getInstance())
+                }
             }
             else if(isTest == 2)
             {

@@ -111,8 +111,8 @@ class UCMapSetUI extends game.BaseWindow_wx4 {
         this.addBtnEvent(this.hardAddBtn,()=>{
             var w = parseInt(this.hardText.text);
             w ++;
-            if(w > 100)
-                w = 100
+            if(w > 200)
+                w = 200
             this.hardText.text = '' + w
             this.change = true;
         })
@@ -128,8 +128,8 @@ class UCMapSetUI extends game.BaseWindow_wx4 {
 
         this.hardText.addEventListener(egret.Event.CHANGE,()=>{
             var w = parseInt(this.hardText.text);
-            if(w > 100)
-                w = 100
+            if(w > 200)
+                w = 200
             if(w < 0)
                 w = 0;
             this.hardText.text = '' + w

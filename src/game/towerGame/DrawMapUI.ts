@@ -27,7 +27,6 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
 
 
-    public isTest = 0;//1,设计，2，原创测试
 
     public pkMap = new PKMap();
     public scale = 1;
@@ -85,6 +84,16 @@ class DrawMapUI extends game.BaseUI_wx4 {
         GameManager_wx4.stage.addEventListener(egret.TouchEvent.TOUCH_END,this.onTouchEnd,this)
 
         this.addBtnEvent(this.closeBtn,()=>{
+            if(TC.isTest == 3)
+            {
+                MyWindow.Confirm('已支付金币不会被返还，确定要放弃挑战吗？',(b)=>{
+                    if(b==1)
+                    {
+                        this.hide();
+                    }
+                },['取消','确定']);
+                return;
+            }
             this.hide()
         })
 
@@ -138,7 +147,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     private randomGun(){
         var list = PKManager.getInstance().gunList.concat();
-        if(this.isTest)
+        if(TC.isTest)
         {
             list =  PKManager.getInstance().getTestGunList(this.data.id);
         }
@@ -257,7 +266,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
             }
         }
 
-        if(!PKManager.getInstance().getEnergy() && !this.isTest)
+        if(!PKManager.getInstance().getEnergy() && !TC.isTest)
         {
             var share = !UM_wx4.isTest;
             if(share)
@@ -308,11 +317,10 @@ class DrawMapUI extends game.BaseUI_wx4 {
         }
 
         TC.initData(this.data);
-        PKTowerUI.getInstance().isTest = this.isTest;
         PKTowerUI.getInstance().show(data)
 
 
-        if(!this.isTest)
+        if(!TC.isTest)
         {
             PKManager.getInstance().forceAdd = 0;
             PKManager.getInstance().addEnergy(-1)
@@ -481,7 +489,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     public show(data?,showPath?){
         this.data = data;
 
-        PKManager.getInstance().initGunList(data.towerNum + 3);
+        PKManager.getInstance().initGunList(PKManager.getInstance().getGunNum(data.id,data.towerNum));
 
         this.showPath = showPath
         this.towerPos = {};
@@ -644,6 +652,19 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
 
 
+    public findTower(){
+        if(TC.findTowerTimes > 100)
+        {
+            TC.findTower = false;
+            console.log('no find!')
+            console.log('currentHard:' + this.data.hard)
+            return;
+        }
+        this.randomGun();
+        this.startGame();
+        TC.findTowerTimes ++;
+        console.log('find times:' + TC.findTowerTimes)
+    }
 
 
 }

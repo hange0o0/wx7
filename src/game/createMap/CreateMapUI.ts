@@ -187,20 +187,19 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
 
         this.addBtnEvent(this.saveBtn,()=>{
-            if(!this.data)
+            if(!DebugUI.getInstance().getOtherData)
             {
-                this.data = new LevelVO();
-                this.data.id = this.level
-                LevelVO.list.push(this.data)
-                LevelVO.data[this.data.id] = this.data;
+                MyWindow.Confirm('使用的默认数据，确定要保存吗？',(b)=>{
+                    if(b==1)
+                    {
+                        this.onSave();
+                    }
+                },['取消','确定']);
+                return;
             }
-            this.data.width = this.ww;
-            this.data.height = this.hh;
-            this.data.hard = this.hard;
-            this.data.data = this.getSaveData();
-            this.isChange = false;
-            this.data.reset();
-            CreateMapManager.getInstance().save();
+            this.onSave();
+
+
         })
         this.addBtnEvent(this.randomBtn,()=>{
             this.randomMap();
@@ -213,7 +212,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
             data.hard = this.hard;
             data.data = this.getSaveData();
             data.reset();
-            DrawMapUI.getInstance().isTest = 1;
+            TC.isTest = 1;
             DrawMapUI.getInstance().show(data);
 
         })
@@ -271,7 +270,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
                 data.hard = this.hard;
                 data.data = this.getSaveData();
                 data.reset();
-                DrawMapUI.getInstance().isTest = 1;
+                TC.isTest = 1;
                 DrawMapUI.getInstance().show(data,true);
             }
         },this)
@@ -280,6 +279,23 @@ class CreateMapUI extends game.BaseUI_wx4 {
             this.isChange = true;
             this.hard = parseInt(this.hardText.text)
         },this)
+    }
+
+    private onSave(){
+        if(!this.data)
+        {
+            this.data = new LevelVO();
+            this.data.id = this.level
+            LevelVO.list.push(this.data)
+            LevelVO.data[this.data.id] = this.data;
+        }
+        this.data.width = this.ww;
+        this.data.height = this.hh;
+        this.data.hard = this.hard;
+        this.data.data = this.getSaveData();
+        this.isChange = false;
+        this.data.reset();
+        CreateMapManager.getInstance().save();
     }
 
 

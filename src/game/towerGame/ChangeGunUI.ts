@@ -75,7 +75,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     }
 
     private resetGunList(){
-        PKManager.getInstance().initGunList(TC.currentVO.towerNum + 3,true);
+        PKManager.getInstance().initGunList(PKManager.getInstance().getGunNum(TC.currentVO.id,TC.currentVO.towerNum),true);
         var gunList = this.getGunList().concat();
 
         var lastGun = this.towerPos[this.key]
@@ -128,7 +128,11 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     }
 
     public getGunList(){
-        if(DrawMapUI.getInstance().isTest)
+        if(TC.isTest == 3)
+        {
+            return PKManager.getInstance().createGunList;
+        }
+        if(TC.isTest)
         {
             return PKManager.getInstance().getTestGunList(DrawMapUI.getInstance().data.id);
         }
@@ -139,12 +143,20 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
         var arr = this.getGunList();
         var listObj = this.listObj = {};
         var gid:any;
+        var mArr = DrawMapUI.getInstance().data.monsterArr
         for(var i=0;i<arr.length;i++)
         {
             gid = arr[i];
             if(!listObj[gid])
             {
-                listObj[gid] = {id:gid,num:0}
+                listObj[gid] = {id:gid,num:0,enemyNum:0}
+                var gvo = GunVO.getObject(gid);
+                for(var j=0;j<gvo.enemys.length;j++)
+                {
+                    if(mArr.indexOf(parseInt(gvo.enemys[j])) != -1)
+                        listObj[gid].enemyNum ++;
+                }
+
             }
             listObj[gid].num ++;
         }
@@ -156,7 +168,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
 
         }
         var list = ObjectUtil_wx4.objToArray(listObj);
-        ArrayUtil_wx4.sortByField(list,['id'],[0]);
+        ArrayUtil_wx4.sortByField(list,['enemyNum','id'],[1,0]);
         this.list.dataProvider = new eui.ArrayCollection(list)
 
         this.lastSelectGun = this.towerPos[this.key];

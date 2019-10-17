@@ -18,6 +18,7 @@ class UCMapResultUI extends game.BaseWindow_wx4 {
 
 
     public data
+    private maxCoin = 10000
 
     public constructor() {
         super();
@@ -74,6 +75,9 @@ class UCMapResultUI extends game.BaseWindow_wx4 {
                 coin = UM_wx4.coin;
             if(coin < 1000)
                 coin = 1000;
+
+            if(coin > this.maxCoin)
+                coin = this.maxCoin
             this.widthText.text = '' + coin
         })
 
@@ -93,6 +97,8 @@ class UCMapResultUI extends game.BaseWindow_wx4 {
                 this.widthText.text = '1000'
                 MyWindow.ShowTips('奖池金币不能低于1000')
             }
+            if(coin > this.maxCoin)
+                coin = this.maxCoin
             this.widthText.text = '' + coin
         },this)
 
@@ -111,9 +117,9 @@ class UCMapResultUI extends game.BaseWindow_wx4 {
     }
 
     public onShow(){
+        this.maxCoin = 500*UM_wx4.level
         this.renew();
     }
-
 
     public renew(){
         this.nameText.text = this.data.title

@@ -45,6 +45,8 @@ class UCMapListUI extends game.BaseWindow_wx4 {
 
     public onShow(){
         this.renew();
+        this.addPanelOpenEvent(GameEvent.client.UCMAP_CHANGE,this.renewList)
+        this.addPanelOpenEvent(GameEvent.client.UCMAP_RENEW,this.justRenewList)
     }
 
 
@@ -53,8 +55,13 @@ class UCMapListUI extends game.BaseWindow_wx4 {
         UCM.getMapData(0,this.renewList)
     }
 
+    private justRenewList(){
+        MyTool.renewList(this.listDown);
+    }
+
     private renewList(){
         this.listDown.dataProvider = new eui.ArrayCollection(UCMapManager.getInstance().mapList)
+        this.currentState = UCMapManager.getInstance().mapList.length > 0?'s1':'s2'
     }
 
 }

@@ -51,17 +51,18 @@ class UCMapManager extends egret.EventDispatcher {
             name: 'getMapData',
             data:{
                 id:id,
+                time:TM_wx4.now() - 48*3600
             },
             complete: (res) => {
                 Net.getInstance().removeLoading();
                 if(id)
                 {
-                    this.pkMapData = res.search.data[0];
+                    this.pkMapData = res.result.search.data[0];
                 }
                 else
                 {
                     this.getMapTime = TM_wx4.now();
-                    this.pkMapData = res.self.data.concat(res.other.data)
+                    this.mapList = res.result.self.data.concat(res.result.other.data)
                 }
                 console.log(res)
                 fun && fun();
@@ -108,7 +109,7 @@ class UCMapManager extends egret.EventDispatcher {
             },
             complete: (res) => {
                 Net.getInstance().removeLoading();
-                obj._id = res._id
+                obj._id = res.result._id
                 this.mapList.unshift(obj);
                 EM_wx4.dispatchEventWith(GameEvent.client.UCMAP_CHANGE);
                 fun && fun();

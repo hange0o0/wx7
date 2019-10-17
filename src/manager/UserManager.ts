@@ -52,6 +52,7 @@ class UserManager_wx4 {
     public initDataTime
 
 
+    public pkMap
     public haveGetUser = false
     public fill(data:any):void{
         var localData = SharedObjectManager_wx4.getInstance().getMyValue('localSave')
@@ -95,20 +96,22 @@ class UserManager_wx4 {
 
         //this.initDataTime = TM_wx4.now()
 
-        if(this.isFirst)
+        var wx = window['wx'];
+        if(wx)
         {
-            console.log('isFirst',this.isFirst)
-            var wx = window['wx'];
-            if(wx)
+            var query = wx.getLaunchOptionsSync().query;
+            console.log(query)
+            if(query.type == '1' && this.isFirst)
             {
-                var query = wx.getLaunchOptionsSync().query;
-                console.log(query)
-                if(query.type == '1')
-                {
-                    this.helpUser = {openid:query.from,index:query.index}
-                }
+                this.helpUser = {openid:query.from,index:query.index}
+            }
+            if(query.type == '2')
+            {
+                this.pkMap = {id:query.id,nick:query.nick}
             }
         }
+
+
         PKManager.getInstance().initData(data.pkData);
         PKManager.getInstance().resetSkin()
         this.testAddInvite();

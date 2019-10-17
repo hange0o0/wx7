@@ -195,6 +195,12 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
+
+        if(!UM_wx4.shareUser[0] && TC.isSpeed)
+        {
+            TC.isSpeed = false
+        }
+
         this.bg.source = UM_wx4.getBG()
         SoundManager.getInstance().playSound('pk_bg')
         this.renewSpeedBtn();

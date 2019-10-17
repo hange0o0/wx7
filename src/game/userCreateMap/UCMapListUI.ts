@@ -32,7 +32,13 @@ class UCMapListUI extends game.BaseWindow_wx4 {
             UCMapUI.getInstance().show();
         })
 
-        this.addBtnEvent(this.cancelBtn,this.hide)
+        this.addBtnEvent(this.cancelBtn,()=>{
+            if(this.cancelBtn.label == '刷新')
+            {
+                UCMapManager.getInstance().mapList = null;
+                this.renew();
+            }
+        })
     }
 
     public show(){
@@ -47,12 +53,25 @@ class UCMapListUI extends game.BaseWindow_wx4 {
         this.renew();
         this.addPanelOpenEvent(GameEvent.client.UCMAP_CHANGE,this.renewList)
         this.addPanelOpenEvent(GameEvent.client.UCMAP_RENEW,this.justRenewList)
+        this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
     }
 
+    private onTimer(){
+        var UCM = UCMapManager.getInstance();
+        if(!UCM.getMapTime)
+            return
+        var cd = 600 - (TM_wx4.now() - UCM.getMapTime)
+        if(cd <= 0)
+            this.cancelBtn.label = '刷新'
+        else
+            this.cancelBtn.label = DateUtil_wx4.getStringBySecond(cd).substr(-5)
+    }
 
     public renew(){
         var UCM = UCMapManager.getInstance();
-        UCM.getMapData(0,this.renewList)
+        UCM.getMapData(0,()=>{
+            this.renewList()
+        })
     }
 
     private justRenewList(){

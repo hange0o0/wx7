@@ -86,7 +86,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.addBtnEvent(this.closeBtn,()=>{
             if(TC.isTest == 3)
             {
-                MyWindow.Confirm('已支付金币不会被返还，确定要放弃挑战吗？',(b)=>{
+                MyWindow.Confirm('确定要放弃挑战吗？',(b)=>{
                     if(b==1)
                     {
                         this.hide();
@@ -603,7 +603,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.showArrow();
 
 
-        this.isGuiding = this.data.id == 1 && UM_wx4.level == 1
+        this.isGuiding = this.data.id == 1 && UM_wx4.level == 1 && !UM_wx4.pkMap
         if(this.isGuiding)
         {
             this.list.selectedIndex = 0;

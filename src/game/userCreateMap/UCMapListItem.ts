@@ -36,18 +36,25 @@ class UCMapListItem extends game.BaseItem{
         else if(this.btn.label == '挑战')
         {
             var needCoin = Math.ceil(this.data.coin/10);
-            if(!UM_wx4.checkCoin(needCoin))
-                return;
-            UM_wx4.addCoin(-needCoin);
-            TC.isTest = 3
-            var vo = new LevelVO();
-            for(var s in this.data)
-            {
-                vo[s] = this.data[s];
-            }
-            vo.reset(this.data.monsterArr)
-            DrawMapUI.getInstance().show(vo);
-            UCMapManager.getInstance().pkMap(this.data._id,needCoin);
+            MyWindow.Confirm('确定花费'+this.createHtml(needCoin,0xFFFF00)+'金币开始挑战？',(b)=>{
+                if(b == 1)
+                {
+                    if(!UM_wx4.checkCoin(needCoin))
+                        return;
+                    UM_wx4.addCoin(-needCoin);
+                    TC.isTest = 3
+                    var vo = new LevelVO();
+                    for(var s in this.data)
+                    {
+                        vo[s] = this.data[s];
+                    }
+                    vo.reset(this.data.monsterArr)
+                    DrawMapUI.getInstance().show(vo);
+                    UCMapManager.getInstance().pkMap(this.data._id,needCoin);
+                }
+            })
+
+
         }
     }
 

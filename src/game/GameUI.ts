@@ -335,6 +335,37 @@ class GameUI extends game.BaseUI_wx4 {
         //map.y = (GameManager_wx4.uiHeight - 64*9)/2
         this.onLevelChange(false);
 
+        if(UM_wx4.pkMap)
+        {
+            MyWindow.Confirm('你的好友'+this.createHtml(UM_wx4.pkMap.nick,0x00ff00)+'设计了一张牛B的地图，是否挑战一下？',(b)=>{
+                if(b==1)
+                {
+                    UCMapManager.getInstance().getMapData(UM_wx4.pkMap.id,()=>{
+                        UM_wx4.pkMap = null;
+
+                        var data = UCMapManager.getInstance().pkMapData
+                        if(!data)
+                        {
+                            MyWindow.ShowTips('地图数据已失效')
+                            return;
+                        }
+                        TC.isTest = 3
+                        var vo = new LevelVO();
+                        for(var s in data)
+                        {
+                            vo[s] = data[s];
+                        }
+                        vo.reset(data.monsterArr)
+                        DrawMapUI.getInstance().show(vo);
+                    })
+                }
+                else
+                {
+                    UM_wx4.pkMap = null;
+                }
+            });
+        }
+
     }
 
     public onLoadServerData(){

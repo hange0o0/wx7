@@ -9,11 +9,11 @@ class UCMapManager extends egret.EventDispatcher {
     public getMapTime = 0
     public mapList
     public pkMapData
-    public lastWinList = []//记最近10次
+    public lastWinList//记最近10次
 
     public constructor(){
         super();
-        this.lastWinList = SharedObjectManager_wx4.getInstance().getMyValue('lastWinList') || []
+
     }
 
     public getMapByID(id,fromList?){
@@ -44,6 +44,8 @@ class UCMapManager extends egret.EventDispatcher {
 
     //取地图列表
     public getMapData(id=0,fun?){
+        if(!this.lastWinList)
+            this.lastWinList = SharedObjectManager_wx4.getInstance().getMyValue('lastWinList') || []
         if(!id && this.mapList)
         {
             fun && fun();

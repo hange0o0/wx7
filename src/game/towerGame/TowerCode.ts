@@ -64,12 +64,29 @@ class TowerCode {
     }
 
     //开始找可以过关的塔
+    public findList = [];
     public startFind(){
+        this.findList.length = 0
+        var list = LevelVO.list;
+        for(var i=0;i<list.length;i++)
+        {
+            var vo = list[i];
+            if(vo.id >10 && !vo.hard)
+                this.findList.push(vo)
+        }
         this.findTower = true;
         this.findTowerTimes = 0;
         this.speedNum = 50;
         this.isSpeed = true;
-        console.log('start find,hard:' + this.currentVO.hard)
+        this.isTest=1
+        console.log(this.findList)
+        var vo = this.findList.shift();
+        if(!vo)
+        {
+            console.log('no LevelVO find')
+            return;
+        }
+        DrawMapUI.getInstance().show(vo,true)
         DrawMapUI.getInstance().findTower();
     }
 

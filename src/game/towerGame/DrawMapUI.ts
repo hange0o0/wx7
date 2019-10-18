@@ -669,14 +669,27 @@ class DrawMapUI extends game.BaseUI_wx4 {
         if(TC.findTowerTimes > 200)
         {
             TC.findTower = false;
-            console.log('no find!')
+            //console.log('no find!')
             console.log('currentLevel:' + this.data.id + '    currentHard:' + this.data.hard)
+            CreateMapManager.getInstance().save();
+            var vo = TC.findList.shift();
+            if(vo)
+            {
+                TC.findTowerTimes = 0;
+                TC.findTower = true;
+                this.show(vo,true)
+                this.findTower();
+            }
+            else
+            {
+                console.log('finish')
+            }
             return;
         }
         this.randomGun();
         this.startGame();
         TC.findTowerTimes ++;
-        console.log('find times:' + TC.findTowerTimes + '    currentHard:' + this.data.hard)
+        console.log(this.data.id + ' finding')
     }
 
 

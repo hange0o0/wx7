@@ -109,6 +109,7 @@ class GameUI extends game.BaseUI_wx4 {
         })
 
         this.addBtnEvent(this.skillBtn,()=>{
+            TC.tempShowLevel = UM_wx4.level
             SkillListUI.getInstance().show()
         })
 

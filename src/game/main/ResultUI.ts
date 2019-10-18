@@ -106,6 +106,9 @@ class ResultUI extends game.BaseUI_wx4{
 
     public show(isWin?){
         var isTest = TC.isTest;
+        this.isWin = isWin;
+        this.newLevel = false
+
         if(isTest)
         {
             if(isTest == 1)
@@ -118,7 +121,8 @@ class ResultUI extends game.BaseUI_wx4{
                     //DrawMapUI.getInstance().hide();
                     if(TC.findTower)
                     {
-                        TC.currentVO.hard += 5;//向上5个难度找
+                        var addStep = Math.min(Math.ceil(TC.currentVO.id/20),5)
+                        TC.currentVO.hard += addStep;//向上5个难度找
                         TC.findTowerTimes = 0;
                         console.log('find finish!,hard to ' + TC.currentVO.hard)
                         egret.callLater(DrawMapUI.getInstance().startGame,DrawMapUI.getInstance())
@@ -141,13 +145,25 @@ class ResultUI extends game.BaseUI_wx4{
                 }
                 DrawMapUI.getInstance().hide();
             }
+            else if(isTest == 3)
+            {
+                if(isWin)
+                {
+                    super.show();
+                    UCMapManager.getInstance().pkMap(TC.currentVO._id,-Math.floor(TC.currentVO.coin/2))
+                }
+                else
+                {
+                    MyWindow.Alert('挑战失败！');
+                }
+                DrawMapUI.getInstance().hide();
+            }
             PKTowerUI.getInstance().hide();
             return;
         }
 
 
-        this.isWin = isWin;
-        this.newLevel = false
+
 
         PKManager.getInstance().sendGameEnd(isWin)
         PKManager.getInstance().onGameEnd(this.isWin)
@@ -167,7 +183,16 @@ class ResultUI extends game.BaseUI_wx4{
 
     public renew(){
         var rate = (TC.appearMonsterNum - PKTowerUI.getInstance().monsterArr.length)/TC.totalMonsterNum
-        this.resultCoin = this.isWin?PKManager.getInstance().getWinCoin(TC.currentVO.id):PKManager.getInstance().getFailCoin(TC.currentVO.id,rate)
+        if(TC.isTest == 3)
+        {
+            this.resultCoin = Math.floor(TC.currentVO.coin/2*PKManager.getInstance().getCoinRate());
+            this.shareBtn.visible = false
+        }
+        else
+        {
+            this.resultCoin = this.isWin?PKManager.getInstance().getWinCoin(TC.currentVO.id):PKManager.getInstance().getFailCoin(TC.currentVO.id,rate)
+            this.shareBtn.visible = true
+        }
         if(this.isWin)
         {
             SoundManager.getInstance().playEffect('win')

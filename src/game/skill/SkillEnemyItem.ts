@@ -26,7 +26,7 @@ class SkillEnemyItem extends game.BaseItem{
 
 
     public dataChanged():void {
-        var level = UM_wx4.level
+        var level = TC.tempShowLevel || UM_wx4.level
         if(this.data.level > level)
         {
             this.currentState = 'lock'

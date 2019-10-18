@@ -330,8 +330,12 @@ class DrawMapUI extends game.BaseUI_wx4 {
         else
         {
             TC.monsterHPRate = this.data.getHpRate();
-            TC.forceRate = 1 + (this.data.id-1)*0.25;
+            TC.forceRate = 1 + (this.data.id-1)*0.22;
+            if(TC.isTest == 3)
+                this.hide();
         }
+
+
     }
 
 
@@ -466,6 +470,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
     private saveLocal(){
+        if(TC.isTest == 2 || TC.isTest == 3)
+            return;
         var arr = [];
         for(var i=0;i<this.hh;i++)
         {
@@ -524,25 +530,29 @@ class DrawMapUI extends game.BaseUI_wx4 {
             }
         }
 
-        var roundData = SharedObjectManager_wx4.getInstance().getValue('roundData');
-        if(roundData && roundData.id == data.id)
+        if(TC.isTest != 2 && TC.isTest != 3)
         {
-            var arr = roundData.data;
-            for(var i=0;i<arr.length;i++)
+            var roundData = SharedObjectManager_wx4.getInstance().getValue('roundData');
+            if(roundData && roundData.id == data.id)
             {
-                var oo = arr[i]
-                if(this.mapData[oo.y] && this.mapData[oo.y][oo.x] === 0)
-                    this.mapData[oo.y][oo.x] = 1;
-            }
-            var towerData = roundData.towerData;
-            for(var s in this.towerPos)
-            {
-                if(towerData[s])
+                var arr = roundData.data;
+                for(var i=0;i<arr.length;i++)
                 {
-                    this.towerPos[s] = towerData[s];
+                    var oo = arr[i]
+                    if(this.mapData[oo.y] && this.mapData[oo.y][oo.x] === 0)
+                        this.mapData[oo.y][oo.x] = 1;
+                }
+                var towerData = roundData.towerData;
+                for(var s in this.towerPos)
+                {
+                    if(towerData[s])
+                    {
+                        this.towerPos[s] = towerData[s];
+                    }
                 }
             }
         }
+
 
         super.show()
     }
@@ -565,12 +575,15 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
     public onShow(){
+        TC.tempShowLevel = Math.max(UM_wx4.level,this.data.id);
         if(UM_wx4.level <5)
             this.currentState = 's1'
         else if(UM_wx4.level <10)
             this.currentState = 's2'
         else
             this.currentState = 's3'
+
+        this.addForceBtn.visible = TC.isTest != 2 && TC.isTest != 3;
 
         this.list.selectedIndex = 0;
         TC.currentVO = this.data;
@@ -653,17 +666,17 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
 
     public findTower(){
-        if(TC.findTowerTimes > 100)
+        if(TC.findTowerTimes > 200)
         {
             TC.findTower = false;
             console.log('no find!')
-            console.log('currentHard:' + this.data.hard)
+            console.log('currentLevel:' + this.data.id + '    currentHard:' + this.data.hard)
             return;
         }
         this.randomGun();
         this.startGame();
         TC.findTowerTimes ++;
-        console.log('find times:' + TC.findTowerTimes)
+        console.log('find times:' + TC.findTowerTimes + '    currentHard:' + this.data.hard)
     }
 
 

@@ -35,7 +35,7 @@ class SkillListItem extends game.BaseItem{
     private renewMonster(){
         this.currentState = 's1'
         var vo = this.data
-        var level = UM_wx4.level
+        var level = TC.tempShowLevel
 
         if(vo.level > level)
         {
@@ -53,7 +53,7 @@ class SkillListItem extends game.BaseItem{
 
     private renewGun(){
         this.currentState = 's2'
-        var level = UM_wx4.level
+        var level = TC.tempShowLevel
         var vo = this.data
 
         if(vo.level > level)

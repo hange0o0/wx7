@@ -320,6 +320,7 @@ class PKMonsterItem extends game.BaseItem {
             if(this.fireStep <= 0)
             {
                 this.fireStep = 0;
+                this.fireHurt = 0;
                 this.stateFireMV.stop()
                 MyTool.removeMC(this.stateFireMV)
             }

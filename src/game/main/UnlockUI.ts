@@ -69,6 +69,7 @@ class UnlockUI extends game.BaseWindow_wx4 {
 
     public show(level?){
         this.level = level;
+        TC.tempShowLevel = UM_wx4.level
         this.gvo = null
         this.mvo = null
 

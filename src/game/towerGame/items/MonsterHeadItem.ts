@@ -17,6 +17,7 @@ class MonsterHeadItem extends game.BaseItem{
     }
 
     private onClick(){
+        var level = 0;
         SkillListUI.getInstance().show(MonsterVO.getObject(this.data))
     }
 

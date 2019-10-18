@@ -64,6 +64,7 @@ class SkillListUI extends game.BaseWindow_wx4 {
 
     public show(dataIn?){
         this.dataIn = dataIn;
+
         super.show()
     }
 

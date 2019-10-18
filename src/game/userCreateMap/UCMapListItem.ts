@@ -8,9 +8,11 @@ class UCMapListItem extends game.BaseItem{
     private btn: eui.Button;
     private needCoinText: eui.Label;
     private awardText: eui.Label;
-    private titleText: eui.Label;
     private desText: eui.Label;
     private nameText: eui.Label;
+    private titleText: eui.Label;
+    private lvText: eui.Label;
+
 
 
 
@@ -65,6 +67,7 @@ class UCMapListItem extends game.BaseItem{
         this.nameText.text = StringUtil.getStringByLength(this.data.nick,5)
         this.titleText.text = this.data.title
         this.desText.text = '挑战人数：' + (this.data.pkNum || 0)
+        this.lvText.text = 'LV.' + (this.data.id)
 
         if(this.data.gameid == UM_wx4.gameid)
         {
@@ -73,6 +76,10 @@ class UCMapListItem extends game.BaseItem{
                 this.btn.label = '领取'
             else
                 this.btn.label = '分享'
+        }
+        else if(UCMapManager.getInstance().lastWinList.indexOf(this.data._id) != -1)
+        {
+            this.currentState = 's3'
         }
         else
         {

@@ -9,6 +9,12 @@ class UCMapManager extends egret.EventDispatcher {
     public getMapTime = 0
     public mapList
     public pkMapData
+    public lastWinList = []//记最近10次
+
+    public constructor(){
+        super();
+        this.lastWinList = SharedObjectManager_wx4.getInstance().getMyValue('lastWinList') || []
+    }
 
     public getMapByID(id,fromList?){
         if(!fromList && this.pkMapData && this.pkMapData._id == id)
@@ -63,6 +69,21 @@ class UCMapManager extends egret.EventDispatcher {
                 {
                     this.getMapTime = TM_wx4.now();
                     this.mapList = res.result.self.data.concat(res.result.other.data)
+                    for(var i=0;i<this.mapList.length;i++)
+                    {
+                        var mapData = this.mapList[i]
+                        if(mapData.gameid != UM_wx4.gameid && this.lastWinList.indexOf(mapData._id) != -1)//已挑战完成
+                        {
+                            this.mapList.splice(i,1);
+                            i--;
+                            continue;
+                        }
+                        mapData.coin = Math.ceil(mapData.coin);
+                        if(mapData.coin < 10)
+                        {
+                            mapData.coin = 10
+                        }
+                    }
                 }
                 console.log(res)
                 fun && fun();
@@ -89,6 +110,13 @@ class UCMapManager extends egret.EventDispatcher {
                 var map = this.getMapByID(id);
                 if(map)
                 {
+                    if(coin < 0)
+                    {
+                        this.lastWinList.unshift(map._id);
+                        if(this.lastWinList.length > 10)
+                            this.lastWinList.length = 10;
+                        SharedObjectManager_wx4.getInstance().setMyValue('lastWinList',this.lastWinList);
+                    }
                     map.coin += coin;
                     EM_wx4.dispatchEventWith(GameEvent.client.UCMAP_RENEW);
                 }

@@ -21,7 +21,6 @@ class StopUI extends game.BaseWindow_wx4 {
         this.addBtnEvent(this.closeBtn,()=>{
             this.hide();
             PKTowerUI.getInstance().hide();
-
             if(RebornUI.getInstance().stage)
                 RebornUI.getInstance().hide();
 

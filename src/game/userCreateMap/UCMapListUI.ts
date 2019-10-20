@@ -81,6 +81,7 @@ class UCMapListUI extends game.BaseWindow_wx4 {
     private renewList(){
         this.listDown.dataProvider = new eui.ArrayCollection(UCMapManager.getInstance().mapList)
         this.currentState = UCMapManager.getInstance().mapList.length > 0?'s1':'s2'
+        this.onTimer();
     }
 
 }

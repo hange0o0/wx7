@@ -112,11 +112,14 @@ class UCMapManager extends egret.EventDispatcher {
                 var map = this.getMapByID(id);
                 if(map)
                 {
+                    console.log(map);
+                    map.pkNum ++;
                     if(coin < 0)
                     {
                         this.lastWinList.unshift(map._id);
                         if(this.lastWinList.length > 10)
                             this.lastWinList.length = 10;
+                        map.winNum ++
                         SharedObjectManager_wx4.getInstance().setMyValue('lastWinList',this.lastWinList);
                     }
                     map.coin += coin;

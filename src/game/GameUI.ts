@@ -163,7 +163,7 @@ class GameUI extends game.BaseUI_wx4 {
 
         MyTool.addLongTouch(this.energyText,()=>{
             DebugUI.getInstance().debugTimer = egret.getTimer()
-            MyWindow.ShowTips('体力很重要')
+            MyWindow.ShowTips(DateUtil_wx4.getStringBySecond(PKManager.getInstance().getNextEnergyCD()).substr(-5) + '后回复1点体力')
         },this)
 
         MyTool.addLongTouch(this.coinText,()=>{
@@ -338,7 +338,7 @@ class GameUI extends game.BaseUI_wx4 {
 
         if(UM_wx4.pkMap)
         {
-            MyWindow.Confirm('你的好友'+this.createHtml(UM_wx4.pkMap.nick,0x00ff00)+'设计了一张牛B的地图，是否挑战一下？',(b)=>{
+            MyWindow.Confirm('你的好友'+this.createHtml(UM_wx4.pkMap.nick,0x00ff00)+'设计了一张牛B的地图，是否要挑战一下？',(b)=>{
                 if(b==1)
                 {
                     UCMapManager.getInstance().getMapData(UM_wx4.pkMap.id,()=>{
@@ -350,7 +350,7 @@ class GameUI extends game.BaseUI_wx4 {
                             MyWindow.ShowTips('地图数据已失效')
                             return;
                         }
-                        TC.isTest = 3
+                        TC.isTest = 4
                         var vo = new LevelVO();
                         for(var s in data)
                         {
@@ -364,7 +364,7 @@ class GameUI extends game.BaseUI_wx4 {
                 {
                     UM_wx4.pkMap = null;
                 }
-            });
+            },['不用了','好的']);
         }
 
     }

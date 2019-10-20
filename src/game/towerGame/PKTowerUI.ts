@@ -74,7 +74,7 @@ class PKTowerUI extends game.BaseUI_wx4 {
         this.skillInfoGroup.touchChildren = this.skillInfoGroup.touchEnabled = false;
 
         this.addBtnEvent(this.closeBtn,()=>{
-            if(TC.isTest)
+            if(TC.isTest == 1)
                 this.hide();
             else
             {

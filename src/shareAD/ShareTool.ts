@@ -126,7 +126,7 @@ class ShareTool {
         //监时用进入好友代替
         if(!Config.wx_video)
         {
-            ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success,closeFun)
+            ChangeJumpUI.getInstance().show('没有可观看的广告\n体验任一小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success,closeFun)
             return;
         }
 
@@ -162,7 +162,7 @@ class ShareTool {
             this.videoAD.onError(errorFun);
         }
         this.videoAD.load().then(() =>this.videoAD.show()).catch(err => {
-            ChangeJumpUI.getInstance().show('没有可观看的广告\n体验以上小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success,closeFun)
+            ChangeJumpUI.getInstance().show('没有可观看的广告\n体验任一小程序'+MyTool.createHtml(30,0xFFFF00)+'秒也可获得',success,closeFun)
             //MyWindow.ShowTips('没有可观看的广告，请稍后再尝试')
             window["wx"].isPlayAD = false
         })

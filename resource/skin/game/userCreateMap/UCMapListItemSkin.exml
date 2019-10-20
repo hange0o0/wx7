@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="UCMapListItemSkin" width="540" height="140" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="s1,s2,s3" >
+<e:Skin class="UCMapListItemSkin" width="550" height="140" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" states="s1,s2,s3" >
 	<e:Image source="window_bg_png" scale9Grid="41,39,28,29" left="0" right="0" top="0" bottom="0"/>
 	<e:Image id="headMC" source="white_bg_png" x="20" width="100" height="100" verticalCenter="0"/>
 	<e:Button id="btn" label="挑战" skinName="Btn2Skin" right="20" bottom="18" verticalCenter.s2="0" verticalCenter.s3="0" includeIn="s1,s2"/>

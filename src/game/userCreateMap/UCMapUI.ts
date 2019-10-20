@@ -167,6 +167,7 @@ class UCMapUI extends game.BaseUI_wx4 {
     }
 
     public show(){
+        this.monsterList = [];
         this.data = null;
         this.mapData = [];
         this.level = UM_wx4.level

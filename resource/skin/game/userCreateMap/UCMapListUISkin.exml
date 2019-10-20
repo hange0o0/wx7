@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="UCMapListUISkin" width="600" height="860" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*" states="s1,s2" >
 	<ns1:BasePanel skinName="BasePanelSkin" left="0" right="0" top="0" bottom="0"/>
-	<e:Scroller id="scrollerDown" width="540" top="85" bottom="130" bounces="false" anchorOffsetY="0" horizontalCenter="0" includeIn="s1">
+	<e:Scroller id="scrollerDown" width="550" top="85" bottom="130" bounces="false" anchorOffsetY="0" horizontalCenter="0" includeIn="s1">
 		<e:Group>
 		<e:List id="listDown" width="200" height="200" x="236" y="144">
 			<e:layout>
-				<e:VerticalLayout/>
+				<e:VerticalLayout gap="10"/>
 			</e:layout>
 		</e:List>
 		</e:Group>

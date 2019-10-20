@@ -110,7 +110,7 @@ class PKManager {
     }
 
     public initGunList(num,forceRenew?){
-        if(TC.isTest == 3)
+        if(TC.isTest == 3 || TC.isTest == 4)
         {
             this.createGunList = this.getGunArr(num*2+3);
             return;

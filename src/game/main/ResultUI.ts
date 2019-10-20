@@ -122,6 +122,8 @@ class ResultUI extends game.BaseUI_wx4{
                     if(TC.findTower)
                     {
                         var addStep = Math.min(Math.ceil(TC.currentVO.id/20),5)
+                        if(TC.currentVO.hard < 0)
+                            addStep = 1;
                         TC.currentVO.hard += addStep;//向上5个难度找
                         TC.findTowerTimes = 0;
                         console.log('find finish!,hard to ' + TC.currentVO.hard)
@@ -144,6 +146,7 @@ class ResultUI extends game.BaseUI_wx4{
                     MyWindow.Alert('挑战失败，无法发布！');
                 }
                 DrawMapUI.getInstance().hide();
+                PKTowerUI.getInstance().hide();
             }
             else if(isTest == 3)
             {
@@ -155,10 +158,29 @@ class ResultUI extends game.BaseUI_wx4{
                 else
                 {
                     MyWindow.Alert('挑战失败！');
+                    PKTowerUI.getInstance().hide();
                 }
                 DrawMapUI.getInstance().hide();
+
             }
-            PKTowerUI.getInstance().hide();
+            else if(isTest == 4)
+            {
+                if(isWin)
+                {
+                    MyWindow.Alert('挑战成功，快告诉你的好友吧！',()=>{
+                        ShareTool.share('你的地图我已挑战成功了！！！',Config.getShare(1),{},()=>{
+
+                        },true)
+                    });
+                    DrawMapUI.getInstance().hide();
+                }
+                else
+                {
+                    MyWindow.Alert('挑战失败！');
+                }
+                PKTowerUI.getInstance().hide();
+            }
+
             return;
         }
 

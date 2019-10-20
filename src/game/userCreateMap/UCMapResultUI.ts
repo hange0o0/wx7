@@ -63,6 +63,8 @@ class UCMapResultUI extends game.BaseWindow_wx4 {
             UCMapManager.getInstance().saveData(oo,()=>{
                 PKTowerUI.getInstance().hide();
                 DrawMapUI.getInstance().hide();
+                UCMapUI.getInstance().hide();
+                MyWindow.ShowTips('地图发布成功！')
                 this.hide();
             })
         })

@@ -84,7 +84,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         GameManager_wx4.stage.addEventListener(egret.TouchEvent.TOUCH_END,this.onTouchEnd,this)
 
         this.addBtnEvent(this.closeBtn,()=>{
-            if(TC.isTest == 3)
+            if(TC.isTest == 3 || TC.isTest == 4)
             {
                 MyWindow.Confirm('确定要放弃挑战吗？',(b)=>{
                     if(b==1)
@@ -470,7 +470,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     }
 
     private saveLocal(){
-        if(TC.isTest == 2 || TC.isTest == 3)
+        if(TC.isTest == 2 || TC.isTest == 3 || TC.isTest == 4)
             return;
         var arr = [];
         for(var i=0;i<this.hh;i++)
@@ -530,7 +530,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
             }
         }
 
-        if(TC.isTest != 2 && TC.isTest != 3)
+        if(TC.isTest != 2 && TC.isTest != 3 && TC.isTest != 4)
         {
             var roundData = SharedObjectManager_wx4.getInstance().getValue('roundData');
             if(roundData && roundData.id == data.id)
@@ -583,7 +583,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         else
             this.currentState = 's3'
 
-        this.addForceBtn.visible = TC.isTest != 2 && TC.isTest != 3;
+        this.addForceBtn.visible = TC.isTest != 2 && TC.isTest != 3 && TC.isTest != 4;
 
         this.list.selectedIndex = 0;
         TC.currentVO = this.data;
@@ -671,8 +671,17 @@ class DrawMapUI extends game.BaseUI_wx4 {
             TC.findTower = false;
             //console.log('no find!')
             console.log('currentLevel:' + this.data.id + '    currentHard:' + this.data.hard)
-            CreateMapManager.getInstance().save();
-            var vo = TC.findList.shift();
+            if(this.data.hard == 0)
+            {
+                this.data.hard = -(this.data.id -1)
+                var vo = this.data;
+            }
+            else
+            {
+                CreateMapManager.getInstance().save();
+                var vo = TC.findList.shift();
+            }
+
             if(vo)
             {
                 TC.findTowerTimes = 0;

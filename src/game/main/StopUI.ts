@@ -24,6 +24,9 @@ class StopUI extends game.BaseWindow_wx4 {
             if(RebornUI.getInstance().stage)
                 RebornUI.getInstance().hide();
 
+            if(TC.isTest == 3)
+                DrawMapUI.getInstance().hide();
+
         })
 
         this.addBtnEvent(this.okBtn,()=>{

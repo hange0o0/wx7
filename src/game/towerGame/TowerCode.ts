@@ -45,7 +45,7 @@ class TowerCode {
     public findTower = false;
     public findTowerTimes = 0;
 
-    public isTest = 0;//1,设计，2，原创测试,3原创过关
+    public isTest = 0;//1,设计，2，原创测试,3原创过关,4分享挑战
 
     public tempShowLevel//显示信息时依赖的玩家等级，要在显示前赋值
 
@@ -66,6 +66,20 @@ class TowerCode {
     //开始找可以过关的塔
     public findList = [];
     public startFind(){
+        if(!DebugUI.getInstance().getOtherData)
+        {
+            MyWindow.Confirm('使用的默认数据，确定要开始吗？',(b)=>{
+                if(b==1)
+                {
+                    this._startFind();
+                }
+            },['取消','确定']);
+            return;
+        }
+        this._startFind();
+    }
+
+    private _startFind(){
         this.findList.length = 0
         var list = LevelVO.list;
         for(var i=0;i<list.length;i++)

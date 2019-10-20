@@ -128,7 +128,7 @@ class ChangeGunUI extends game.BaseWindow_wx4 {
     }
 
     public getGunList(){
-        if(TC.isTest == 3)
+        if(TC.isTest == 3 || TC.isTest == 4)
         {
             return PKManager.getInstance().createGunList;
         }

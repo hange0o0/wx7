@@ -31,7 +31,7 @@ class UCMapListItem extends game.BaseItem{
         }
         else if(this.btn.label == '分享')
         {
-            ShareTool.share('我设计了一个新地图，要来挑战一下吗？',Config.getShare(0),{type:2,nick:UM_wx4.nick,id:this.data._id},()=>{
+            ShareTool.share('我设计了一个新地图，要来挑战一下吗？',Config.getShare(1),{type:2,nick:UM_wx4.nick,id:this.data._id},()=>{
 
             },true)
         }
@@ -69,13 +69,19 @@ class UCMapListItem extends game.BaseItem{
         this.desText.text = '挑战人数：' + (this.data.pkNum || 0)
         this.lvText.text = 'LV.' + (this.data.id)
 
+        this.btn.skinName = 'Btn2Skin'
         if(this.data.gameid == UM_wx4.gameid)
         {
             this.currentState = 's2'
             if(TM_wx4.now() - this.data.time > 48*3600)
+            {
                 this.btn.label = '领取'
+            }
             else
+            {
                 this.btn.label = '分享'
+                this.btn.skinName = 'Btn1Skin'
+            }
         }
         else if(UCMapManager.getInstance().lastWinList.indexOf(this.data._id) != -1)
         {

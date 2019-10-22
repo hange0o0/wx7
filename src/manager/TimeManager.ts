@@ -10,48 +10,20 @@ class TimeManager_wx4 {
             TimeManager_wx4._instance = new TimeManager_wx4();
         return TimeManager_wx4._instance;
     }
-    
-    private _timeDiff: number = 0;
-    public get timeDiff():number {
-        return this._timeDiff - DM.addTime;
+
+    public timeDiff: number = 0;
+    public timeDiffMs: number = 0;
+
+    public initlogin(time:number):void{
+        this.timeDiffMs = Date.now() - time*1000
+        this.timeDiff = Math.floor(this.timeDiffMs / 1000);
     }
 
-    public loginTime: number = 0;//等陆时的服务器时间
-
-    private loginWXTime = 0;
-    public init(time:number):void{
-        //本地和服务器的时间差
-        this._timeDiff = Math.floor(Date.now() / 1000 - time);
-    }
-
-    public getTimer(){
-        var wx = window['wx'];
-        if(wx)
-            return  Math.floor((wx.getPerformance().now() -  this.loginWXTime)/1000)
-        return egret.getTimer();
-    }
-
-    public initlogin(t){
-        var wx = window['wx'];
-        this.loginWXTime = wx.getPerformance().now()
-        this.loginTime = Math.floor(t/1000)//Math.floor((t - wx.getPerformance().now())/1000);
-    }
-    
     public now():number{
-        if(this.loginTime)
-        {
-            var wx = window['wx'];
-            return this.loginTime + Math.floor(this.getTimer()/1000)
-        }
-        return Math.floor(Date.now() / 1000) - this.timeDiff //+ 24*3600 *7;
+        return Math.floor(this.nowMS() / 1000)//Math.floor(Date.now() / 1000) - this.timeDiff //+ 24*3600 *7;
     }
     public nowMS():number{
-        if(this.loginTime)
-        {
-            var wx = window['wx'];
-            return this.loginTime*1000 + this.getTimer();
-        }
-        return Date.now() - this.timeDiff*1000
+        return Date.now() - this.timeDiffMs //+ 24*3600 *7;
     }
 
     public getLastDayOfWeekDate(time:number, endDay:any):Date{

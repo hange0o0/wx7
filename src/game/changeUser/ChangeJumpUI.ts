@@ -24,6 +24,11 @@ class ChangeJumpUI extends game.BaseWindow_wx4{
     }
 
     public show(str?,fun?,closeFun?){
+        if(Config.isZJ || Config.isQQ)
+        {
+            MyWindow.ShowTips('今日没有广告了')
+            return;
+        }
         this.fun = fun;
         this.str = str;
         this.closeFun = closeFun;

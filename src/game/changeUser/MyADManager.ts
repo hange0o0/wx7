@@ -71,6 +71,11 @@ class MyADManager {
             fun && fun();
             return;
         }
+        if(Config.isZJ || Config.isQQ)
+        {
+            fun && fun();
+            return;
+        }
 
         var self = this;
         //var splitList = ['wxd5d9d807682d46bb',"wxf9c8e218c23e2eb7","wxe066524f2972cb1a","wx2f66e2c8de744d53"]
@@ -250,6 +255,9 @@ class MyADManager {
             return;
         var wx = window['wx']
 
+        if(!wx.createBannerAd)
+            return;
+
 
         var btnw = Math.min(Math.pow(GameManager_wx4.stage.stageHeight/1330,1.6)*640,640)
 
@@ -258,8 +266,16 @@ class MyADManager {
         if(btnw * scalex < 300){ //微信限制广告宽度不能小于300
             btnw = 300 / scalex;
         }
-        Config.adHeight =  btnw/640 * 224;
         var  btny = GameManager_wx4.uiHeight;//给广告留的高度
+
+        if(Config.isZJ){//字节广告限制了宽度为 128-208
+            if(btnw * scalex > 208) btnw = 208 / scalex;
+            else if(btnw * scalex < 128) btnw = 128 / scalex;
+            //btny = GameManager_wx4.uiHeight - Math.min(btnw * 9/16, 224);//给广告留的高度(因为界面留空是按微信224留的空，不是取的实际广告高度，故这里要取最大224避免广告遮住上方的内容)
+        }
+
+        Config.adHeight =  btnw/640 * 224;
+
         var  paddingTop = GameManager_wx4.paddingTop();
         var btnx =  (640-btnw)/2;
 

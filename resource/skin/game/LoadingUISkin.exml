@@ -8,6 +8,7 @@
 		<e:Image id="startBtn" width="640" height="800" bottom="420" x="0" source=""/>
 		<e:Group horizontalCenter="0" width="640" verticalCenter="-120">
 			<e:Label id="loadText" text="加载中" size="24" textAlign="center" lineSpacing="20" horizontalCenter="0" y="0" textColor="0x1c1b1b"/>
-			<e:Image source="logo_png" horizontalCenter="0" top="-150" scaleX="0.8" scaleY="0.8"/>
+			<e:Image id="titleMC" source="game_title_png" y="-55" horizontalCenter="0.5"/>
+			<e:Image source="logo_png" horizontalCenter="0" top="-180" scaleX="0.8" scaleY="0.8"/>
 		</e:Group>
 </e:Skin>

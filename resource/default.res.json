@@ -1,7 +1,7 @@
 {
 	"groups":[
 		{
-			"keys":"window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,data_txt,gun_txt,logo_png,common_head_bg_jpg,ui_loading_png,skill_txt,level_txt,guide_mv_json,guide_mv_png",
+			"keys":"window_bg_png,black_bg_alpha_png,close_btn_png,btn_png,btn2_png,item_png,black_bg_png,coin_mc_png,btn3_png,arrow_png,icon_force_png,lock_icon_png,using_png,border_png,rank_btn_png,skin_btn_png,sound_btn1_png,sound_btn2_png,friend_btn_png,head_border_png,icon_right_png,reborn_bg_png,arrow3_png,main_shop_png,video_icon_png,arrow_btn_png,data_txt,gun_txt,logo_png,common_head_bg_jpg,ui_loading_png,skill_txt,level_txt,guide_mv_json,guide_mv_png,game_title_png",
 			"name":"preload_png"
 		},
 		{
@@ -1907,6 +1907,16 @@
 			"name":"help_img_png",
 			"type":"image",
 			"url":"game_assets/help_img.png"
+		},
+		{
+			"name":"game_title_png",
+			"type":"image",
+			"url":"game_assets/game_title.png"
+		},
+		{
+			"name":"zj_video_icon_png",
+			"type":"image",
+			"url":"game_assets/zj_video_icon.png"
 		}
 	]
 }

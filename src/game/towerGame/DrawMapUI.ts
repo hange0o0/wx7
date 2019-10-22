@@ -68,7 +68,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.pkMap.roleCon.addChild(this.heroItem);
 
         this.monsterList.itemRenderer = MonsterHeadItem
-        this.monsterGroup.visible = false;
+        this.monsterGroup.visible = true;
         this.addBtnEvent(this.monsterBtn,()=>{
             this.monsterGroup.visible = !this.monsterGroup.visible;
             this.renewMonsterList();
@@ -330,12 +330,10 @@ class DrawMapUI extends game.BaseUI_wx4 {
         else
         {
             TC.monsterHPRate = this.data.getHpRate();
-            TC.forceRate = 1 + (this.data.id-1)*0.22;
+            TC.forceRate = 1 + (this.data.id-1)*0.25;
             if(TC.isTest == 3)
                 this.hide();
         }
-
-
     }
 
 
@@ -666,12 +664,13 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
 
     public findTower(){
-        if(TC.findTowerTimes > 200)
+        var testTime = TC.findType==1?200:300;
+        if(TC.findTowerTimes > testTime)
         {
             TC.findTower = false;
             //console.log('no find!')
             console.log('currentLevel:' + this.data.id + '    currentHard:' + this.data.hard)
-            if(this.data.hard == 0)
+            if(this.data.hard == 0 && TC.findType == 1)
             {
                 this.data.hard = -(this.data.id -1)
                 var vo = this.data;
@@ -679,6 +678,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
             else
             {
                 CreateMapManager.getInstance().save();
+                SharedObjectManager_wx4.getInstance().setMyValue('lastTestMap',this.data.id)
                 var vo = TC.findList.shift();
             }
 

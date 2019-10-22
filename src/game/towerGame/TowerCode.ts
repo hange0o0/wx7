@@ -65,28 +65,39 @@ class TowerCode {
 
     //开始找可以过关的塔
     public findList = [];
-    public startFind(){
+    public findType = 1;
+    public startFind(type=1,startNum=10){
+        this.findType = type;
         if(!DebugUI.getInstance().getOtherData)
         {
             MyWindow.Confirm('使用的默认数据，确定要开始吗？',(b)=>{
                 if(b==1)
                 {
-                    this._startFind();
+                    this._startFind(startNum);
                 }
             },['取消','确定']);
             return;
         }
-        this._startFind();
+        this._startFind(startNum);
     }
 
-    private _startFind(){
+    private _startFind(startNum){
         this.findList.length = 0
         var list = LevelVO.list;
         for(var i=0;i<list.length;i++)
         {
             var vo = list[i];
-            if(vo.id >10 && !vo.hard)
+            if(vo.id < startNum)
+                continue;
+            if(this.findType == 1)
+            {
+                if(!vo.hard)
+                    this.findList.push(vo)
+            }
+            else
+            {
                 this.findList.push(vo)
+            }
         }
         this.findTower = true;
         this.findTowerTimes = 0;
@@ -169,6 +180,10 @@ class TowerCode {
 
 
     public initData(levelVO){
+        if(ZijieScreenBtn.e)
+        {
+            ZijieScreenBtn.e.init();
+        }
         this.currentVO = levelVO
         this.isStop = false;
         this.actionStep = 0;

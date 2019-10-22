@@ -36,6 +36,10 @@ class ResultUI extends game.BaseUI_wx4{
     public resultCoin;
     public rate = 3;
     public newLevel = false
+
+    public zjVideo = false
+    public zjVideoTimes = 0;
+
     public constructor() {
         super();
         this.skinName = "ResultUISkin";
@@ -78,6 +82,15 @@ class ResultUI extends game.BaseUI_wx4{
                 DrawMapUI.getInstance().show(TC.currentVO);
                 return;
             }
+            if(this.zjVideo)
+            {
+                ZijieScreenBtn.e.awardPublish(this.resultCoin*this.rate,()=>{
+                    this.zjVideoTimes ++;
+                    this.close();
+                    SoundManager.getInstance().playEffect('coin')
+                })
+                return;
+            }
             ShareTool.openGDTV(()=>{
                 UM_wx4.addCoin(this.resultCoin*this.rate)
                 MyWindow.ShowTips('获得金币：'+MyTool.createHtml('+' + NumberUtil_wx4.addNumSeparator(this.resultCoin*this.rate,2),0xFFFF00),1000)
@@ -102,6 +115,7 @@ class ResultUI extends game.BaseUI_wx4{
             ShareUnlockUI.getInstance().hide();
         TC.isStop = true;
         this.renew();
+        ZijieScreenBtn.e && ZijieScreenBtn.e.stop();
     }
 
     public show(isWin?){
@@ -122,7 +136,9 @@ class ResultUI extends game.BaseUI_wx4{
                     if(TC.findTower)
                     {
                         var addStep = Math.min(Math.ceil(TC.currentVO.id/20),5)
-                        if(TC.currentVO.hard < 0)
+                        if(TC.findType == 2)
+                            addStep = 1;
+                        else if(TC.currentVO.hard < 0)
                             addStep = 1;
                         TC.currentVO.hard += addStep;//向上5个难度找
                         TC.findTowerTimes = 0;
@@ -153,7 +169,11 @@ class ResultUI extends game.BaseUI_wx4{
                 if(isWin)
                 {
                     super.show();
-                    UCMapManager.getInstance().pkMap(TC.currentVO._id,-Math.floor(TC.currentVO.coin/2))
+                    var coin = Math.floor(TC.currentVO.coin/2)
+                    var mData = UCMapManager.getInstance().getMapByID(TC.currentVO._id);
+                    if(mData)
+                        coin = Math.floor(mData.coin/2)
+                    UCMapManager.getInstance().pkMap(TC.currentVO._id,-coin)
                 }
                 else
                 {
@@ -220,6 +240,10 @@ class ResultUI extends game.BaseUI_wx4{
             SoundManager.getInstance().playEffect('win')
             this.currentState = 'win'
             this.coinText.text = '+' + NumberUtil_wx4.addNumSeparator(this.resultCoin);
+            if(ZijieScreenBtn.e && !TC.rebornTime)
+            {
+                this.zjVideo = true;
+            }
         }
         else
         {
@@ -323,6 +347,11 @@ class ResultUI extends game.BaseUI_wx4{
         {
             this.ad4.visible = false;
         }
+
+        if(this.zjVideo)
+            this.shareBtn.icon = 'zj_video_icon_png'
+        else
+            this.shareBtn.icon = 'video_icon_png'
     }
 
     public hide(){

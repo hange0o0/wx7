@@ -53,7 +53,6 @@ class UCMapResultUI extends game.BaseWindow_wx4 {
                 nick:UM_wx4.nick,
                 head:UM_wx4.head,
                 gameid:UM_wx4.gameid,
-                gameid2:UM_wx4.gameid2,
                 pkNum:0,
                 winNum:0,
                 getAward:false,

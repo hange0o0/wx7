@@ -271,6 +271,11 @@ class PKTowerUI extends game.BaseUI_wx4 {
     }
 
     private onE(){
+
+        if(ZijieScreenBtn.e && !TC.isTest && !TC.isStop && TC.maxStep - TC.actionStep < 900)
+        {
+            ZijieScreenBtn.e.start();
+        }
         var runTime = TC.isSpeed?TC.speedNum:1
         while(runTime >0)
         {

@@ -30,7 +30,7 @@ class UserManager_wx4 {
 
 
     public isTest = true;
-    public testVersion = 1//与服务器相同则为测试版本
+    public testVersion = 20191009//与服务器相同则为测试版本
     public shareFail;
 
     public gameid: string;
@@ -54,6 +54,14 @@ class UserManager_wx4 {
 
     public pkMap
     public haveGetUser = false
+
+
+
+    public loginSuccess
+    //public loginSuccess
+    //public loginSuccess
+
+
     public fill(data:any):void{
         var localData = SharedObjectManager_wx4.getInstance().getMyValue('localSave')
         if(localData && localData.saveTime && localData.saveTime - data.saveTime > 10) //本地的数据更新
@@ -69,7 +77,7 @@ class UserManager_wx4 {
         this.dbid = data._id;
         this.loginTime = data.loginTime || TM_wx4.now();
         this.coin = data.coin || 0;
-        this.shareUser = data.shareUser;
+        this.shareUser = data.shareUser || {};
         //this.helpUser = data.helpUser;
         //this.endLess = data.endLess || 0;
         this.level = data.level || 1;
@@ -154,7 +162,60 @@ class UserManager_wx4 {
         EM_wx4.dispatch(GameEvent.client.COIN_CHANGE)
     }
 
+    public getUserInfoZJ(fun,force=false){
+        var tt = window['wx'];
+        tt.login({
+            force:force,
+            success:(res)=>{
+                this.loginSuccess = res.code
+                console.log(res);
+                var url =  Config.serverPath + 'getInfo.php'
+                Net.getInstance().send(url,res,fun);
+            },
+            fail (res) {
+                console.log(`login调用失败`);
+            }
+        });
+    }
+
     public getUserInfo(fun){
+        if(Config.isZJ || Config.isQQ)
+        {
+            this.getUserInfoZJ((data)=>{
+                this.gameid = data.data.openid || data.data.anonymous_openid
+                this.gameid2 = data.data.anonymous_openid
+                this.isTest = data.version == this.testVersion;
+                TimeManager_wx4.getInstance().initlogin(data.time)
+
+                Net.getInstance().getServerData((data)=>{
+                    console.log(data);
+                    if(data.data)
+                    {
+                        var tempdata = JSON.parse(Base64.decode(data.data.gamedata))
+                        if(data.data.sharedata)
+                        {
+                            var  shareData = JSON.parse(data.data.sharedata)
+                            tempdata.shareUser = shareData;
+                        }
+
+                        this.fill(tempdata);
+                    }
+                    else
+                    {
+                        var initData:any = this.orginUserData();
+                        this.fill(initData);
+                        Net.getInstance().saveServerData(true);
+                    }
+
+                    fun && fun();
+                });
+                //this.gameid = _get['openid'];
+                //this.isFirst = !SharedObjectManager_wx4.getInstance().getMyValue('localSave')
+                //this.fill(this.orginUserData_5537());
+
+            })
+            return;
+        }
         var wx = window['wx'];
         if(!wx)
         {
@@ -230,6 +291,21 @@ class UserManager_wx4 {
             fun && fun();
             return;
         }
+
+        if(Config.isZJ || Config.isQQ)
+        {
+            Net.getInstance().getShareData((data)=>{
+                console.log(data);
+                if(data.data.sharedata)
+                {
+                    var  shareData = JSON.parse(data.data.sharedata)
+                    this.shareUser = shareData;
+                }
+                fun && fun();
+            })
+            return;
+        }
+
         const db = wx.cloud.database();
         db.collection('user').where({     //取玩家数据
             _openid: this.gameid,
@@ -247,17 +323,31 @@ class UserManager_wx4 {
         console.log('testAddInvite',this.helpUser && this.haveGetUser)
         if(this.helpUser && this.haveGetUser)
         {
+
+            var data = {
+                other:this.helpUser.openid,
+                nick:UM_wx4.nick,
+                head:UM_wx4.head,
+                index:this.helpUser.index
+            }
+
+            if(Config.isZJ || Config.isQQ)
+            {
+                Net.getInstance().onShareIn(data,()=>{
+                    this.helpUser = null;
+                    this.needUpUser = true;
+                })
+                return;
+            }
+
+
+
             var wx = window['wx'];
             if(!wx)
                 return;
             wx.cloud.callFunction({      //取玩家openID,
                 name: 'onShareIn',
-                data:{
-                    other:this.helpUser.openid,
-                    nick:UM_wx4.nick,
-                    head:UM_wx4.head,
-                    index:this.helpUser.index
-                },
+                data:data,
                 complete: (res) => {
                     console.log(res)
                     this.helpUser = null;
@@ -298,7 +388,7 @@ class UserManager_wx4 {
          };
     }
 
-    private getUpdataData(){
+    public getUpdataData(){
         return {
             loginTime:UM_wx4.loginTime,
             coin:UM_wx4.coin,
@@ -317,10 +407,14 @@ class UserManager_wx4 {
         if(!this.needUpUser)
             return;
         var wx = window['wx'];
-        if(wx)
+        if(Config.isWX)
         {
             var updateData:any = this.getUpdataData();;
             WXDB.updata('user',updateData)
+        }
+        else if(Config.isZJ || Config.isQQ)
+        {
+            Net.getInstance().saveServerData();
         }
         this.needUpUser = false;
         this.localSave();
@@ -356,7 +450,15 @@ class UserManager_wx4 {
         var wx = window['wx'];
         if(!wx)
             return;
-        var score = JSON.stringify({"wxgame":{"score":UM_wx4.level,"update_time": TM_wx4.now()}})
+        var pKey = 'wxgame';
+        if(Config.isZJ)
+            pKey = 'ttgame'
+        if(Config.isQQ)
+            pKey = 'qqgame'
+        var data = {}
+        data[pKey] = {"score":UM_wx4.level,"update_time": TM_wx4.now()}
+
+        var score = JSON.stringify(data)
         var upList = [{ key: 'level', value: score}]; //{ key: 'level', value: UM.chapterLevel + ',' + TM.now()},
         wx.setUserCloudStorage({
             KVDataList: upList,

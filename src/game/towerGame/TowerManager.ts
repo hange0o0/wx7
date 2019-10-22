@@ -40,9 +40,13 @@ class TowerManager extends egret.EventDispatcher {
         if(this.isLoadServerMap)
             return;
         this.isLoadServerMap = true
+        if(!Config.isWX)
+            return;
         var wx = window['wx'];
         if(!wx)
             return;
+
+
 
         console.log('getServerData')
         var url = MyADManager.getInstance().cloudPath + 'map.txt'

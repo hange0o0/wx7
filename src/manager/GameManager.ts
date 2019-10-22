@@ -299,6 +299,7 @@ if(window["wx"])
 
 
     window["UCM"] = UCMapManager.getInstance();
+    window["TM"] = TimeManager_wx4.getInstance();
 
 
     var wx =  window["wx"];

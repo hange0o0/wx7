@@ -193,6 +193,12 @@ class GameUI extends game.BaseUI_wx4 {
         this.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE,this.onEnd,this)
 
         this.skillRedMC.visible = false;
+
+        this.feedBackBtn.visible = !UM_wx4.isTest
+        if(Config.isZJ)
+        {
+            new ZijieScreenBtn();
+        }
     }
 
     private onBegin(e){
@@ -273,6 +279,7 @@ class GameUI extends game.BaseUI_wx4 {
         if(!LevelVO.getObject(UM_wx4.level + 1))
             TowerManager.getInstance().getServerData();
 
+        RES.loadGroup('monster');
 
         this.tempLevel = -1;
         this.pkMap.horizontalCenter = 0

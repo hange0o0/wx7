@@ -12,6 +12,8 @@ class LoadingUI extends game.BaseUI_wx4 {
     private changeUser: ChangeUserUI;
     private startBtn: eui.Image;
     private loadText: eui.Label;
+    private titleMC: eui.Image;
+
 
 
     private infoBtn:UserInfoBtn
@@ -28,11 +30,19 @@ class LoadingUI extends game.BaseUI_wx4 {
     public childrenCreated() {
         super.childrenCreated();
 
+        this.startBtn.visible = false;
+        this.titleMC.visible = Config.isZJ
+        if(Config.isZJ)
+        {
+            this.startBtn.bottom = 0;
+            this.startBtn.top = 0;
+            console.log(this.startBtn.height)
+        }
         this.infoBtn = new UserInfoBtn(this.startBtn, (res)=>{
             this.renewInfo(res);
         }, this, Config.localResRoot + "wx_btn_info.png");
         this.infoBtn.visible = false;
-        this.startBtn.visible = false;
+
     }
 
     private renewInfo(res?){
@@ -47,6 +57,7 @@ class LoadingUI extends game.BaseUI_wx4 {
             this.initData();
             return;
         }
+
         if(res)
         {
             if(!res.userInfo)
@@ -66,20 +77,19 @@ class LoadingUI extends game.BaseUI_wx4 {
                                 this.haveGetUser = true;
                                 this.initData();
                             }
+                            else if(Config.isZJ)
+                            {
+                                if(!UM_wx4.loginSuccess)
+                                {
+                                    UM_wx4.getUserInfoZJ(()=>{
+                                        this.openSetting();
+                                    },true)
+                                    return;
+                                }
+                                this.openSetting();
+                            }
                         }
                     })
-                    //MyWindow.Confirm('你是通过好友邀请进入的，不授权将无法完成该好友请求的帮助，是否继续？',(b)=>{
-                    //    if(b==1)
-                    //    {
-                    //        this.infoBtn.visible = false;
-                    //        this.haveGetUser = true;
-                    //        this.initData();
-                    //    }
-                    //    else
-                    //    {
-                    //        this.infoBtn.visible = true;
-                    //    }
-                    //},['重新授权','进入游戏']);
                     return;
                 }
                 this.infoBtn.visible = false;
@@ -96,7 +106,7 @@ class LoadingUI extends game.BaseUI_wx4 {
         wx.getSetting({
             success: (res) =>{
                 console.log(res.authSetting)
-                if(res.authSetting["scope.userInfo"])//已授权
+                if(res.authSetting && res.authSetting["scope.userInfo"])//已授权
                 {
                     this.haveGetUser = true;
                     this.initData()
@@ -114,7 +124,24 @@ class LoadingUI extends game.BaseUI_wx4 {
                 }
             }
         })
+
     }
+
+    private openSetting(){
+        window['wx'].openSetting ({
+            success: (res)=>{
+                if(res.authSetting && res.authSetting['scope.userInfo'])//答应了
+                {
+                    window['wx'].getUserInfo({
+                        success: (res) =>{
+                            this.renewInfo(res);
+                        }
+                    })
+                }
+            }
+        })
+    }
+
 
     private initData(){
         if(this.haveLoadFinish && this.haveGetInfo && !this.haveGetUser && this.needShowStartBtn)
@@ -129,15 +156,7 @@ class LoadingUI extends game.BaseUI_wx4 {
             return;
         this.hide();
         this.infoBtn.visible = false;
-        //GameUI.getInstance().show();
-
-        GameTool.getInstance().preLoadMV();
-        //RES.loadGroup('hero');
-        RES.loadGroup('monster');
-
         GameUI.getInstance().show();
-        //PKUI.getInstance().show();
-        //CreateListUI.getInstance().show();
     }
 
     public onShow(){
@@ -150,32 +169,32 @@ class LoadingUI extends game.BaseUI_wx4 {
             this.initData();
         });
         var wx =  window["wx"];
-        if(wx)
+        if(Config.isWX || Config.isQQ)
         {
             const loadTask = wx.loadSubpackage({
                 name: 'assets2', // name 可以填 name 或者 root
                 success(res) {
+                    console.log(res)
                     self.callShow();
                     setTimeout(()=>{
                         self.changeUser.renew()
                     },5000)
                 },
                 fail(res) {
+                    console.log(res)
                 }
             })
-
+            console.log(loadTask);
             loadTask.onProgressUpdate(res => {
                 self.loadText.text = '正在加载素材..' + res.progress + '%'
             })
             return;
         }
-
         if(_get['resource2'])
         {
             this.loadResource2();
             return;
         }
-
         this.callShow();
     }
 
@@ -195,7 +214,6 @@ class LoadingUI extends game.BaseUI_wx4 {
             this.loadText.text = '正在加载素材..' + Math.floor(event.itemsLoaded/event.itemsTotal*100) + '%'
         }
     }
-
     private callShow(){
         this.loadText.text = '正在请求用户数据'
         if(this.needShowStartBtn)

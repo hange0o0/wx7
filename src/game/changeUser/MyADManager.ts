@@ -299,6 +299,11 @@ class MyADManager {
 
         })
         bannerAd.onResize((res)=>{
+            var btnw = res.width/scalex;
+            var btnx =  (640-btnw)/2;
+            bannerAd.style.left = scalex * (btnx);
+
+
             var hh = res.height/scalex*(640/btnw);
             if(Math.abs(hh - 224)/224 > 0.02)
             {
@@ -306,6 +311,9 @@ class MyADManager {
                 GameManager_wx4.stage.dispatchEventWith(egret.Event.RESIZE);
                 bannerAd.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop);
             }
+
+
+
             //console.log(res,scalex,scaley,GameManager.stage.stageHeight)
         })
         bannerAd.show()

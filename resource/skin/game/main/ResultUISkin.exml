@@ -28,7 +28,7 @@
 				</e:layout>
 			</e:Group>
 			<e:Button id="awardBtn" label="马上领取" skinName="Btn1Skin" width="300" x="0" y="0" height="80" label.fail="回到首页"/>
-			<e:Button id="shareBtn" label="三倍领取" width="300" x="0" y="0" skinName="Btn2Skin" height="80" label.fail="再试一次" icon.win="video_icon_png" icon.fail=""/>
+			<e:Button id="shareBtn" label="三倍领取" width="300" x="0" y="0" skinName="Btn2Skin" height="80" label.fail="再试一次"/>
 			<e:layout>
 			<e:VerticalLayout gap="20"/>
 			</e:layout>

@@ -7,5 +7,11 @@
 		<e:Image source="reborn_bg_png" x="0" y="0" width="260" height="260"/>
 		<e:Label id="cdText" text="10" size="100" bold="true" verticalCenter="0" horizontalCenter="0"/>
 	</e:Group>
-	<e:Button id="rebornBtn" label="复活" skinName="Btn1Skin" width="200" height="70" horizontalCenter="0" bottom="50"/>
+	<e:Group y="520" horizontalCenter="0">
+		<e:Button id="cancelBtn" label="认输" skinName="Btn1Skin" width="200" height="70" x="0" y="0"/>
+		<e:Button id="rebornBtn" label="复活" width="200" height="70" icon="video_icon_png" x="0" y="0" skinName="Btn2Skin"/>
+		<e:layout>
+			<e:HorizontalLayout gap="30"/>
+		</e:layout>
+	</e:Group>
 </e:Skin>

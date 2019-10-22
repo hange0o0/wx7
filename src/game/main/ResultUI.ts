@@ -244,9 +244,15 @@ class ResultUI extends game.BaseUI_wx4{
             {
                 this.zjVideo = true;
             }
+
+            if(this.zjVideo)
+                this.shareBtn.icon = 'zj_video_icon_png'
+            else
+                this.shareBtn.icon = 'video_icon_png'
         }
         else
         {
+            this.shareBtn.icon = ''
             SoundManager.getInstance().playEffect('lose')
             this.currentState = 'fail'
             this.failCoinText.text = '金币 +' + NumberUtil_wx4.addNumSeparator(this.resultCoin);
@@ -348,10 +354,7 @@ class ResultUI extends game.BaseUI_wx4{
             this.ad4.visible = false;
         }
 
-        if(this.zjVideo)
-            this.shareBtn.icon = 'zj_video_icon_png'
-        else
-            this.shareBtn.icon = 'video_icon_png'
+
     }
 
     public hide(){

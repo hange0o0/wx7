@@ -9,7 +9,10 @@ class RebornUI extends game.BaseWindow_wx4{
     private desText: eui.Label;
     private rebornGroup: eui.Group;
     private cdText: eui.Label;
+    private cancelBtn: eui.Button;
     private rebornBtn: eui.Button;
+
+
 
 
     private shape = new egret.Shape()
@@ -38,6 +41,10 @@ class RebornUI extends game.BaseWindow_wx4{
 
         this.addBtnEvent(this.rebornGroup,()=>{
             this.step -= 30*3;
+        })
+        this.addBtnEvent(this.cancelBtn,()=>{
+            this.hide();
+            ResultUI.getInstance().show(false);
         })
 
         this.rebornGroup.addChildAt(this.shape,1);

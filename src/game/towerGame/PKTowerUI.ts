@@ -196,6 +196,9 @@ class PKTowerUI extends game.BaseUI_wx4 {
 
     public onShow(){
 
+        if(TC.findTower)
+            this.visible = false;
+
         if(!UM_wx4.shareUser[0] && TC.isSpeed && TC.isTest != 1)
         {
             TC.isSpeed = false

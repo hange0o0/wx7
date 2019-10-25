@@ -245,6 +245,7 @@ class MyADManager {
     public bannerAD
     public bannerBG
     public insertAD
+    public callADBottom
     public createAD(){
         //Config.adHeight = 200;
         if(!window['wx'])
@@ -308,8 +309,11 @@ class MyADManager {
             if(Math.abs(hh - 224)/224 > 0.02)
             {
                 Config.adHeight =  btnw/640 * hh;
+                console.log(res,btnw,Config.adHeight )
                 GameManager_wx4.stage.dispatchEventWith(egret.Event.RESIZE);
-                bannerAd.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop);
+                //bannerAd.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop);
+
+                this.bannerAD.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop - this.callADBottom - GameManager_wx4.paddingBottom() - Config.adHeight);
             }
 
 
@@ -353,6 +357,7 @@ class MyADManager {
             var scaley = screen.availHeight/GameManager_wx4.stage.stageHeight;
             var  paddingTop = GameManager_wx4.paddingTop();
             this.bannerAD.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop - bottom - GameManager_wx4.paddingBottom() - Config.adHeight);
+            this.callADBottom = bottom
         }
     }
 

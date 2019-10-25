@@ -101,7 +101,7 @@ class TowerCode {
         }
         this.findTower = true;
         this.findTowerTimes = 0;
-        this.speedNum = 50;
+        this.speedNum = 2000;
         this.isSpeed = true;
         this.isTest=1
         console.log(this.findList)

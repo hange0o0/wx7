@@ -43,8 +43,8 @@ class PKMap extends game.BaseContainer_wx4 {
     }
 
     public initMap(id){
-        this.randomSeedIn = id*1000000;
-        this.map.initMap(id)
+        this.randomSeedIn = id*1000000*Math.random();
+        this.map.initMap(this.randomSeedIn)
     }
 
     public draw(data,noPos?){

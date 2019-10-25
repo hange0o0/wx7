@@ -157,6 +157,14 @@ class PKManager {
             }
         }
 
+        if(level <4)
+        {
+            resultArr.push(1)
+            resultArr.push(2)
+            resultArr.push(3)
+            num -= 3
+        }
+
         while(num > 0)
         {
             num --;

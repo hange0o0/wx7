@@ -317,9 +317,6 @@ class DrawMapUI extends game.BaseUI_wx4 {
         }
 
         TC.initData(this.data);
-        PKTowerUI.getInstance().show(data)
-
-
         if(!TC.isTest)
         {
             PKManager.getInstance().forceAdd = 0;
@@ -334,6 +331,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
             if(TC.isTest == 3)
                 this.hide();
         }
+
+        PKTowerUI.getInstance().show(data)
     }
 
 
@@ -574,9 +573,9 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
     public onShow(){
         TC.tempShowLevel = Math.max(UM_wx4.level,this.data.id);
-        if(UM_wx4.level <5)
+        if(UM_wx4.level <=3)
             this.currentState = 's1'
-        else if(UM_wx4.level <10)
+        else if(UM_wx4.level <=6)
             this.currentState = 's2'
         else
             this.currentState = 's3'

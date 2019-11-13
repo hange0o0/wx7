@@ -21,6 +21,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
     private levetText: eui.Label;
     private leftBtn: eui.Image;
     private rightBtn: eui.Image;
+    private helpBtn: eui.Group;
+
 
 
 
@@ -74,6 +76,12 @@ class DrawMapUI extends game.BaseUI_wx4 {
             this.renewMonsterList();
 
         })
+        this.addBtnEvent(this.helpBtn,()=>{
+           ShareTool.openGDTV(()=>{
+               this.showPathTips();
+               this.helpBtn.visible = false;
+           })
+        })
 
         this.list.itemRenderer = CreateMapItem
         this.list.selectedIndex = 0;
@@ -115,6 +123,29 @@ class DrawMapUI extends game.BaseUI_wx4 {
             this.gotoLevel(1);
         })
 
+    }
+
+    public showPathTips(){
+        var path = this.data.getRoadData(true);
+        for(var i=0;i<this.hh;i++)
+        {
+            for(var j=0;j<this.ww;j++)
+            {
+                if(path[i][j] == 1)
+                {
+                    this.mapData[i][j] = 1;
+                }
+                else if(this.mapData[i][j] == 1)
+                {
+                    this.mapData[i][j] = 0;
+                }
+            }
+        }
+
+        this.renewMap();
+        this.movePaths = TC.findPath(this.mapData)
+        this.showArrow();
+        this.saveLocal();
     }
 
     private renewMonsterList(){
@@ -489,6 +520,8 @@ class DrawMapUI extends game.BaseUI_wx4 {
         })
     }
 
+
+
     public show(data?,showPath?){
         this.data = data;
 
@@ -609,6 +642,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
 
         this.isChange = false;
+        this.helpBtn.visible = !TC.isTest
 
         this.showArrow();
 

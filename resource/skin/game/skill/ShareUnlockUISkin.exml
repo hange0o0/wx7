@@ -8,7 +8,7 @@
 			<e:HorizontalLayout gap="30"/>
 		</e:layout>
 	</e:Group>
-	<e:Label text="注：好友需通过本邀请链接进入游戏" textColor="0x9b9b9b" size="22" bottom="135" horizontalCenter="0"/>
+	<e:Label id="desText2" text="注：好友需通过本邀请链接进入游戏" textColor="0x9b9b9b" size="22" bottom="135" horizontalCenter="0"/>
 	<e:Image id="mc" horizontalCenter="0" source="add_speed_btn2_png" bottom="280" scaleX="2" scaleY="2"  bottom.addSpeed="320" scaleX.skin="1.5" scaleY.skin="1.5" bottom.skin="270"/>
 	<e:Label id="desText" text="LabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabelLabel" horizontalCenter="0.5" textAlign="left" lineSpacing="10" maxWidth="360" size="24" bottom="170"/>
 </e:Skin>

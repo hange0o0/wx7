@@ -59,6 +59,14 @@ class PKManager {
             if(id > 100)
                 this.heroList.push(id)
         }
+        for(var s in UM_wx4.shareUserVideo)
+        {
+            if(!UM_wx4.shareUserVideo[s])
+                continue;
+            var id = parseInt(s) || 0;
+            if(id > 100 && this.heroList.indexOf(id) == -1)
+                this.heroList.push(id)
+        }
     }
 
     public getPlayerValue(level?){

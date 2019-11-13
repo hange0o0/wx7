@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TotalMapItemSkin" width="150" height="200" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image id="mc" source="common_close_01_png" horizontalCenter="0" verticalCenter="-15"/>
+	<e:Label id="titleText" text="Label" size="24" bottom="5" horizontalCenter="0"/>
+</e:Skin>

@@ -45,6 +45,7 @@ class UserManager_wx4 {
     public addForceEnd = 0
 
     public shareUser = {};//buff玩家的数据   openid:{head,nick,time}
+    public shareUserVideo = {};//buff玩家的数据   openid:{head,nick,time}
     public loginTime = 0
 
 
@@ -78,6 +79,7 @@ class UserManager_wx4 {
         this.loginTime = data.loginTime || TM_wx4.now();
         this.coin = data.coin || 0;
         this.shareUser = data.shareUser || {};
+        this.shareUserVideo = data.shareUserVideo || {};
         //this.helpUser = data.helpUser;
         //this.endLess = data.endLess || 0;
         this.level = data.level || 1;
@@ -385,6 +387,7 @@ class UserManager_wx4 {
              guideFinish:true,
              saveTime:0,
              shareUser:{},
+             shareUserVideo:{},
          };
     }
 
@@ -396,10 +399,15 @@ class UserManager_wx4 {
             helpUser:UM_wx4.helpUser,
             coinTimes:UM_wx4.coinTimes,
             addForceEnd:UM_wx4.addForceEnd,
+            shareUserVideo:UM_wx4.shareUserVideo,
             pkData:PKManager.getInstance().getSave(),
             saveTime:TM_wx4.now(),
         };
 
+    }
+
+    public isShareOpen(id){
+        return this.shareUser[id] || this.shareUserVideo[id]
     }
 
 

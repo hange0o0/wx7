@@ -58,6 +58,7 @@
 	</e:Group>
 	<e:Label id="levelText" text="第 1 关" horizontalCenter="0" size="30" y="120" bold="true" stroke="5"/>
 	<e:Group id="btnGroup" horizontalCenter="0" bottom="200">
+		<e:Button id="mapBtn" label="地图" x="10" y="10" skinName="Btn1Skin" height="78" width="100"/>
 		<e:Group x="0" y="0">
 			<e:Group id="needEnergyGroup" y="-40" horizontalCenter="0">
 				<e:Image x="0" source="common_energy_png" scaleX="0.9" scaleY="0.9" y="0"/>

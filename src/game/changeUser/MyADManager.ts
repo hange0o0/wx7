@@ -370,8 +370,6 @@ class MyADManager {
             var  paddingTop = GameManager_wx4.paddingTop();
             this.bannerAD.style.top = scaley * (GameManager_wx4.uiHeight + paddingTop - bottom - GameManager_wx4.paddingBottom() - Config.adHeight);
             this.callADBottom = bottom
-
-            console.log(Config.adHeight)
         }
     }
 

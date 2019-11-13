@@ -383,7 +383,7 @@ class CreateMapUI extends game.BaseUI_wx4 {
 
 
 
-        var count = 50
+        var count = 1000
         var lastMap;
         var lastRate;
         while(count--)
@@ -392,7 +392,10 @@ class CreateMapUI extends game.BaseUI_wx4 {
             this.randomRoad();
             var rate = this.roadArr.length/(this.ww*this.hh)
             if(rate > 0.6)
+            {
+                lastMap = this.mapData
                 break;
+            }
 
             if(!lastMap || rate > lastRate)
             {
@@ -400,10 +403,8 @@ class CreateMapUI extends game.BaseUI_wx4 {
                 lastMap = this.mapData
             }
         }
-        if(count < 0)
-            this.mapData = lastMap;
 
-
+        this.mapData = lastMap;
 
 
         this.isChange = true;

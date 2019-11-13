@@ -135,6 +135,7 @@ class ResultUI extends game.BaseUI_wx4{
                     //DrawMapUI.getInstance().hide();
                     if(TC.findTower)
                     {
+                        CreateMapManager.getInstance().save();
                         var addStep = Math.min(Math.ceil(TC.currentVO.id/20),5)
                         if(TC.findType == 2)
                             addStep = 1;
@@ -143,6 +144,8 @@ class ResultUI extends game.BaseUI_wx4{
                         TC.currentVO.hard += addStep;//向上5个难度找
                         TC.findTowerTimes = 0;
                         console.log('find finish!,hard to ' + TC.currentVO.hard)
+
+
                         egret.callLater(DrawMapUI.getInstance().startGame,DrawMapUI.getInstance())
                     }
                 }

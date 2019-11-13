@@ -9,8 +9,10 @@ class ShareUnlockUI extends game.BaseWindow_wx4 {
 
     private refreshBtn: eui.Button;
     private inviteBtn: eui.Button;
+    private desText2: eui.Label;
     private mc: eui.Image;
     private desText: eui.Label;
+
 
 
 
@@ -30,9 +32,29 @@ class ShareUnlockUI extends game.BaseWindow_wx4 {
 
         this.addBtnEvent(this.inviteBtn,this.onInvite)
         this.addBtnEvent(this.refreshBtn,this.onRefresh)
+
+        if(!Config.isWX)
+        {
+            this.desText2.visible = false;
+            MyTool.removeMC(this.refreshBtn)
+            this.inviteBtn.label = '解锁'
+            this.inviteBtn.icon = 'video_icon_png'
+        }
     }
 
     private onInvite(){
+        if(!Config.isWX)
+        {
+            ShareTool.openGDTV(()=>{
+                UM_wx4.shareUserVideo[this.index] = 1;
+                UM_wx4.needUpUser = true;
+                this.hide();
+                EM_wx4.dispatch(GameEvent.client.INVITE_CHANGE)
+            })
+            return;
+        }
+
+
         var wx = window["wx"];
         if(wx)
             wx.aldSendEvent("点击邀请好友")
@@ -73,16 +95,22 @@ class ShareUnlockUI extends game.BaseWindow_wx4 {
     public onShow(){
         TC.isStop = true;
         this.setTitle(this.title)
-        this.setHtml(this.desText,this.des);
+
         this.addPanelOpenEvent(GameEvent.client.timer,this.onTimer)
         if(this.currentState == 'addSpeed')
         {
             this.mc.source = 'add_speed_btn2_png'
+            if(!Config.isWX)
+                this.des = '永久解锁 '+this.createHtml('加速',0xFFFF00)+' 功能'
         }
         else if(this.currentState == 'skin')
         {
             this.mc.source = this.index + '_2_png'
+            if(!Config.isWX)
+                this.des = '永久解锁 '+this.createHtml('新皮肤',0xFFFF00)+'，金币获得增加 '+this.createHtml('20%',0xFFFF00)
         }
+
+        this.setHtml(this.desText,this.des);
     }
 
     private onTimer(){

@@ -20,6 +20,7 @@ class GameUI extends game.BaseUI_wx4 {
     private feedBackBtn: eui.Image;
     private ad1: eui.Image;
     private ad2: eui.Image;
+    private bottomGroup: eui.Group;
     private skillBtn: eui.Group;
     private skillRedMC: eui.Image;
     private levelBtn: eui.Group;
@@ -27,12 +28,13 @@ class GameUI extends game.BaseUI_wx4 {
     private editBtn: eui.Group;
     private equipRedMC: eui.Image;
     private levelText: eui.Label;
+    private btnGroup: eui.Group;
+    private mapBtn: eui.Button;
     private needEnergyGroup: eui.Group;
     private needEnergyText: eui.Label;
-    private btnGroup: eui.Group;
-    private bottomGroup: eui.Group;
     private startBtn: eui.Image;
     private swapBtn: eui.Button;
+
 
 
 
@@ -78,6 +80,10 @@ class GameUI extends game.BaseUI_wx4 {
 
         this.addBtnEvent(this.helpBtn,()=>{
             HelpUI.getInstance().show()
+        })
+
+        this.addBtnEvent(this.mapBtn,()=>{
+            TotalMapUI.getInstance().show()
         })
 
 
@@ -280,6 +286,7 @@ class GameUI extends game.BaseUI_wx4 {
             TowerManager.getInstance().getServerData();
 
         RES.loadGroup('monster');
+        RES.loadGroup('map');
 
         this.tempLevel = -1;
         this.pkMap.horizontalCenter = 0
@@ -384,9 +391,15 @@ class GameUI extends game.BaseUI_wx4 {
 
     public onLevelChange(newLevel){
         if(UM_wx4.level > 10)
+        {
+            this.btnGroup.addChildAt(this.mapBtn,0)
             this.btnGroup.addChild(this.swapBtn)
+        }
         else
+        {
             MyTool.removeMC(this.swapBtn)
+            MyTool.removeMC(this.mapBtn)
+        }
 
         this.bottomGroup.visible = UM_wx4.level > 1;
 
@@ -548,7 +561,7 @@ class GameUI extends game.BaseUI_wx4 {
         }
     }
 
-    private renewBtn(){
+    public renewBtn(){
         this.leftBtn.visible = this.currentLevel > 1
         this.rightBtn.visible = this.currentLevel < UM_wx4.level
     }

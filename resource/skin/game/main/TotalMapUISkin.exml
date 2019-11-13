@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="TotalMapUISkin" width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="black_bg_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Scroller id="scroller" left="0" right="0" top="100" bottom="0" anchorOffsetY="0">
+		<e:Group anchorOffsetY="0" height="1045.09" x="0" y="-9.09">
+			<e:List id="list" width="200" height="200" x="106" y="104">
+				<e:layout>
+					<e:TileLayout horizontalGap="8" verticalGap="8" paddingLeft="8" paddingTop="0"/>
+				</e:layout>
+			</e:List>
+		</e:Group>
+	</e:Scroller>
+	<e:Image id="closeBtn" source="common_close_01_png" x="15" y="15"/>
+	<e:Label text="选择关卡" y="32" horizontalCenter="0" bold="true"/>
+</e:Skin>

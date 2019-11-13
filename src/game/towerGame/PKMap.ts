@@ -335,8 +335,8 @@ class PKMap extends game.BaseContainer_wx4 {
             var currentItem = this.roleCon.getChildAt(i)
             if(currentItem.y < lastItem.y)//深度不对，调整
             {
-                var index = i-1;
-                for(var j = index - 1;j>=0;j--)
+                var index = 0;
+                for(var j = i - 2;j>=0;j--)
                 {
                     var lastItem = this.roleCon.getChildAt(j)
                     if(currentItem.y > lastItem.y)

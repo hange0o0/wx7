@@ -31,6 +31,9 @@ class LevelVO {
         delete CM_wx4.table[this.dataKey]
     }
 
+    public static thumbMap
+    public static thumbGroup = new eui.Group()
+
 
     public id: number;
     public width: number;
@@ -46,6 +49,7 @@ class LevelVO {
     public forceRate = 1
     public monsterArr
     public heroPos
+    public thumb
     public constructor() {
 
     }
@@ -60,6 +64,8 @@ class LevelVO {
     }
 
     public reset(monsterArr?){
+        this.thumb = null;
+
         //回合数
         this.roundNum = Math.min(12,3 + Math.floor(this.id/10))
 
@@ -140,6 +146,45 @@ class LevelVO {
             this.heroPos = {x:0,y:0}
         }
 
+    }
+
+    public getThumb(){
+        if(!this.thumb)
+        {
+            this.thumb = new egret.RenderTexture()
+
+
+            if(!LevelVO.thumbMap)
+            {
+                LevelVO.thumbMap = new PKMap();
+                LevelVO.thumbGroup.addChild(LevelVO.thumbMap)
+                LevelVO.thumbMap.x = 0
+                LevelVO.thumbMap.y = 32
+            }
+
+            var pkMap = LevelVO.thumbMap
+            var group = LevelVO.thumbGroup
+
+
+
+            GameManager_wx4.container.addChild(group)
+            pkMap.width = 64*this.width
+            pkMap.height = 64*this.height
+            pkMap.initMap(this.id)
+            pkMap.draw(this.getRoadData(),true);
+            pkMap.sortY();
+
+            group.width = pkMap.width
+            group.height = pkMap.height + 64
+            group.validateNow()
+            var scale = Math.min(140/group.width,160/group.height,0.25)
+            this.thumb.drawToTexture(group,null,scale)
+            //this.thumb.drawToTexture(group)
+            MyTool.removeMC(group)
+        }
+
+
+        return this.thumb
     }
 
 

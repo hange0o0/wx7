@@ -44,6 +44,8 @@
 		"resource/skin/game/main/RebornUISkin.exml",
 		"resource/skin/game/main/ResultUISkin.exml",
 		"resource/skin/game/main/StopUISkin.exml",
+		"resource/skin/game/main/TotalMapItemSkin.exml",
+		"resource/skin/game/main/TotalMapUISkin.exml",
 		"resource/skin/game/main/UnlockUISkin.exml",
 		"resource/skin/game/NotEnoughCoinUISkin.exml",
 		"resource/skin/game/rank/RankItemSkin.exml",

@@ -116,6 +116,7 @@ class ResultUI extends game.BaseUI_wx4{
         TC.isStop = true;
         this.renew();
         ZijieScreenBtn.e && ZijieScreenBtn.e.stop();
+        ADIconManager.getInstance().showIcon('result')
     }
 
     public show(isWin?){
@@ -362,5 +363,6 @@ class ResultUI extends game.BaseUI_wx4{
 
     public hide(){
         super.hide();
+        ADIconManager.getInstance().hideAll()
     }
 }

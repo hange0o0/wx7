@@ -73,6 +73,34 @@ class GameManager_wx4 {
         //this.createAD_8628();
     }
 
+    public cleanAllTest(){
+        this.testHideArr.length = 0
+        this.testShowArr.length = 0
+    }
+
+    public addTestHide(fun){
+        this.testHideArr.push(fun);
+    }
+    public addTestShow(fun){
+        this.testShowArr.push(fun);
+    }
+
+    private testHideArr = []
+    private testShowArr = []
+    public testHide(res){
+        while(this.testHideArr[0])
+        {
+            this.testHideArr.shift()(res);
+        }
+    }
+
+    public testShow(res){
+        while(this.testShowArr[0])
+        {
+            this.testShowArr.shift()(res);
+        }
+    }
+
 	//private wx4_functionX_54598(){console.log(6363)}
     //public addJoinAppid(appid){
      //   var arr = SharedObjectManager_wx4.getInstance().getMyValue('exchangeUserAppid')|| [];
@@ -316,6 +344,7 @@ if(window["wx"])
         console.log(res)
         if(!GameManager_wx4.stage)
             return;
+        GameManager_wx4.getInstance().testHide(res)
         UM_wx4 && UM_wx4.upDateUserData();
         SoundManager.getInstance().stopBgSound();
         GameManager_wx4.getInstance().isActive = false;
@@ -332,7 +361,7 @@ if(window["wx"])
         console.log(res)
         if(!GameManager_wx4.stage)
             return;
-
+        GameManager_wx4.getInstance().testShow(res)
         //GameManager.stage.dispatchEventWith(egret.Event.ACTIVATE);
         EM_wx4.dispatch(egret.Event.ACTIVATE)
         GameManager_wx4.getInstance().onShowFun && GameManager_wx4.getInstance().onShowFun();

@@ -12,6 +12,7 @@ class ChangeJumpUI extends game.BaseWindow_wx4{
     public fun;
     public closeFun;
     public str;
+    private isSuccess = false
     public constructor() {
         super();
         this.skinName = "ChangeJumpUISkin";
@@ -32,6 +33,7 @@ class ChangeJumpUI extends game.BaseWindow_wx4{
         this.fun = fun;
         this.str = str;
         this.closeFun = closeFun;
+        this.isSuccess = false;
         //ChangeUserUI.getAD(()=>{
             super.show()
         //})
@@ -49,11 +51,32 @@ class ChangeJumpUI extends game.BaseWindow_wx4{
 
     public renew(){
         this.setHtml(this.destText, this.str);
+        if(ADIconManager.getInstance().showIcon('changeJump'))
+        {
+            this.list.visible = false;
+            GameManager_wx4.getInstance().addTestHide((res)=>{
+                if(res.targetAction == 9)
+                {
+                    this.isSuccess = true;
+                }
+            })
+
+            GameManager_wx4.getInstance().addTestShow((res)=>{
+                if(this.isSuccess)
+                {
+                    this.fun();
+                    this.hide()
+                }
+            })
+            return;
+        }
         this.list.dataProvider = new eui.ArrayCollection(MyADManager.getInstance().getListByNum(9,this.fun))
     }
 
     public hide(){
         super.hide();
         this.closeFun && this.closeFun();
+        ADIconManager.getInstance().hideAll();
+        GameManager_wx4.getInstance().cleanAllTest();
     }
 }

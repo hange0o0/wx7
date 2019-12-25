@@ -159,6 +159,11 @@ class LoadingUI extends game.BaseUI_wx4 {
         GameUI.getInstance().show();
     }
 
+    public hide(){
+        ADIconManager.getInstance().hideAll()
+        super.hide();
+    }
+
     public onShow(){
         var self = this;
         //ChangeUserUI.getAD();
@@ -175,7 +180,10 @@ class LoadingUI extends game.BaseUI_wx4 {
                 name: 'assets2', // name 可以填 name 或者 root
                 success(res) {
                     console.log(res)
-                    self.callShow();
+                    ADIconManager.getInstance().showIcon('loading')
+                    setTimeout(()=>{
+                        self.callShow();
+                    },1000)
                     setTimeout(()=>{
                         self.changeUser.renew()
                     },5000)

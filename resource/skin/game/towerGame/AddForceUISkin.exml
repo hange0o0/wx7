@@ -22,7 +22,7 @@
 			<e:VerticalLayout gap="30" verticalAlign="middle" horizontalAlign="center"/>
 		</e:layout>
 	</e:Group>
-	<e:Label text="每观看一次广告，可获得20%战力加成" size="24" bottom="430" horizontalCenter="0.5" lineSpacing="10" bold="true"/>
+	<e:Label text="观看广告后，可获得20%战力加成" size="24" bottom="430" horizontalCenter="0.5" lineSpacing="10" bold="true"/>
 	<e:Label text="注：增加战力只在本次挑战中有效" size="24" bottom="374" horizontalCenter="0.5" lineSpacing="10" textColor="0xccc9c9"/>
 
 </e:Skin>

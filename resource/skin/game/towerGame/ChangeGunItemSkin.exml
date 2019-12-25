@@ -2,9 +2,13 @@
 <e:Skin class="ChangeGunItemSkin" width="100" height="125" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" >
 	<e:Image source="dungeon_map_1b_a_jpg" x="0" y="0" width="100" height="100"/>
 	<e:Image id="mc" width="80" height="80" x="10" y="8"/>
+	<e:Image id="rateBGMC" width="80" height="85" x="10" source="black_bg_alpha2_png" y="8"/>
+	<e:Group y="68" right="10">
+		<e:Image source="bg17_png" y="0" scaleX="-0.5" scaleY="0.5" x="30"/>
+		<e:Label id="numText" text="x 5" size="20" right="5" verticalCenter="0"/>
+	</e:Group>
 	<e:Image id="selectMC" source="common_select_01_png" left="0" right="0" top="0" scale9Grid="19,17,25,24" height="100"/>
 	<e:Label id="nameText" text="Label" horizontalCenter="0" size="20" bottom="0"/>
-	<e:Image id="rateBGMC" width="80" height="80" x="10" source="black_bg_alpha2_png" y="8"/>
 	<e:Group y="0" horizontalCenter="0">
 		<e:Image id="m0" width="30" height="30" x="0" y="0"/>
 		<e:Image width="30" height="30" x="10" y="10" id="m1"/>

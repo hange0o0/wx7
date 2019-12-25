@@ -1,12 +1,14 @@
 class ChangeGunItem extends game.BaseItem{
 
     private mc: eui.Image;
-    private m0: eui.Image;
-    private m1: eui.Image;
-    private m2: eui.Image;
     private selectMC: eui.Image;
     private nameText: eui.Label;
     private rateBGMC: eui.Image;
+    private m0: eui.Image;
+    private m1: eui.Image;
+    private m2: eui.Image;
+    private numText: eui.Label;
+
 
 
 
@@ -65,7 +67,8 @@ class ChangeGunItem extends game.BaseItem{
         var vo = GunVO.getObject(this.data.id)
         this.touchChildren = this.touchEnabled = this.data.num > 0
         this.rateBGMC.visible = this.data.num <= 0
-        this.nameText.text = vo.name + ' x' + this.data.num
+        this.nameText.text = vo.name;
+        this.numText.text = 'x ' + this.data.num
 
     }
 }

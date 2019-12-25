@@ -367,15 +367,17 @@ class PKTowerUI extends game.BaseUI_wx4 {
         newItem.resetXY(startPos.x,startPos.y)
     }
 
-    public createBullet(owner,target){
+    public createBullet(owner,target,rotaAdd=0){
         var bullet = PKBulletItem.createItem();
         this.bulletArr.push(bullet);
         this.pkMap.topCon.addChild(bullet);
         bullet.data = {
             owner:owner,
             target:target,
+            rotaAdd:rotaAdd,
         }
         bullet.resetXY(owner.x,owner.y - 50)
+        //bullet.resetXY(owner.x,owner.y - 50)
         return bullet;
     }
 
@@ -385,7 +387,14 @@ class PKTowerUI extends game.BaseUI_wx4 {
         {
             if(TC.getSkillCD(sid))
             {
-                MyWindow.ShowTips('技能冷却中')
+                //MyWindow.ShowTips('技能冷却中')
+                TC.isStop = true
+                ShareTool.openGDTV(()=>{
+                    delete TC.lastSkillTime[sid];
+                    TC.isStop = false
+                },()=>{
+                    TC.isStop = false
+                })
                 return;
             }
             switch(sid)

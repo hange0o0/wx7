@@ -8,7 +8,7 @@
 	</e:List>
 	<e:Button id="startBtn" label="开始" skinName="Btn2Skin" width="150" bottom="90" right="20"/>
 	<e:Button id="randomBtn" label="随机武器" width="150" bottom="20" right="20" skinName="Btn1Skin" includeIn="s2,s3"/>
-	<e:Button id="addForceBtn" label="攻击+50%" skinName="Btn2Skin" width="150" bottom="90" left="20" includeIn="s3"/>
+	<e:Button id="helpBtn" label="提示" skinName="Btn2Skin" width="150" bottom="90" left="20" includeIn="s3" icon="video_icon_png"/>
 	<e:Button id="resetBtn" label="重置" width="150" bottom="20" left="20" skinName="Btn1Skin" bottom.s1="90" bottom.s2="90"/>
 	<e:Group horizontalCenter="0" bottom="10" touchChildren="false" touchEnabled="false">
 		<e:Label text="铺路" size="20" x="0" y="0"/>
@@ -35,8 +35,4 @@
 	</e:Group>
 	<e:Image id="leftBtn" source="arrow_btn2_png" x="20" verticalCenter="0"/>
 	<e:Image id="rightBtn" source="arrow_btn2_png" verticalCenter="0" right="20" scaleX="-1"/>
-	<e:Group id="helpBtn" horizontalCenter="0" bottom="150" includeIn="s2,s3">
-		<e:Label text="观看广告，获得布阵提示" y="0" horizontalCenter="0" size="24"/>
-		<e:Image source="white_bg_png" x="0" y="30" height="3" width="100%"/>
-	</e:Group>
 </e:Skin>

@@ -11,7 +11,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     private list: eui.List;
     private startBtn: eui.Button;
     private randomBtn: eui.Button;
-    private addForceBtn: eui.Button;
+    private helpBtn: eui.Button;
     private resetBtn: eui.Button;
     private closeBtn: eui.Group;
     private monsterGroup: eui.Group;
@@ -21,7 +21,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
     private levetText: eui.Label;
     private leftBtn: eui.Image;
     private rightBtn: eui.Image;
-    private helpBtn: eui.Group;
+
 
 
 
@@ -107,9 +107,9 @@ class DrawMapUI extends game.BaseUI_wx4 {
 
         this.addBtnEvent(this.randomBtn,this.randomGun)
 
-        this.addBtnEvent(this.addForceBtn,()=>{
-            AddForceUI.getInstance().show()
-        })
+        //this.addBtnEvent(this.addForceBtn,()=>{
+        //    AddForceUI.getInstance().show()
+        //})
 
         this.addBtnEvent(this.resetBtn,this.onReset)
         this.addBtnEvent(this.startBtn,()=>{
@@ -597,12 +597,12 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.pkMap.sortY()
     }
 
-    public renewForceAdd(){
-        if(PKManager.getInstance().forceAdd)
-            this.addForceBtn.label = '战力+' + Math.round(PKManager.getInstance().forceAdd*100) + '%';
-        else
-            this.addForceBtn.label = '增加战力'
-    }
+    //public renewForceAdd(){
+    //    if(PKManager.getInstance().forceAdd)
+    //        this.addForceBtn.label = '战力+' + Math.round(PKManager.getInstance().forceAdd*100) + '%';
+    //    else
+    //        this.addForceBtn.label = '增加战力'
+    //}
 
     public onShow(){
         TC.tempShowLevel = Math.max(UM_wx4.level,this.data.id);
@@ -613,7 +613,7 @@ class DrawMapUI extends game.BaseUI_wx4 {
         else
             this.currentState = 's3'
 
-        this.addForceBtn.visible = TC.isTest != 2 && TC.isTest != 3 && TC.isTest != 4;
+        //this.addForceBtn.visible = TC.isTest != 2 && TC.isTest != 3 && TC.isTest != 4;
 
         this.list.selectedIndex = 0;
         TC.currentVO = this.data;
@@ -634,7 +634,6 @@ class DrawMapUI extends game.BaseUI_wx4 {
         this.heroItem.y = this.data.heroPos.y*64+32 + 20
         this.heroItem.standMV()
 
-        this.renewForceAdd();
 
         this.renewMap();
 

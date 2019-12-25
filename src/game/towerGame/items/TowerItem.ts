@@ -62,12 +62,14 @@ class TowerItem extends game.BaseItem{
     public stateFireMV
     public statePoisonMV
 
+    public timer
+
     private isLighting = false
 
     public childrenCreated() {
         super.childrenCreated();
-        this.mc.bottom = 50;
-        this.tw = egret.Tween.get(this.mc,{loop:true}).to({bottom:30},300).to({bottom:50},300)
+
+        this.resetTW();
         this.anchorOffsetX = 32
         this.anchorOffsetY = 32
 
@@ -83,17 +85,32 @@ class TowerItem extends game.BaseItem{
         this.mv.anchorOffsetY = 30
         this.mv.x = 32
         this.mv.y = 32
+        this.mc.scaleX = this.mc.scaleY = 0.8
 
 
+    }
+
+    public resetTW(){
+        if(this.tw)
+            return;
+        this.mc.bottom = 40;
+        egret.Tween.removeTweens(this.mc);
+        this.tw = egret.Tween.get(this.mc,{loop:true}).to({bottom:60},500).to({bottom:40},500)
     }
 
     public dataChanged():void {
         if(!this.mv)
             return;
+        this.resetTW();
         this.mv.gotoAndPay()
         this.mc.source = ''
         this.effectTowers = [];
         this.gvo = null;
+
+        egret.clearTimeout(this.timer);
+        this.mc.visible = true;
+
+
         MyTool.removeMC(this.disBottomMC);
         MyTool.removeMC(this.disBottomMVMC);
         this.isLighting = false
@@ -357,9 +374,11 @@ class TowerItem extends game.BaseItem{
 
         ArrayUtil_wx4.sortByField(atkList,['totalDis'],[0])
 
-        var isShoot = false
+        //var isShoot = false
         var shootNum = this.shootNum;
         var skillType = this.gvo.skilltype
+
+        var enemys = [];
         if(skillType)//优先加状态
         {
             var skills=['fire','yun','poison','ice']
@@ -377,9 +396,10 @@ class TowerItem extends game.BaseItem{
                     if(mItem.iceStep && skillType == 'ice')
                         continue;
 
-                    PKTowerUI.getInstance().createBullet(this,mItem)
+                    enemys.push(mItem)
+                    //PKTowerUI.getInstance().createBullet(this,mItem)
 
-                    isShoot = true;
+                    //isShoot = true;
 
                     atkList.splice(i,1);
                     i--;
@@ -394,15 +414,35 @@ class TowerItem extends game.BaseItem{
         {
             if(atkList[i])
             {
-                PKTowerUI.getInstance().createBullet(this,atkList[i])
-                isShoot = true;
+                enemys.push(atkList[i])
+                //PKTowerUI.getInstance().createBullet(this,atkList[i])
+                //isShoot = true;
             }
         }
 
-        if(isShoot)
+        var enemysLen = enemys.length;
+        if(enemysLen > 0)
         {
+            var rotaStep = Math.min(20,90/enemysLen)
+            var rotaStart = -(rotaStep*(enemysLen-1))/2
+            for(var i=0;i<enemysLen;i++)
+            {
+                PKTowerUI.getInstance().createBullet(this,enemys[i],rotaStart+i*rotaStep)
+            }
             this.lastHurtTime = TC.actionStep;
             SoundManager.getInstance().playEffect('arc')
+            //egret.clearTimeout(this.timer);
+            //this.mc.visible = false;
+            //this.timer = egret.setTimeout(()=>{
+            //    this.mc.visible = true;
+            //},this,200)
+
+            this.mc.bottom = 40;
+            this.mc.scaleX = this.mc.scaleY = 0
+            this.tw = null;
+            egret.Tween.removeTweens(this.mc);
+            egret.Tween.get(this.mc).wait(200).to({scaleX:0.8,scaleY:0.8},200).call(this.resetTW,this)
+
         }
     }
 

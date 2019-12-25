@@ -26,6 +26,7 @@ class PKBulletItem extends game.BaseItem {
     public isDie = 0;
 
     public targetDiePos;
+    public step = 0
     public constructor() {
         super();
         this.skinName = "PKBulletItemSkin";
@@ -36,7 +37,7 @@ class PKBulletItem extends game.BaseItem {
         this.anchorOffsetX = 25
         this.anchorOffsetY = 25
 
-        this.mc.scaleX = this.mc.scaleY = 0.6
+        this.mc.scaleX = this.mc.scaleY = 0.7
         this.mc.rotation = 90
     }
 
@@ -49,7 +50,11 @@ class PKBulletItem extends game.BaseItem {
         this.isDie = 0
         this.targetDiePos = null
 
-        this.scaleX = this.scaleY = 0;
+        //this.scaleX = this.scaleY = 0;
+        this.scaleX = this.scaleY = 1/0.7;
+
+        this.rotation = -90 + this.data.rotaAdd
+        this.step = 0;
     }
 
     public resetXY(x,y){
@@ -60,11 +65,13 @@ class PKBulletItem extends game.BaseItem {
     public onE(){
         if(this.isDie)
             return;
-        if(this.scaleX<1)
+        if(this.scaleX>1)
         {
-            this.scaleX = this.scaleY = this.scaleX + 0.2;
+            this.scaleX = this.scaleY = this.scaleX - 0.1;
+            if(this.scaleX<1)
+                this.scaleX = this.scaleY = 1;
         }
-
+        this.step ++;
 
         if(this.target.isDie && !this.targetDiePos)
         {
@@ -75,13 +82,35 @@ class PKBulletItem extends game.BaseItem {
 
 
         var rota = Math.atan2(targetXY.y-this.y,targetXY.x-this.x)
+        var selfRota = this.rotation/180*Math.PI;
+
+
+        if(Math.abs(rota - selfRota)>Math.PI)
+        {
+            if(rota > selfRota)
+                selfRota += Math.PI*2;
+            else
+                rota += Math.PI*2
+        }
+        var stepAdd = Math.pow(this.step,1.5)*Math.PI/50// + Math.abs(rota - selfRota)/50
+        if(Math.abs(rota - selfRota)>stepAdd)
+        {
+            if(rota > selfRota)
+                selfRota += stepAdd;
+            else
+                selfRota -= stepAdd;
+            rota = selfRota;
+        }
+
+
         this.rotation = rota/Math.PI*180
 
-        var addX = this.speed*Math.cos(rota)
-        var addY = this.speed*Math.sin(rota)
+        var speed = this.speed + this.step;
+        var addX = speed*Math.cos(rota)
+        var addY = speed*Math.sin(rota)
         this.resetXY(this.x + addX,this.y+addY)
 
-        if(MyTool.getDis(this,targetXY) <= this.speed)
+        if(MyTool.getDis(this,targetXY) <= speed)
         {
             this.isDie = 1;
             this.onAtk();

@@ -26,14 +26,16 @@ class AddForceUI extends game.BaseWindow_wx4 {
         this.addBtnEvent(this.sendBtn,()=>{
             ShareTool.openGDTV(()=>{
                 PKManager.getInstance().addForce();
-                DrawMapUI.getInstance().renewForceAdd();
-                this.renew();
+                //DrawMapUI.getInstance().renewForceAdd();
+                this.hide();
             })
         })
         this.addBtnEvent(this.closeBtn,this.hide)
     }
 
     public show(){
+        if(PKManager.getInstance().forceAdd)
+            return
         super.show()
     }
 

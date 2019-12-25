@@ -5,4 +5,5 @@
 	<e:Image id="rateBGMC" width="80" height="80" x="10" bottom="12" source="black_bg_alpha2_png" />
 	<e:Image id="rateMC" source="black_bg_alpha_png" width="80" height="80" x="10" bottom="12"/>
 	<e:Image id="selectMC" source="common_select_01_png" left="0" right="0" top="0" bottom="2" scale9Grid="19,17,25,24"/>
+	<e:Image id="videoMC" source="vide_icon2_png" horizontalCenter="0" verticalCenter="0"/>
 </e:Skin>

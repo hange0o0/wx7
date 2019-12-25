@@ -7,6 +7,8 @@ class PKSkillItem extends game.BaseItem{
     private rateBGMC: eui.Image;
     private rateMC: eui.Image;
     private selectMC: eui.Image;
+    private videoMC: eui.Image;
+
 
 
 
@@ -14,6 +16,7 @@ class PKSkillItem extends game.BaseItem{
     public childrenCreated() {
         super.childrenCreated();
         this.addBtnEvent(this,this.onClick)
+        this.videoMC.visible = false;
 
     }
 
@@ -31,17 +34,19 @@ class PKSkillItem extends game.BaseItem{
 
     public setSelect(data){
         this.selectMC.visible = this.data == data;
+        this.videoMC.visible = this.rateMC.visible && this.selectMC.visible;
     }
 
     public setRateVisible(b){
         this.rateMC.visible = b;
         this.rateBGMC.visible = b;
+        this.videoMC.visible = this.rateMC.visible && this.selectMC.visible;
     }
 
     public onE(){
         if(!this.data)
             return;
-        var cd = TC.getSkillCD(this.data)
+        var cd = TC.getSkillCD(this.data);
         if(cd)
         {
             this.setRateVisible(true);

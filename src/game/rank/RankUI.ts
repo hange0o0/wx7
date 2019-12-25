@@ -179,6 +179,10 @@ class RankUI extends game.BaseWindow_wx4{
                 openid:UM_wx4.gameid
             })
         }
+        for(var i=0;i<arr.length;i++)
+        {
+            arr[i].value = Math.floor(arr[i].value)
+        }
         ArrayUtil_wx4.sortByField(arr,['value'],[1])
         var myRank = 0
         for(var i=0;i<arr.length;i++)
